@@ -2,8 +2,9 @@ Package: manhattan
 Type: Package
 Title: Interactive Q-Q and manhattan plots Using 'plotly'
 Version: 0.1.0
-Authors@R: person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
-role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/")
+Date: 2016-05-25
+Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
+    role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
 Description: Create interactive Q-Q and manhattan plots that are usable from the R console,
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a point to show details or drag a rectangle to
@@ -23,7 +24,7 @@ Depends:
     R (>= 3.0.0),
     magrittr (>= 1.0.1),
     plotly (>= 3.6.0),
-    viridis
+    qqman (>= 0.1.2)
 Imports:
     stats
 Suggests:
