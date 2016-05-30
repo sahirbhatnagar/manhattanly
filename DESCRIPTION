@@ -1,0 +1,38 @@
+Package: manhattan
+Type: Package
+Title: Interactive Q-Q and manhattan plots Using 'plotly'
+Version: 0.1.0
+Authors@R: person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
+role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/")
+Description: Create interactive Q-Q and manhattan plots that are usable from the R console,
+    in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
+    Hover the mouse pointer over a point to show details or drag a rectangle to
+    zoom. A manhattan plot is a popular graphical method for visualizing results
+    from high-dimensional data analysis such as a (epi)genome wide asssociation study
+    (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter
+    plot against their genomic position. Manhattan plots are used for visualizing
+    potential regions of interest in the genome that are associated with a phenotype.
+    Interactive manhattan plots allow the inspection of specific value (e.g. rs number or
+    gene name) by hovering the mouse over a cell, as well as zooming into a region of the
+    genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
+    This work is based on the 'qqman' package by Stephen Turner and the 'plotly.js'
+    engine. It produces similar manhattan and Q-Q plots as the 'manhattan' and 'qq'
+    functions in the 'qqman' package, with the advantage interacting with the plot and
+    including extra annotation information.
+Depends:
+    R (>= 3.0.0),
+    magrittr (>= 1.0.1),
+    plotly (>= 3.6.0),
+    viridis
+Imports:
+    stats
+Suggests:
+    knitr,
+    rmarkdown,
+    RColorBrewer
+VignetteBuilder: knitr
+License: GPL-2 | GPL-3
+URL: https://github.com/sahirbhatnagar/manhattan/
+BugReports: https://github.com/sahirbhatnagar/manhattan/issues
+LazyData: TRUE
+RoxygenNote: 5.0.1
