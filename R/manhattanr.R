@@ -24,6 +24,7 @@
 #'   useful to plot raw p-values, but plotting the raw value could be useful for
 #'   other genome-wide plots, for example, peak heights, bayes factors, test
 #'   statistics, other "scores," etc.
+#' @param ... currently ignored
 #'
 #' @export
 #' @source The pre-processing is mostly the same as the
@@ -39,24 +40,44 @@ manhattanr <- function(x,
                        chr = "CHR",
                        bp = "BP",
                        p = "P",
-                       snp = "SNP",
-                       gene = "GENE",
+                       snp,
+                       gene,
+                       annotation1,
+                       annotation2,
                        logp = TRUE,
                        ...) {
 
-  # CHR <- vector()
-  # BP
-  # P
-  # index=NULL
+  # NULLing out strategy
+  # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+  CHR = BP = P = index = NULL
+  # dotargs <- list(...)
+  # print(dotargs)
+  # message(paste(chr, bp, p,snp, gene, dotargs))
 
   # Check for sensible dataset
   ## Make sure you have chr, bp and p columns.
-  if (!(chr %in% names(x))) stop(paste("Column", chr, "not found!"))
-  if (!(bp %in% names(x))) stop(paste("Column", bp, "not found!"))
-  if (!(p %in% names(x))) stop(paste("Column", p, "not found!"))
+  if (!(chr %in% names(x))) stop(paste("Column", chr, "not found in 'x' data.frame"))
+  if (!(bp %in% names(x))) stop(paste("Column", bp, "not found in 'x' data.frame"))
+  if (!(p %in% names(x))) stop(paste("Column", p, "not found 'x' data.frame"))
+
   ## warn if you don't have a snp column
-  if (!(snp %in% names(x))) warning(paste("No SNP column found. OK unless you're trying to highlight."))
-  if (!(gene %in% names(x))) warning(paste("No GENE column found. OK unless you're trying to annotate."))
+  if (!missing(snp)) {
+    if (!(snp %in% names(x))) stop(sprintf("snp argument specified as %s but this column not found in 'x' data.frame", snp))
+  }
+
+  if (!missing(gene)) {
+    if(!(gene %in% names(x))) stop(sprintf("gene argument specified as %s but this column not found in 'x' data.frame", gene))
+  }
+
+  if (!missing(annotation1)) {
+    if (!(annotation1 %in% names(x))) stop(sprintf("annotation1 argument specified as %s but this column not found in 'x' data.frame", annotation1))
+  }
+
+  if (!missing(annotation2)) {
+    if (!(annotation2 %in% names(x))) stop(sprintf("annotation2 argument specified as %s but this column not found in 'x' data.frame", annotation2))
+  }
+
+  # if (!(gene %in% names(x))) warning(paste("No GENE column found. OK unless you're trying to annotate."))
 
   ## make sure chr, bp, and p columns are numeric.
   if (!is.numeric(x[[chr]])) stop(paste(chr, "column should be numeric. Do you have 'X', 'Y', 'MT', etc? If so change to numbers and try again."))
@@ -67,9 +88,26 @@ manhattanr <- function(x,
   d <- data.frame(CHR = x[[chr]], BP = x[[bp]], P = x[[p]])
 
   # If the input data frame has a SNP column, add it to the new data frame
-  # you're creating.
-  if (!is.null(x[[snp]])) d <- transform(d, SNP = x[[snp]])
-  if (!is.null(x[[gene]])) d <- transform(d, GENE = x[[gene]])
+  # you're creating. Rename columns according to input
+  if (!missing(snp)) {
+    d <- transform(d, SNP = x[[snp]])
+    colnames(d)[which(colnames(d) == "SNP")] <- snp
+  }
+
+  if (!missing(gene)) {
+    d <- transform(d, GENE = x[[gene]])
+    colnames(d)[which(colnames(d) == "GENE")] <- gene
+  }
+
+  if (!missing(annotation1)) {
+    d <- transform(d, ANNOTATION1 = x[[annotation1]])
+    colnames(d)[which(colnames(d) == "ANNOTATION1")] <- annotation1
+  }
+
+  if (!missing(annotation2)) {
+    d <- transform(d, ANNOTATION2 = x[[annotation2]])
+    colnames(d)[which(colnames(d) == "ANNOTATION2")] <- annotation2
+  }
 
   # Set positions, ticks, and labels for plotting
   ## Sort and keep only values where is numeric.
@@ -129,7 +167,11 @@ manhattanr <- function(x,
   }
 
   manhattanr <- list(data = d, xlabel = xlabel, ticks = ticks, labs = labs,
-                     nchr = nchr)
+                     nchr = nchr, pName = p,
+                     snpName = if (missing(snp)) NA else snp,
+                     geneName = if (missing(gene)) NA else gene,
+                     annotation1Name = if (missing(annotation1)) NA else annotation1,
+                     annotation2Name = if (missing(annotation2)) NA else annotation2)
 
   class(manhattanr) <- "manhattanr"
 

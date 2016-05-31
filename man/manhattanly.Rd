@@ -7,14 +7,16 @@
 \title{Creates a plotly manhattan plot}
 \usage{
 manhattanly(x, col = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name
-  = "Set1")))(nchr), chrlabs = NULL, suggestiveline = -log10(1e-05),
+  = "Set1")))(nchr), labelChr = NULL, suggestiveline = -log10(1e-05),
   genomewideline = -log10(5e-08), suggestiveline_color = "blue",
-  genomewideline_color = "red", highlight = NULL, showlegend = TRUE, ...)
+  genomewideline_color = "red", highlight = NULL, showlegend = TRUE,
+  showgrid = TRUE, xlab = NULL, ylab = "-log10(p)",
+  title = "Manhattan Plot", ...)
 }
 \arguments{
 \item{col}{A character vector indicating which colors to alternate.}
 
-\item{chrlabs}{A character vector equal to the number of chromosomes
+\item{labelChr}{A character vector equal to the number of chromosomes
 specifying the chromosome labels (e.g., \code{c(1:22, "X", "Y", "MT")}).}
 
 \item{suggestiveline}{Where to draw a "suggestive" line. Default
@@ -34,7 +36,7 @@ These SNPs should all be in your dataset.}
 
 \item{showlegend}{Should a legend be shown. Default is \code{TRUE}.}
 
-\item{...}{Currently not used.}
+\item{...}{other parameters passed to \link{manhattanr}}
 }
 \value{
 A manhattan plot.

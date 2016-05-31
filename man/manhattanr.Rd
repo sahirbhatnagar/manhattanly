@@ -10,8 +10,8 @@ The pre-processing is mostly the same as the
   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
 }
 \usage{
-manhattanr(x, chr = "CHR", bp = "BP", p = "P", snp = "SNP",
-  gene = "GENE", logp = TRUE, ...)
+manhattanr(x, chr = "CHR", bp = "BP", p = "P", snp, gene, annotation1,
+  annotation2, logp = TRUE, ...)
 }
 \arguments{
 \item{x}{A data.frame with columns "BP," "CHR," "P," and optionally, "SNP."}
@@ -37,6 +37,8 @@ PLINK's "SNP." Said column should be a character. This argument is optional}
 useful to plot raw p-values, but plotting the raw value could be useful for
 other genome-wide plots, for example, peak heights, bayes factors, test
 statistics, other "scores," etc.}
+
+\item{...}{currently ignored}
 }
 \description{
 An object of class manhattanr includes all the needed information for
