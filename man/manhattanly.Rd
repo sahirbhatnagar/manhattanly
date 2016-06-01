@@ -6,8 +6,8 @@
 \alias{manhattanly.manhattanr}
 \title{Creates a plotly manhattan plot}
 \usage{
-manhattanly(x, col = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name
-  = "Set1")))(nchr), labelChr = NULL, suggestiveline = -log10(1e-05),
+manhattanly(x, col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
+  labelChr = NULL, suggestiveline = -log10(1e-05),
   genomewideline = -log10(5e-08), suggestiveline_color = "blue",
   genomewideline_color = "red", highlight = NULL, showlegend = TRUE,
   showgrid = TRUE, xlab = NULL, ylab = "-log10(p)",

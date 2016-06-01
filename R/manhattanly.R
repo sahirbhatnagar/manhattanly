@@ -31,7 +31,8 @@
 #' }
 
 manhattanly <- function(x,
-                        col = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name ="Set1")))(nchr),
+                        # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
+                        col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
                         labelChr = NULL,
                         suggestiveline = -log10(1e-5),
                         genomewideline = -log10(5e-8),
@@ -50,7 +51,8 @@ manhattanly <- function(x,
 
 #' @export
 manhattanly.default <- function(x,
-                                col = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name ="Set1")))(nchr),
+                                # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
+                                col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
                                 labelChr = NULL,
                                 suggestiveline = -log10(1e-5),
                                 genomewideline = -log10(5e-8),
@@ -83,7 +85,8 @@ manhattanly.default <- function(x,
 
 #' @export
 manhattanly.manhattanr <- function(x,
-                                   col = colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name ="Set1")))(nchr),
+                                   # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
+                                   col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
                                    labelChr = NULL,
                                    suggestiveline = -log10(1e-5),
                                    genomewideline = -log10(5e-8),
@@ -168,9 +171,9 @@ manhattanly.manhattanr <- function(x,
                     range = c(xmin, xmax)
                   ),
                   yaxis = list(
-                    title = ylab,
-                    range = c(0,ceiling(max(d$logp)))
-                  )
+                    title = ylab)#,
+                    #range = c(0,ceiling(max(d$logp)))
+                  #)
     )
   } else {
     # if multiple chrs, use the ticks and labels you created above.
@@ -188,9 +191,9 @@ manhattanly.manhattanr <- function(x,
                   ticks = "outside"
                 ),
                 yaxis = list(
-                  title = ylab,
-                  range = c(0,ceiling(max(d$logp)))
-                )
+                  title = ylab)#,
+                  #range = c(0,ceiling(max(d$logp)))
+                #)
     )
   }
 
@@ -310,3 +313,4 @@ manhattanly.manhattanr <- function(x,
 #                                 text = topHits$SNP[10],
 #                                 showarrow = T))
 
+"%ni%" <- Negate("%in%")
