@@ -3,7 +3,7 @@
 #' A dataset containing a subset of the draft release 2 for genome-wide SNP
 #' genotyping in DNA samples from 11 human populations (sometimes referred to as
 #' the "HapMap 3" samples). Only the PLINK .map file was used. Approximately
-#' 2.5% of each SNPs in each chromosome were retained. The p-values, zscores,
+#' 2.5\% of the SNPs in each chromosome were retained. The p-values, zscores,
 #' and effectsizes were simulated using random distributions in R. Annotation
 #' information (nearest gene and distance to nearest gene) was obtained from the
 #' UCSC genome annotation database for the Mar. 2006 GenBank freeze assembled by
@@ -21,4 +21,4 @@
 #' @source \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
 #'   \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/}
 #'
-"hapmap"
+"HapMap"

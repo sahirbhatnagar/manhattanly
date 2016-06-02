@@ -2,5 +2,8 @@
 
 S3method(manhattanly,default)
 S3method(manhattanly,manhattanr)
+S3method(qqly,default)
+S3method(qqly,qqr)
 export(manhattanly)
 export(manhattanr)
+export(qqr)

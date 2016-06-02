@@ -6,49 +6,102 @@
 \alias{manhattanly.manhattanr}
 \title{Creates a plotly manhattan plot}
 \usage{
-manhattanly(x, col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
+manhattanly(x, col = c("#969696", "#252525"), point_size = 5,
   labelChr = NULL, suggestiveline = -log10(1e-05),
-  genomewideline = -log10(5e-08), suggestiveline_color = "blue",
-  genomewideline_color = "red", highlight = NULL, showlegend = TRUE,
-  showgrid = TRUE, xlab = NULL, ylab = "-log10(p)",
+  suggestiveline_color = "blue", suggestiveline_width = 1,
+  genomewideline = -log10(5e-08), genomewideline_color = "red",
+  genomewideline_width = 1, highlight = NULL, highlight_color = "#00FF00",
+  showlegend = FALSE, showgrid = FALSE, xlab = NULL, ylab = "-log10(p)",
   title = "Manhattan Plot", ...)
 }
 \arguments{
-\item{col}{A character vector indicating which colors to alternate.}
+\item{x}{Can be an object of class \code{manhattanr} produced by the
+\code{\link{manhattanr}} function or a \code{data.frame} which must contain
+at least the following three columns: \itemize{ \item{the chromosome
+number} \item{genomic base-pair position} \item{a numeric quantity to plot
+such as a p-value or zscore} }}
+
+\item{col}{A character vector indicating the colors of each chromosome. If
+the number of colors specified is less than the number of unique
+chromosomes, then the elements will be recycled. Can be
+\href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+well.}
+
+\item{point_size}{A \code{numeric} indicating the size of the points on the
+plot. Default is 5}
 
 \item{labelChr}{A character vector equal to the number of chromosomes
-specifying the chromosome labels (e.g., \code{c(1:22, "X", "Y", "MT")}).}
+specifying the chromosome labels (e.g., \code{c(1:22, "X", "Y", "MT")}).
+Default is \code{NULL}, meaning that the actual chromosome numbers will be
+used.}
 
-\item{suggestiveline}{Where to draw a "suggestive" line. Default
--log10(1e-5). Set to FALSE to disable.}
-
-\item{genomewideline}{Where to draw a "genome-wide sigificant" line. Default
--log10(5e-8). Set to FALSE to disable.}
+\item{suggestiveline}{Where to draw a "suggestive" line. Default is
+\code{-log10(1e-5)}. Set to \code{FALSE} to disable.}
 
 \item{suggestiveline_color}{color of "suggestive" line. Only used if
-\code{suggestiveline} is not set to \code{FALSE}}
+\code{suggestiveline} is not set to \code{FALSE}. Default is \code{"blue"}.}
 
-\item{genomewideline_color}{color of "genome-wide sigificant" line. Only used if
-\code{genomewideline} is not set to \code{FALSE}}
+\item{suggestiveline_width}{Width of \code{suggestiveline}. Default is 1.}
+
+\item{genomewideline}{Where to draw a "genome-wide sigificant" line. Default
+\code{-log10(5e-8)}. Set to \code{FALSE} to disable.}
+
+\item{genomewideline_color}{color of "genome-wide sigificant" line. Only used
+if \code{genomewideline} is not set to \code{FALSE}. Default is
+\code{"red"}.}
+
+\item{genomewideline_width}{Width of \code{genomewideline}. Default is 1.}
 
 \item{highlight}{A character vector of SNPs in your dataset to highlight.
-These SNPs should all be in your dataset.}
+These SNPs should all be in your dataset. Default is \code{NULL} which
+means that nothing is highlighted.}
 
-\item{showlegend}{Should a legend be shown. Default is \code{TRUE}.}
+\item{highlight_color}{Color used to highlight points. Only used if
+\code{highlight} argument has been specified}
 
-\item{...}{other parameters passed to \link{manhattanr}}
+\item{showlegend}{Should a legend be shown. Default is \code{FALSE}.}
+
+\item{showgrid}{Should gridlines be shown. Default is \code{FALSE}.}
+
+\item{xlab}{X-axis label. Default is \code{NULL} which means that the label
+is automatically determined by the \code{\link{manhattanr}} function.
+Specify here to overwrite the default.}
+
+\item{ylab}{Y-axis label. Default is \code{"-log10(p)"}.}
+
+\item{title}{Title of the plot. Default is \code{"Manhattan Plot"}}
+
+\item{...}{other parameters passed to \code{\link{manhattanr}}}
 }
 \value{
-A manhattan plot.
+An interactive manhattan plot.
 }
 \description{
-Creates a manhattan plot from PLINK assoc output (or any data frame with
-chromosome, position, and p-value).
+Creates an interactive manhattan plot with multiple annotation options
+}
+\note{
+This package is inspired by the
+  \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
+  \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}. Much of the
+  plot format and pre-processing is the same. This package provides
+  additional annotation options and builds on the \code{\link{plotly}}
+  \code{d3.js} engine. These plots can be included in Shiny apps, Rmarkdown
+  documents or embeded in websites using simple HTML code.
 }
 \examples{
 \dontrun{
-library(qqman)
-manhattanly(gwasResults)
+library(manhattanly)
+manhattanly(HapMap)
+
+# highlight SNPs of interest
+# 'signigicantSNP' is a character vector of SNPs included in this package
+manhattanly(HapMap, snp = "SNP", highlight = significantSNP)
 }
+}
+\seealso{
+\code{\link{manhattanr}}, \code{\link{HapMap}},
+  \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
+  \url{https://github.com/stephenturner/qqman},
+  \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 }
 

@@ -32,7 +32,8 @@ set.seed(12345)
 rm(hapmap)
 hapmap <- stratifiedDT(DT,"chr", size = size, select = list(chr = paste0("chr",c(1:23))))
 # hapmap[, table(chr)]
-hapmap[, `:=`(P = runif(.N), ZSCORE = rnorm(.N, sd = 0.3), EFFECTSIZE = rnorm(.N, sd = 0.1))]
+# hapmap[, `:=`(P = runif(.N), ZSCORE = rnorm(.N, sd = 0.3), EFFECTSIZE = rnorm(.N, sd = 0.1))]
+hapmap[, `:=`(P = runif(.N), EFFECTSIZE = rnorm(.N, sd = 0.1))]
 # hapmap[, hist(P)]
 # hapmap[, hist(ZSCORE)]
 # hapmap[, hist(EFFECTSIZE)]
@@ -44,28 +45,45 @@ significantRS4 <- hapmap[CHR %in% 5][order(BP)][1970:1979]$SNP
 significantRS5 <- hapmap[CHR %in% 5][order(BP)][1960:1969]$SNP
 
 # significantRS <- hapmap[CHR %in% c(5)][sample(.N, 100)]$SNP
+# hapmap[SNP %in% significantRS1, `:=`(P = sample(seq(1e-7, 5e-5, length.out = 2e2),
+#                                           size = .N, replace = F),
+#                                     ZSCORE = rnorm(.N, sd = 0.5),
+#                                     EFFECTSIZE = rnorm(.N, sd = 0.3))]
+# hapmap[SNP %in% significantRS2, `:=`(P = sample(seq(1e-10, 5e-3, length.out = 2e2),
+#                                           size = .N, replace = F),
+#                                      ZSCORE = rnorm(.N, sd = 0.6),
+#                                      EFFECTSIZE = rnorm(.N, sd = 0.8))]
+# hapmap[SNP %in% significantRS3, `:=`(P = sample(seq(1e-14, 1e-8, by = 9e-12),
+#                                            size = .N, replace = F),
+#                                      ZSCORE = rnorm(.N, sd = 0.8),
+#                                      EFFECTSIZE = rnorm(.N, sd = 1))]
+# hapmap[SNP %in% significantRS4, `:=`(P = sample(seq(1e-8, 1e-6, length.out = 2e2),
+#                                            size = .N, replace = F),
+#                                      ZSCORE = rnorm(.N, sd = 0.6),
+#                                      EFFECTSIZE = rnorm(.N, sd = 0.8))]
+# hapmap[SNP %in% significantRS5, `:=`(P = sample(seq(1e-6, 5e-4, length.out = 2e2),
+#                                            size = .N, replace = F),
+#                                      ZSCORE = rnorm(.N, sd = 0.5),
+#                                      EFFECTSIZE = rnorm(.N, sd = 0.3))]
+
 hapmap[SNP %in% significantRS1, `:=`(P = sample(seq(1e-7, 5e-5, length.out = 2e2),
-                                          size = .N, replace = F),
-                                    ZSCORE = rnorm(.N, sd = 0.5),
-                                    EFFECTSIZE = rnorm(.N, sd = 0.3))]
+                                                size = .N, replace = F),
+                                     EFFECTSIZE = rnorm(.N, sd = 0.3))]
 hapmap[SNP %in% significantRS2, `:=`(P = sample(seq(1e-10, 5e-3, length.out = 2e2),
-                                          size = .N, replace = F),
-                                     ZSCORE = rnorm(.N, sd = 0.6),
+                                                size = .N, replace = F),
                                      EFFECTSIZE = rnorm(.N, sd = 0.8))]
 hapmap[SNP %in% significantRS3, `:=`(P = sample(seq(1e-14, 1e-8, by = 9e-12),
-                                           size = .N, replace = F),
-                                     ZSCORE = rnorm(.N, sd = 0.8),
+                                                size = .N, replace = F),
                                      EFFECTSIZE = rnorm(.N, sd = 1))]
 hapmap[SNP %in% significantRS4, `:=`(P = sample(seq(1e-8, 1e-6, length.out = 2e2),
-                                           size = .N, replace = F),
-                                     ZSCORE = rnorm(.N, sd = 0.6),
+                                                size = .N, replace = F),
                                      EFFECTSIZE = rnorm(.N, sd = 0.8))]
 hapmap[SNP %in% significantRS5, `:=`(P = sample(seq(1e-6, 5e-4, length.out = 2e2),
-                                           size = .N, replace = F),
-                                     ZSCORE = rnorm(.N, sd = 0.5),
+                                                size = .N, replace = F),
                                      EFFECTSIZE = rnorm(.N, sd = 0.3))]
 
-hapmap[, `:=`(ZSCORE = round(ZSCORE, 4), EFFECTSIZE = round(EFFECTSIZE, 4))]
+
+hapmap[, `:=`(ZSCORE = round(qnorm(P/2, lower.tail = FALSE), 4), EFFECTSIZE = round(EFFECTSIZE, 4))]
 
 
 # read in other annotation information
@@ -78,16 +96,17 @@ hapmap <- unique(DTannot)[hapmap][, c("CHR", "BP", "P", "V4", "ZSCORE", "EFFECTS
 setnames(hapmap, c("V4", "V12","V11"), c("SNP", "GENE", "DISTANCE"))
 setkey(hapmap, CHR, BP)
 
-hapmap <- as.data.frame(hapmap)
+HapMap <- as.data.frame(hapmap)
+significantSNP <- hapmap[P<1e-6]$SNP
 
-devtools::use_data(hapmap, overwrite = TRUE)
-
+devtools::use_data(HapMap, overwrite = TRUE)
+devtools::use_data(significantSNP, overwrite = TRUE)
 
 
 
 # devtools::load_all()
 manhattanly(hapmap)
-manhattanly(hapmap, snp = "SNP", annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
+manhattanly(hapmap, p = "ZSCORE", snp = "SNP", annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
 
 
 pp <- manhattanly(kk, snp = "SNP", gene = "GENE", annotation1 = "EFFECTSIZE",

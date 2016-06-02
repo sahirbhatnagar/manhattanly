@@ -14,43 +14,89 @@ manhattanr(x, chr = "CHR", bp = "BP", p = "P", snp, gene, annotation1,
   annotation2, logp = TRUE, ...)
 }
 \arguments{
-\item{x}{A data.frame with columns "BP," "CHR," "P," and optionally, "SNP."}
+\item{x}{A \code{data.frame} which must contain at least the following three
+columns: \itemize{ \item{the chromosome number} \item{genomic base-pair
+position} \item{a numeric quantity to plot such as a p-value or zscore} }}
 
-\item{chr}{A string denoting the column name for the chromosome. Defaults to
-PLINK's "CHR." Said column must be numeric. If you have X, Y, or MT
+\item{chr}{A string denoting the column name for the chromosome. Default is
+\code{chr = "CHR"}. This column must be \code{numeric} or \code{integer}.
+Minimum number of chromosomes required is 1. If you have X, Y, or MT
 chromosomes, be sure to renumber these 23, 24, 25, etc.}
 
 \item{bp}{A string denoting the column name for the chromosomal position.
-Defaults to PLINK's "BP." Said column must be numeric.}
+Default is \code{bp = "BP"}. This column must be \code{numeric} or
+\code{integer}.}
 
-\item{p}{A string denoting the column name for the p-value. Defaults to
-PLINK's "P." Said column must be numeric.}
+\item{p}{A string denoting the column name for the numeric quantity to be
+plotted on the y-axis. Default is \code{p = "P"}. This column must be
+\code{numeric} or \code{integer}. This does not have to be a p-value. It
+can be any numeric quantity such as peak heights, bayes factors, test
+statistics. If it is not a p-value, make sure to set \code{logp = FALSE}.}
 
-\item{snp}{A string denoting the column name for the SNP name (rs number).
-Defaults to PLINK's "SNP." Said column should be a character. This
-argument is optional}
+\item{snp}{A string denoting the column name for the SNP names (e.g. rs
+number). More generally, this column could be anything that identifies each
+point being plotted. For example, in an Epigenomewide association study
+(EWAS) this could be the probe name or cg number. This column should be a
+\code{character}. This argument is optional, however it is necessary to
+specify if you want to highlight points on the plot using the
+\code{highlight} argument in the \code{\link{manhattanly}} function}
 
-\item{gene}{A string denoting the column name for the GENE name. Defaults to
-PLINK's "SNP." Said column should be a character. This argument is optional}
+\item{gene}{A string denoting the column name for the GENE names. This column
+could be a \code{character} or \code{numeric}. More generally this could be
+any annotation information that you want to include in the plot. This
+argument is optional.}
+
+\item{annotation1}{A string denoting the column name for an annotation. This
+column could be a \code{character} or \code{numeric}. This could be any
+annotation information that you want to include in the plot (e.g. zscore,
+effect size, minor allele frequency). This argument is optional.}
+
+\item{annotation2}{A string denoting the column name for an annotation. This
+column could be a \code{character} or \code{numeric}. This could be any
+annotation information that you want to include in the plot (e.g. zscore,
+effect size, minor allele frequency). This argument is optional.}
 
 \item{logp}{If TRUE, the -log10 of the p-value is plotted. It isn't very
 useful to plot raw p-values, but plotting the raw value could be useful for
 other genome-wide plots, for example, peak heights, bayes factors, test
-statistics, other "scores," etc.}
+statistics, other "scores" etc.}
 
 \item{...}{currently ignored}
 }
+\value{
+A \code{list} object of class \code{manhattanr} with the following
+  elements \describe{ \item{data}{processed data to be used for plotting}
+  \item{xlabel}{The label of the x-axis which is determined by the number of
+  chromosomes present in the data} \item{ticks}{the coordinates on the x-axis
+  of where the tick marks should be placed} \item{labs}{the labels for each
+  tick. This defaults to the chromosome number but can be changed in the
+  \code{\link{manhattanly}} function } \item{nchr}{the number of unique
+  chromosomes present in the data} \item{pName, snpName, geneName,
+  annotation1Name, annotation2Name}{The names of the columns corresponding to
+  the data provided. This information is used for annotating the plot in the
+  \code{\link{manhattanly}} function } }
+}
 \description{
 An object of class manhattanr includes all the needed information for
-producing a manhattan plot. In the same spirit as the \link{heatmaply}
-package, the goal is to seperate the pre-processing of the manhattan plot
-elements from the graphical rendaring of the object, which could be done
-using any graphical device including \code{\link[plotly]{plot_ly}} and
-\code{\link[graphics]{plot}} in base \code{R}.
+producing a manhattan plot. The goal is to seperate the pre-processing of the
+manhattan plot elements from the graphical rendaring of the object, which
+could be done using any graphical device including
+\code{\link[plotly]{plot_ly}} and \code{\link[graphics]{plot}} in base
+\code{R}.
+}
+\examples{
+# HapMap dataset included in this package already has columns named P, CHR and BP
+DT <- manhattanly::manhattanr(HapMap)
+head(DT[["data"]])
+
+#include snp and gene information
+DT2 <- manhattanly::manhattanr(HapMap, snp = "SNP", gene = "GENE")
+head(DT2[["data"]])
+
 }
 \seealso{
-\code{\link[qqman]{manhattan}},
+\code{\link[qqman]{manhattanly}},
   \url{https://github.com/stephenturner/qqman},
-   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
+  \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 }
 
