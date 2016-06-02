@@ -2,3 +2,6 @@
 ^\.Rproj\.user$
 hapmap.R
 ^data-raw$
+*.Rproj
+.gitignore
+.Rhistory

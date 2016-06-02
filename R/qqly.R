@@ -1,20 +1,73 @@
+#' Creates a plotly Q-Q plot
+#'
+#' Creates an interactive Q-Q plot with multiple annotation options
+#'
+#' @param x Can be an object of class \code{qqr} produced by the
+#'   \code{\link{qqr}} function or a \code{data.frame} which must contain at
+#'   least the following column: \itemize{ \item{a p-value, must be numeric} }
+#' @param col A \code{character} indicating the color of the points. Can
+#'   be \href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+#'   well.
+#' @param size A \code{numeric} specifying the size of the points. Default
+#'   is 1
+#' @param type An integer between 0 and 25 specifying the point shape.
+#'   Default is 20 (filled circle). See
+#'   \href{http://www.cookbook-r.com/Graphs/Shapes_and_line_types/}{R Cookbook}
+#'   for complete list
+#' @param abline_col A \code{character} indicating the color of the 45 degree
+#'   diagonal line. Can be
+#'   \href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+#'   well. Default is \code{"red"}.
+#' @param abline_size A \code{numeric} indicating the size of the 45 degree
+#'   diagonal line. Default is 0.5.
+#' @param abline_type An integer between 0 and 6 specifying the line type of the
+#'   diagonal 45 degree line. Default is 1 (solid line). See
+#'   \href{http://www.cookbook-r.com/Graphs/Shapes_and_line_types/}{R Cookbook}
+#'   for complete list
+#' @param ticklabel_size A \code{numeric} for the size of the x and y axis
+#'   labels. Default is 10.
+#' @param highlight A character vector of SNPs in your dataset to highlight.
+#'   These SNPs should all be in your dataset. Default is \code{NULL} which
+#'   means that nothing is highlighted.
+#' @param highlight_color Color used to highlight points. Only used if
+#'   \code{highlight} argument has been specified
+#' @param xlab X-axis label. Default is \code{"Expected -log10(p)"}
+#' @param ylab Y-axis label. Default is \code{"Observed -log10(p)"}
+#' @param xlab_size Size of x-axis label. Default is 14
+#' @param ylab_size Size of y-axis label. Default is 14.
+#' @param title Title of the plot. Default is \code{"Q-Q Plot"}
+#' @param ... other parameters passed to \code{\link{qqr}}
+#' @return An interactive Q-Q plot.
+#' @aliases qqly.default qqly.qqr
+#' @seealso \code{\link{qqr}}, \code{\link{HapMap}},
+#'   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
+#'   \url{https://github.com/stephenturner/qqman}
+#' @note This function first creates a \code{ggplot2} object and then converts
+#'   it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
+#' @export
+#' @examples
+#' \dontrun{
+#' library(manhattanly)
+#' qqly(HapMap)
+#'
+#' # highlight SNPs of interest
+#' # 'signigicantSNP' is a character vector of SNPs included in this package
+#' qqly(HapMap, snp = "SNP", highlight = significantSNP)
+#' }
+#'
 qqly <- function(x,
-                 col = c("#969696", "#252525"),
-                 point_size = 5,
-                 labelChr = NULL,
-                 suggestiveline = -log10(1e-5),
-                 suggestiveline_color = "blue",
-                 suggestiveline_width = 1,
-                 genomewideline = -log10(5e-8),
-                 genomewideline_color = "red",
-                 genomewideline_width = 1,
+                 col = "#252525",
+                 size = 1,
+                 type = 20,
+                 abline_col = "red",
+                 abline_size = 0.5,
+                 abline_type = 1,
                  highlight = NULL,
                  highlight_color = "#00FF00",
-                 showlegend = FALSE,
-                 showgrid = FALSE,
-                 xlab = NULL,
-                 ylab = "-log10(p)",
-                 title = "Manhattan Plot", ...) {
+                 xlab = "Expected -log10(p)",
+                 ylab = "Observed -log10(p)",
+                 title = "Q-Q Plot",
+                 ...) {
 
   UseMethod("qqly")
 
@@ -22,38 +75,29 @@ qqly <- function(x,
 
 #' @export
 qqly.default <- function(x,
-                         col = c("#969696", "#252525"),
-                         point_size = 5,
-                         labelChr = NULL,
-                         suggestiveline = -log10(1e-5),
-                         suggestiveline_color = "blue",
-                         suggestiveline_width = 1,
-                         genomewideline = -log10(5e-8),
-                         genomewideline_color = "red",
-                         genomewideline_width = 1,
+                         col = "#252525",
+                         size = 1,
+                         type = 20,
+                         abline_col = "red",
+                         abline_size = 0.5,
+                         abline_type = 1,
                          highlight = NULL,
                          highlight_color = "#00FF00",
-                         showlegend = FALSE,
-                         showgrid = FALSE,
-                         xlab = NULL,
-                         ylab = "-log10(p)",
-                         title = "Manhattan Plot", ...) {
+                         xlab = "Expected -log10(p)",
+                         ylab = "Observed -log10(p)",
+                         title = "Q-Q Plot",
+                         ...) {
 
   qq <- qqr(x, ...)
   qqly.qqr(qq,
            col = col,
-           labelChr = labelChr,
-           point_size = point_size,
-           suggestiveline = suggestiveline,
-           suggestiveline_color = suggestiveline_color,
-           suggestiveline_width = suggestiveline_width,
-           genomewideline = genomewideline,
-           genomewideline_color = genomewideline_color,
-           genomewideline_width = genomewideline_width,
+           size = size,
+           type = type,
+           abline_col = abline_col,
+           abline_size = abline_size,
+           abline_type = abline_type,
            highlight = highlight,
            highlight_color = highlight_color,
-           showlegend = showlegend,
-           showgrid = showgrid,
            xlab = xlab,
            ylab = ylab,
            title = title)
@@ -62,27 +106,39 @@ qqly.default <- function(x,
 
 #' @export
 qqly.qqr <- function(x,
-                     # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
-                     # col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
-                     col = c("#969696", "#252525"),
-                     point_size = 5,
-                     labelChr = NULL,
-                     suggestiveline = -log10(1e-5),
-                     suggestiveline_color = "blue",
-                     suggestiveline_width = 1,
-                     genomewideline = -log10(5e-8),
-                     genomewideline_color = "red",
-                     genomewideline_width = 1,
+                     col = "#252525",
+                     size = 1,
+                     type = 20,
+                     abline_col = "red",
+                     abline_size = 0.5,
+                     abline_type = 1,
                      highlight = NULL,
                      highlight_color = "#00FF00",
-                     showlegend = FALSE,
-                     showgrid = FALSE,
-                     xlab = NULL,
-                     ylab = "-log10(p)",
-                     title = "Manhattan Plot",
+                     xlab = "Expected -log10(p)",
+                     ylab = "Observed -log10(p)",
+                     title = "Q-Q Plot",
                      ...) {
 
-  x <- qqr(HapMap, snp = "SNP")
+  # x <- qqr(HapMap, snp = "SNP")
+  # x$data %>% head
+  # str(x$data)
+  # # http://www.cookbook-r.com/Graphs/Shapes_and_line_types/
+  # col = "#252525"
+  # size = 1
+  # type = 20
+  # abline_col = "red"
+  # abline_size = 0.5
+  # abline_type = 3
+  # ticklabel_size = 10
+  # xlab = "Expected -log10(p)"
+  # xlab_size = 14
+  # ylab = "Observed -log10(p)"
+  # ylab_size = 14
+  # title = "Q-Q Plot"
+  # highlight = significantSNP
+  # highlight_color = "#00FF00"
+
+  #########
 
   d <- x$data
   pName <- x$pName
@@ -93,38 +149,73 @@ qqly.qqr <- function(x,
 
   if (!is.null(highlight) & is.na(snpName)) stop("You're trying to highlight snps, but havent provided a snp column")
 
+
   TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ", d[[snpName]]),
                 if (!is.na(geneName)) paste0(geneName,": ", d[[geneName]]),
                 if (!is.na(annotation1Name)) paste0(annotation1Name,": ", d[[annotation1Name]]),
                 if (!is.na(annotation2Name)) paste0(annotation2Name,": ", d[[annotation2Name]]),
                 sep = "<br>")
 
-  plot_ly(data = d, x = EXPECTED, y = OBSERVED,
-          text = TEXT, mode = "markers")
+  #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  # Initalize ggplot and then convert to plotly using ggplotly
+  #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  if (any(c(!is.na(snpName),!is.na(geneName),!is.na(annotation1Name), !is.na(annotation2Name)))) {
+  p <- ggplot(data = d, aes(x = EXPECTED, y = OBSERVED)) +
+    geom_point(aes(text = TEXT),
+               size = size,
+               color = col[1],
+               shape = type) +
+    geom_abline(aes(intercept = 0, slope = 1),
+                size = abline_size,
+                color = abline_col,
+                linetype = abline_type) +
+    theme_bw() +
+    theme(panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    labs(x = xlab,
+         y = ylab,
+         title = title)
+  } else {
+    p <- ggplot(data = d, aes(x = EXPECTED, y = OBSERVED)) +
+      geom_point(size = size,
+                 color = col[1],
+                 shape = type) +
+      geom_abline(aes(intercept = 0, slope = 1),
+                  size = abline_size,
+                  color = abline_col,
+                  linetype = abline_type) +
+      theme_bw() +
+      theme(panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()) +
+      labs(x = xlab,
+           y = ylab,
+           title = title)
+  }
+
+  # Highlight snps from a character vector
+  if (!is.na(snpName)) {
+    if (!is.null(highlight)) {
+      if (any(!(highlight %in% d[[snpName]]))) warning("You're trying to highlight SNPs that don't exist in your results.")
+
+      d.highlight <- d[which(d[[snpName]] %in% highlight), ]
+
+      TEXT2 <- paste(if (!is.na(snpName)) paste0(snpName,": ", d.highlight[[snpName]]),
+                    if (!is.na(geneName)) paste0(geneName,": ", d.highlight[[geneName]]),
+                    if (!is.na(annotation1Name)) paste0(annotation1Name,": ", d.highlight[[annotation1Name]]),
+                    if (!is.na(annotation2Name)) paste0(annotation2Name,": ", d.highlight[[annotation2Name]]),
+                    sep = "<br>")
+
+      p <- p + geom_point(data = d.highlight,
+                          aes(x = EXPECTED, y = OBSERVED,
+                              text = TEXT2),
+                        size = size,
+                        color = highlight_color,
+                        shape = type)
+    }
+  }
 
 
-  #     # The old way
-  #     plot(e, o, pch=20,
-  #          xlab=expression(Expected~~-log[10](italic(p))),
-  #          ylab=expression(Observed~~-log[10](italic(p))),
-  #          ...)
-
-  # The new way to initialize the plot.
-  ## See http://stackoverflow.com/q/23922130/654296
-  ## First, define your default arguments
-  def_args <- list(pch=20, xlim=c(0, max(e)), ylim=c(0, max(o)),
-                   xlab=expression(Expected~~-log[10](italic(p))),
-                   ylab=expression(Observed~~-log[10](italic(p)))
-  )
-  ## Next, get a list of ... arguments
-  #dotargs <- as.list(match.call())[-1L]
-  dotargs <- list(...)
-  ## And call the plot function passing NA, your ... arguments, and the default
-  ## arguments that were not defined in the ... arguments.
-  tryCatch(do.call("plot", c(list(x=e, y=o), def_args[!names(def_args) %in% names(dotargs)], dotargs)), warn=stop)
-
-  # Add diagonal
-  abline(0,1,col="red")
-
+  ggplotly(p)
 
 }
