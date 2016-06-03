@@ -12,9 +12,11 @@
 #####################################
 
 library(data.table)
-library(readr)
+rm(list = ls())
+# library(readr)
 # ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/
-DT <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.map")
+# DT <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.map")
+DT <- data.table::fread("../hapmap3_r2_b36_fwd.consensus.qc.poly.map")
 DT[, V3:=NULL]
 setnames(DT, c("CHR","SNP","BP"))
 setkey(DT, CHR)
@@ -90,7 +92,8 @@ hapmap[, `:=`(ZSCORE = round(qnorm(P/2, lower.tail = FALSE), 4), EFFECTSIZE = ro
 
 # read in other annotation information
 # http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/
-DTannot <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.kg.out.gene")
+# DTannot <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.kg.out.gene")
+DTannot <- data.table::fread("../hapmap3_r2_b36_fwd.consensus.qc.poly.kg.out.gene")
 setkey(DTannot, V4)
 setkey(hapmap, SNP)
 
@@ -101,7 +104,7 @@ setkey(hapmap, CHR, BP)
 str(hapmap)
 
 significantSNP <- hapmap[P<1e-6]$SNP
-# hapmap <- as.data.frame(hapmap)
+#hapmap <- as.data.frame(hapmap)
 
 devtools::use_data(hapmap, overwrite = TRUE)
 # write_csv(hapmap, "data-raw/hapmap.csv")
@@ -110,9 +113,9 @@ devtools::use_data(hapmap, overwrite = TRUE)
 # devtools::use_data(hapmap, overwrite = TRUE)
 devtools::use_data(significantSNP, overwrite = TRUE)
 
-library(pcev)
-library(survival)
-devtools::use_data(veteran, overwrite = TRUE)
+# library(pcev)
+# library(survival)
+# devtools::use_data(veteran, overwrite = TRUE)
 
 
 
