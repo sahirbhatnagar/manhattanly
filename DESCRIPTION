@@ -33,7 +33,7 @@ Suggests:
     rmarkdown,
     qqman
 VignetteBuilder: knitr
-License: GPL-2 | GPL-3
+License: MIT + file LICENSE
 URL: https://github.com/sahirbhatnagar/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues
 RoxygenNote: 5.0.1

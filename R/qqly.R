@@ -40,7 +40,7 @@
 #'   \url{https://github.com/stephenturner/qqman}
 #' @note This function first creates a \code{ggplot2} object and then converts
 #'   it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
-#' @import ggplot2
+#' @import plotly
 #' @export
 #' @examples
 #' \dontrun{
@@ -158,38 +158,39 @@ qqly.qqr <- function(x,
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   if (any(c(!is.na(snpName),!is.na(geneName),!is.na(annotation1Name), !is.na(annotation2Name)))) {
-  p <- ggplot2::ggplot(data = d, aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
-    ggplot2::geom_point(aes(text = TEXT),
+  p <- ggplot2::ggplot(data = d, ggplot2::aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
+    ggplot2::geom_point(ggplot2::aes(text = TEXT),
                size = size,
                color = col[1],
                shape = type) +
-    ggplot2::geom_abline(aes(intercept = 0, slope = 1),
+    ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1),
                 size = abline_size,
                 color = abline_col,
                 linetype = abline_type) +
     ggplot2::theme_bw() +
-    ggplot2::theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
+    ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank()) +
     ggplot2::labs(x = xlab,
          y = ylab,
          title = title)
   } else {
-    p <- ggplot2::ggplot(data = d, aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
+    p <- ggplot2::ggplot(data = d, ggplot2::aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
       ggplot2::geom_point(size = size,
                  color = col[1],
                  shape = type) +
-      ggplot2::geom_abline(aes(intercept = 0, slope = 1),
+      ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1),
                   size = abline_size,
                   color = abline_col,
                   linetype = abline_type) +
       ggplot2::theme_bw() +
-      ggplot2::theme(panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank()) +
+      ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
+            panel.grid.minor = ggplot2::element_blank()) +
       ggplot2::labs(x = xlab,
            y = ylab,
            title = title)
   }
 
+  EXPECTED=OBSERVED=NULL
   # Highlight snps from a character vector
   if (!is.na(snpName)) {
     if (!is.null(highlight)) {
@@ -204,11 +205,11 @@ qqly.qqr <- function(x,
                     sep = "<br>")
 
       p <- p + ggplot2::geom_point(data = d.highlight,
-                          aes_string(x = 'EXPECTED', y = 'OBSERVED',
-                              text = TEXT2),
-                        size = size,
-                        color = highlight_color,
-                        shape = type)
+                                   ggplot2::aes(x = EXPECTED, y = OBSERVED,
+                                                text = TEXT2),
+                                   size = size,
+                                   color = highlight_color,
+                                   shape = type)
     }
   }
 

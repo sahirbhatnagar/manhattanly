@@ -4,3 +4,6 @@
 .gitignore
 .Rhistory
 ^\.travis\.yml$
+^CONDUCT\.md$
+^index\.Rmd$
+^index\.html$

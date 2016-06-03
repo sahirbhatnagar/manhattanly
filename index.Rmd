@@ -1,0 +1,75 @@
+---
+title: Interactive Manhattan and Q-Q plots in R
+author: 
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Introduction to heatmaply}
+-->
+
+```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+library(manhattanly)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE, 
+                      tidy = FALSE, 
+                      cache = FALSE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      dpi = 60,
+                      comment = "#>")
+knitr::opts_knit$set(eval.after = 'fig.cap')
+```
+
+**Author**: [Sahir Bhatnagar](http://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
+
+
+# Introduction
+
+Create interactive [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) and [manhattan](https://en.wikipedia.org/wiki/Manhattan_plot) plots that are usable from the R console,
+in the [`RStudio`](https://www.rstudio.com/) viewer pane, in [`R Markdown`](http://rmarkdown.rstudio.com/) documents, and in [`Shiny`](http://shiny.rstudio.com/) apps.
+Hover the mouse pointer over a point to show details or drag a rectangle to
+zoom. A manhattan plot is a popular graphical method for visualizing results
+from high-dimensional data analysis such as a (epi)genome wide asssociation study
+(GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter
+plot against their genomic position. Manhattan plots are used for visualizing
+potential regions of interest in the genome that are associated with a phenotype.
+Interactive manhattan plots allow the inspection of specific value (e.g. rs number or
+gene name) by hovering the mouse over a point, as well as zooming into a region of the
+genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
+This work is based on the [`qqman`](https://github.com/stephenturner/qqman) by [Stephen Turner](http://stephenturner.us/) and the [`plotly.js`](https://plot.ly/)
+engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot and
+include extra annotation information.
+
+
+
+## Installation
+
+You can install manhattanly from github with:
+
+```R
+install.packages("devtools")
+devtools::install_github("manhattanly/sahirbhatnagar")
+```
+
+
+# Example
+
+```{r}
+library(manhattanly)
+head(HapMap)
+dim(HapMap)
+significantSNP
+```
+
+
+```{r}
+manhattanly(HapMap)
+```
+
+
