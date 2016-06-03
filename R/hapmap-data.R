@@ -9,6 +9,10 @@
 #' UCSC genome annotation database for the Mar. 2006 GenBank freeze assembled by
 #' NCBI (hg18, Build 36.1)
 #'
+#' @docType data
+#'
+#' @usage hapmap
+#'
 #' @format A data frame with 36011 rows and 8 variables: \describe{
 #'   \item{CHR}{chromosome number. Autosomes coded 1 through 22, and 23 is the X
 #'   chromosome (\code{integer})} \item{BP}{genomic base-pair position
@@ -18,7 +22,10 @@
 #'   the SNP (\code{character})} \item{DISTANCE}{distance between the SNP and
 #'   GENE. if \code{DISTANCE=0} then the SNP is located in the GENE
 #'   (\code{integer})} }
-#' @source \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
-#'   \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/}
 #'
-"HapMap"
+#' @source
+#'  \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/}
+#'  \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
+"hapmap"
+
+

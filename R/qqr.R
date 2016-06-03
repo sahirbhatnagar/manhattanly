@@ -37,11 +37,13 @@
 #'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
 #'
 #' @examples
-#' qqrObj <- qqr(HapMap[["P"]])
+#' \dontrun{
+#' library(manhattanly)
+#' data(HapMap)
+#' qqrObj <- qqr(HapMap, snp = "SNP", highlight = significantSNP)
 #' class(qqrObj)
-#' head(qqrObj[["observed"]])
-#' head(qqrObj[["expected"]])
-#'
+#' head(qqrObj[["data"]])
+#' }
 #' @export
 
 qqr <- function(x,
@@ -117,7 +119,7 @@ qqr <- function(x,
 
   # Observed and expected
   d[["OBSERVED"]] <- -log10(d[["P"]])
-  d[["EXPECTED"]] <- -log10(ppoints(length(d[["P"]])))
+  d[["EXPECTED"]] <- -log10(stats::ppoints(length(d[["P"]])))
 
   qqr <- list(data = d,
               pName = p,

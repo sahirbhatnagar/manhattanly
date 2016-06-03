@@ -1,11 +1,6 @@
 .onAttach <- function(...){
   # packageStartupMessage(manhattanlyWelcomeMessage())
-  packageStartupMessage()
   packageStartupMessage("For example usage please run: vignette('manhattanly')")
-  packageStartupMessage()
-  packageStartupMessage("This package is largely based on the 'qqman' package by Stephen Turner. Please cite:")
-  packageStartupMessage("Turner, S.D. qqman: an R package for visualizing GWAS results using Q-Q and manhattan plots. biorXiv DOI: 10.1101/005165 (2014).")
-  packageStartupMessage()
 }
 
 

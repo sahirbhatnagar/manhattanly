@@ -91,6 +91,7 @@ This package is inspired by the
 \examples{
 \dontrun{
 library(manhattanly)
+data("HapMap")
 manhattanly(HapMap)
 
 # highlight SNPs of interest
@@ -99,7 +100,7 @@ manhattanly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 }
 \seealso{
-\code{\link{manhattanr}}, \code{\link{HapMap}},
+\code{\link{manhattanr}}, \code{help(HapMap)},
   \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
   \url{https://github.com/stephenturner/qqman},
   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}

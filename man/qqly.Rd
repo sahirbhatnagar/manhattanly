@@ -55,13 +55,6 @@ means that nothing is highlighted.}
 \item{title}{Title of the plot. Default is \code{"Q-Q Plot"}}
 
 \item{...}{other parameters passed to \code{\link{qqr}}}
-
-\item{ticklabel_size}{A \code{numeric} for the size of the x and y axis
-labels. Default is 10.}
-
-\item{xlab_size}{Size of x-axis label. Default is 14}
-
-\item{ylab_size}{Size of y-axis label. Default is 14.}
 }
 \value{
 An interactive Q-Q plot.
@@ -75,7 +68,7 @@ This function first creates a \code{ggplot2} object and then converts
 }
 \examples{
 \dontrun{
-library(manhattanly)
+#library(manhattanly)
 qqly(HapMap)
 
 # highlight SNPs of interest
@@ -85,7 +78,7 @@ qqly(HapMap, snp = "SNP", highlight = significantSNP)
 
 }
 \seealso{
-\code{\link{qqr}}, \code{\link{HapMap}},
+\code{\link{qqr}}, \code{help(HapMap)},
   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
   \url{https://github.com/stephenturner/qqman}
 }

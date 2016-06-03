@@ -65,15 +65,19 @@
 #'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
 #'
 #' @examples
+#' \dontrun{
 #' # HapMap dataset included in this package already has columns named P, CHR and BP
-#' DT <- manhattanly::manhattanr(HapMap)
+#' library(manhattanly)
+#' data(HapMap)
+#' DT <- manhattanr(HapMap)
 #' head(DT[["data"]])
 #'
 #' #include snp and gene information
-#' DT2 <- manhattanly::manhattanr(HapMap, snp = "SNP", gene = "GENE")
+#' DT2 <- manhattanr(HapMap, snp = "SNP", gene = "GENE")
 #' head(DT2[["data"]])
+#' }
 #'
-#' @seealso \code{\link[qqman]{manhattanly}},
+#' @seealso \code{\link{manhattanly}},
 #'   \url{https://github.com/stephenturner/qqman},
 #'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 #'
@@ -207,7 +211,7 @@ manhattanr <- function(x,
       if (i==1) {
         d[d$index==i, ]$pos <- d[d$index==i, ]$BP
       } else {
-        lastbase <- lastbase + tail(subset(d,index==i-1)$BP, 1)
+        lastbase <- lastbase + utils::tail(subset(d,index==i-1)$BP, 1)
         d[d$index==i, ]$pos <- d[d$index==i, ]$BP + lastbase
       }
       # Old way: assumes SNPs evenly distributed

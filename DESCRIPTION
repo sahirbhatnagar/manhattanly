@@ -3,6 +3,7 @@ Type: Package
 Title: Interactive Q-Q and manhattan plots Using 'plotly'
 Version: 0.1.0
 Date: 2016-05-25
+LazyData: true
 Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
     role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
 Description: Create interactive Q-Q and manhattan plots that are usable from the R console,
@@ -21,19 +22,18 @@ Description: Create interactive Q-Q and manhattan plots that are usable from the
     functions in the 'qqman' package, with the advantage interacting with the plot and
     including extra annotation information.
 Depends:
-    R (>= 3.0.0),
-    magrittr (>= 1.0.1),
-    plotly (>= 3.6.0)
+    R (>= 3.0.0)
 Imports:
-    stats
+    stats,
+    magrittr,
+    plotly,
+    ggplot2
 Suggests:
     knitr,
     rmarkdown,
-    RColorBrewer,
     qqman
 VignetteBuilder: knitr
 License: GPL-2 | GPL-3
 URL: https://github.com/sahirbhatnagar/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues
-LazyData: TRUE
 RoxygenNote: 5.0.1

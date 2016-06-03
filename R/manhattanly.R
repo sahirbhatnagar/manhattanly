@@ -51,15 +51,18 @@
 #'   \code{d3.js} engine. These plots can be included in Shiny apps, Rmarkdown
 #'   documents or embeded in websites using simple HTML code.
 #' @return An interactive manhattan plot.
-#' @seealso \code{\link{manhattanr}}, \code{\link{HapMap}},
+#' @seealso \code{\link{manhattanr}}, \code{help(HapMap)},
 #'   \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
 #'   \url{https://github.com/stephenturner/qqman},
 #'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 #' @aliases manhattanly.default manhattanly.manhattanr
+#' @import magrittr
+#' @importFrom plotly plot_ly layout add_trace
 #' @export
 #' @examples
 #' \dontrun{
 #' library(manhattanly)
+#' data("HapMap")
 #' manhattanly(HapMap)
 #'
 #' # highlight SNPs of interest
@@ -218,12 +221,12 @@ manhattanly.manhattanr <- function(x,
   # Initalize plotly
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  p <- plot_ly()
+  p <- plotly::plot_ly()
 
   # Add an axis.
   if (nchr == 1) {
     #If single chromosome, ticks and labels automatic.
-    p %<>% layout(p,
+    p %<>% plotly::layout(p,
                   title = title,
                   xaxis = list(
                     title = if(!is.null(xlab)) xlab else xlabel,
@@ -238,7 +241,7 @@ manhattanly.manhattanr <- function(x,
     )
   } else {
     # if multiple chrs, use the ticks and labels you created above.
-    p %<>% layout(p,
+    p %<>% plotly::layout(p,
                 title = title,
                 xaxis = list(
                   title = if(!is.null(xlab)) xlab else "Chromosome",
@@ -274,7 +277,7 @@ manhattanly.manhattanr <- function(x,
                   if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d[[annotation1Name]]),
                   if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d[[annotation2Name]]), sep = "<br>")
 
-    p %<>% add_trace(x = d$pos, y = d$logp,
+    p %<>% plotly::add_trace(x = d$pos, y = d$logp,
                      type = "scatter",
                      mode = "markers",
                      evaluate = TRUE,
@@ -300,7 +303,7 @@ manhattanly.manhattanr <- function(x,
 
       # get chromosome name for labeling
       chromo <- unique(tmp[which(tmp$index==i),"CHR"])
-      p %<>% add_trace(x = tmp$pos, y = tmp$logp, type = "scatter",
+      p %<>% plotly::add_trace(x = tmp$pos, y = tmp$logp, type = "scatter",
                        mode = "markers", evaluate = TRUE,
                        text = TEXT,
                        showlegend = showlegend,
@@ -312,7 +315,7 @@ manhattanly.manhattanr <- function(x,
 
   }
 
-  if (suggestiveline & genomewideline) {p %<>% layout(p,
+  if (suggestiveline & genomewideline) {p %<>% plotly::layout(p,
                                      shapes = list(
                                        list(type = "line",
                                             fillcolor = suggestiveline_color,
@@ -328,7 +331,7 @@ manhattanly.manhattanr <- function(x,
                                             y0 = genomewideline, y1 = genomewideline, yref = "y")
                                      ))}
 
-  if (suggestiveline & !(genomewideline)) {p %<>% layout(p,
+  if (suggestiveline & !(genomewideline)) {p %<>% plotly::layout(p,
                                                       shapes = list(
                                                         list(type = "line",
                                                              fillcolor = suggestiveline_color,
@@ -338,7 +341,7 @@ manhattanly.manhattanr <- function(x,
                                                              y0 = suggestiveline, y1 = suggestiveline, yref = "y")
                                                       ))}
 
-  if (!(suggestiveline) & genomewideline) {p %<>% layout(p,
+  if (!(suggestiveline) & genomewideline) {p %<>% plotly::layout(p,
                                                       shapes = list(
                                                         list(type = "line",
                                                              fillcolor = genomewideline_color,
@@ -355,7 +358,7 @@ manhattanly.manhattanr <- function(x,
 
       d.highlight <- d[which(d[[snpName]] %in% highlight), ]
 
-      p %<>% add_trace(x = d.highlight$pos,
+      p %<>% plotly::add_trace(x = d.highlight$pos,
                        y = d.highlight$logp,
                        type = "scatter",
                        mode = "markers",

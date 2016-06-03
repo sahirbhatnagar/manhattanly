@@ -2,6 +2,7 @@
 # R Source code file for creating dataset to be included in the package
 # genomic coordinates and RS numbers are taken from hapmap:
 # ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/
+# http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/
 # p-values, zscore, effect sizes were simulated randomly
 # Author: Sahir Bhatnagar
 # Created: June 1st 2016
@@ -11,6 +12,7 @@
 #####################################
 
 library(data.table)
+library(readr)
 # ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/
 DT <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.map")
 DT[, V3:=NULL]
@@ -96,12 +98,28 @@ hapmap <- unique(DTannot)[hapmap][, c("CHR", "BP", "P", "V4", "ZSCORE", "EFFECTS
 setnames(hapmap, c("V4", "V12","V11"), c("SNP", "GENE", "DISTANCE"))
 setkey(hapmap, CHR, BP)
 
-HapMap <- as.data.frame(hapmap)
-significantSNP <- hapmap[P<1e-6]$SNP
+str(hapmap)
 
-devtools::use_data(HapMap, overwrite = TRUE)
+significantSNP <- hapmap[P<1e-6]$SNP
+hapmap <- as.data.frame(hapmap[1:100,])
+
+devtools::use_data(hapmap, overwrite = TRUE)
+write_csv(hapmap, "data-raw/hapmap.csv")
+# save(hapmap, file = "data/hapmap.RData")
+
+devtools::use_data(hapmap, overwrite = TRUE)
 devtools::use_data(significantSNP, overwrite = TRUE)
 
+library(pcev)
+library(survival)
+devtools::use_data(veteran, overwrite = TRUE)
+
+
+
+help(hapmap)
+
+
+head(hapmap)
 
 
 # devtools::load_all()

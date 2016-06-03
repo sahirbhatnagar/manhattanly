@@ -24,8 +24,6 @@
 #'   diagonal 45 degree line. Default is 1 (solid line). See
 #'   \href{http://www.cookbook-r.com/Graphs/Shapes_and_line_types/}{R Cookbook}
 #'   for complete list
-#' @param ticklabel_size A \code{numeric} for the size of the x and y axis
-#'   labels. Default is 10.
 #' @param highlight A character vector of SNPs in your dataset to highlight.
 #'   These SNPs should all be in your dataset. Default is \code{NULL} which
 #'   means that nothing is highlighted.
@@ -33,21 +31,20 @@
 #'   \code{highlight} argument has been specified
 #' @param xlab X-axis label. Default is \code{"Expected -log10(p)"}
 #' @param ylab Y-axis label. Default is \code{"Observed -log10(p)"}
-#' @param xlab_size Size of x-axis label. Default is 14
-#' @param ylab_size Size of y-axis label. Default is 14.
 #' @param title Title of the plot. Default is \code{"Q-Q Plot"}
 #' @param ... other parameters passed to \code{\link{qqr}}
 #' @return An interactive Q-Q plot.
 #' @aliases qqly.default qqly.qqr
-#' @seealso \code{\link{qqr}}, \code{\link{HapMap}},
+#' @seealso \code{\link{qqr}}, \code{help(HapMap)},
 #'   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
 #'   \url{https://github.com/stephenturner/qqman}
 #' @note This function first creates a \code{ggplot2} object and then converts
 #'   it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
+#' @import ggplot2
 #' @export
 #' @examples
 #' \dontrun{
-#' library(manhattanly)
+#' #library(manhattanly)
 #' qqly(HapMap)
 #'
 #' # highlight SNPs of interest
@@ -161,34 +158,34 @@ qqly.qqr <- function(x,
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   if (any(c(!is.na(snpName),!is.na(geneName),!is.na(annotation1Name), !is.na(annotation2Name)))) {
-  p <- ggplot(data = d, aes(x = EXPECTED, y = OBSERVED)) +
-    geom_point(aes(text = TEXT),
+  p <- ggplot2::ggplot(data = d, aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
+    ggplot2::geom_point(aes(text = TEXT),
                size = size,
                color = col[1],
                shape = type) +
-    geom_abline(aes(intercept = 0, slope = 1),
+    ggplot2::geom_abline(aes(intercept = 0, slope = 1),
                 size = abline_size,
                 color = abline_col,
                 linetype = abline_type) +
-    theme_bw() +
-    theme(panel.grid.major = element_blank(),
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid.major = element_blank(),
           panel.grid.minor = element_blank()) +
-    labs(x = xlab,
+    ggplot2::labs(x = xlab,
          y = ylab,
          title = title)
   } else {
-    p <- ggplot(data = d, aes(x = EXPECTED, y = OBSERVED)) +
-      geom_point(size = size,
+    p <- ggplot2::ggplot(data = d, aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
+      ggplot2::geom_point(size = size,
                  color = col[1],
                  shape = type) +
-      geom_abline(aes(intercept = 0, slope = 1),
+      ggplot2::geom_abline(aes(intercept = 0, slope = 1),
                   size = abline_size,
                   color = abline_col,
                   linetype = abline_type) +
-      theme_bw() +
-      theme(panel.grid.major = element_blank(),
+      ggplot2::theme_bw() +
+      ggplot2::theme(panel.grid.major = element_blank(),
             panel.grid.minor = element_blank()) +
-      labs(x = xlab,
+      ggplot2::labs(x = xlab,
            y = ylab,
            title = title)
   }
@@ -206,8 +203,8 @@ qqly.qqr <- function(x,
                     if (!is.na(annotation2Name)) paste0(annotation2Name,": ", d.highlight[[annotation2Name]]),
                     sep = "<br>")
 
-      p <- p + geom_point(data = d.highlight,
-                          aes(x = EXPECTED, y = OBSERVED,
+      p <- p + ggplot2::geom_point(data = d.highlight,
+                          aes_string(x = 'EXPECTED', y = 'OBSERVED',
                               text = TEXT2),
                         size = size,
                         color = highlight_color,
@@ -216,6 +213,6 @@ qqly.qqr <- function(x,
   }
 
 
-  ggplotly(p)
+  plotly::ggplotly(p)
 
 }
