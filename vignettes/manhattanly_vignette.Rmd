@@ -4,15 +4,15 @@ author: "Sahir Bhatnagar"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Interactive Manhattan and Q-Q plots in R}
+  %\VignetteIndexEntry{manhattanly}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r}
 library(manhattanly)
-head(hapmap)
-dim(hapmap)
+head(HapMap)
+dim(HapMap)
 significantSNP
 ```
 

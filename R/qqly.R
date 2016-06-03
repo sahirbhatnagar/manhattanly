@@ -35,7 +35,7 @@
 #' @param ... other parameters passed to \code{\link{qqr}}
 #' @return An interactive Q-Q plot.
 #' @aliases qqly.default qqly.qqr
-#' @seealso \code{\link{qqr}}, \code{help(HapMap)},
+#' @seealso \code{\link{qqr}}, \code{\link{HapMap}},
 #'   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
 #'   \url{https://github.com/stephenturner/qqman}
 #' @note This function first creates a \code{ggplot2} object and then converts
@@ -44,7 +44,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' #library(manhattanly)
+#' library(manhattanly)
 #' qqly(HapMap)
 #'
 #' # highlight SNPs of interest

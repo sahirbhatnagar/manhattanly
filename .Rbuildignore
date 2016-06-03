@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-hapmap.R
 ^data-raw$
 .gitignore
 .Rhistory

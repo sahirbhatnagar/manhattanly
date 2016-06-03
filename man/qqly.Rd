@@ -68,7 +68,7 @@ This function first creates a \code{ggplot2} object and then converts
 }
 \examples{
 \dontrun{
-#library(manhattanly)
+library(manhattanly)
 qqly(HapMap)
 
 # highlight SNPs of interest
@@ -78,7 +78,7 @@ qqly(HapMap, snp = "SNP", highlight = significantSNP)
 
 }
 \seealso{
-\code{\link{qqr}}, \code{help(HapMap)},
+\code{\link{qqr}}, \code{\link{HapMap}},
   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
   \url{https://github.com/stephenturner/qqman}
 }

@@ -22,6 +22,6 @@
 #'
 #' @source \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/}
 #' @source \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
-"hapmap"
+"HapMap"
 
 

@@ -9,11 +9,11 @@
 significantSNP
 }
 \description{
-SNP rs identifiers from \code{hapmap} dataset that are significant at \code{p-value
+SNP rs identifiers from \code{\link{HapMap}} dataset that are significant at \code{p-value
 < 1e-6}
 }
 \seealso{
-\code{hapmap}
+\code{\link{HapMap}}
 }
 \keyword{datasets}
 

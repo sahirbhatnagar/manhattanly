@@ -85,17 +85,16 @@ could be done using any graphical device including
 \code{R}.
 }
 \examples{
-\dontrun{
 # HapMap dataset included in this package already has columns named P, CHR and BP
 library(manhattanly)
-data(HapMap)
 DT <- manhattanr(HapMap)
+class(DT)
 head(DT[["data"]])
 
 #include snp and gene information
 DT2 <- manhattanr(HapMap, snp = "SNP", gene = "GENE")
 head(DT2[["data"]])
-}
+
 
 }
 \seealso{

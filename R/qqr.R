@@ -36,14 +36,15 @@
 #'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
 #'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
 #'
+#' @seealso \code{\link{qqly}}
+#'
+#'
 #' @examples
-#' \dontrun{
 #' library(manhattanly)
-#' data(HapMap)
 #' qqrObj <- qqr(HapMap, snp = "SNP", highlight = significantSNP)
 #' class(qqrObj)
 #' head(qqrObj[["data"]])
-#' }
+#'
 #' @export
 
 qqr <- function(x,

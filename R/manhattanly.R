@@ -51,7 +51,7 @@
 #'   \code{d3.js} engine. These plots can be included in Shiny apps, Rmarkdown
 #'   documents or embeded in websites using simple HTML code.
 #' @return An interactive manhattan plot.
-#' @seealso \code{\link{manhattanr}}, \code{help(HapMap)},
+#' @seealso \code{\link{manhattanr}}, \code{\link{HapMap}},
 #'   \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
 #'   \url{https://github.com/stephenturner/qqman},
 #'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
@@ -62,7 +62,6 @@
 #' @examples
 #' \dontrun{
 #' library(manhattanly)
-#' data("HapMap")
 #' manhattanly(HapMap)
 #'
 #' # highlight SNPs of interest

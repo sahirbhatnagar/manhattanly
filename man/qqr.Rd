@@ -67,12 +67,13 @@ This function will return an error if any of the p-values are NA, less
   than 0 or greater than 1
 }
 \examples{
-\dontrun{
 library(manhattanly)
-data(HapMap)
 qqrObj <- qqr(HapMap, snp = "SNP", highlight = significantSNP)
 class(qqrObj)
 head(qqrObj[["data"]])
+
 }
+\seealso{
+\code{\link{qqly}}
 }
 
