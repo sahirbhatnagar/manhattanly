@@ -3,7 +3,7 @@
 
 # manhattanly
 
-The goal of manhattanly is to ...
+The goal of manhattanly is to create interactive manhattan and Q-Q plots
 
 ![](http://i.imgur.com/oTrElAb.gif)
 
@@ -16,14 +16,9 @@ install.packages("devtools")
 devtools::install_github("sahirbhatnagar/manhattanly")
 ```
 
-## Example
+## Vignette
 
-This is a basic example which shows you how to solve a common problem:
-
-```R
-library(manhattanly)
-manhattanly(HapMap, snp = "SNP", gene = "GENE")
-```
+See the [online vignette](http://sahirbhatnagar.com/manhattanly/) for example usage of the functions.
 
 ## Credit
 

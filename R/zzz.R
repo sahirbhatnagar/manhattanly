@@ -1,6 +1,6 @@
 .onAttach <- function(...){
   # packageStartupMessage(manhattanlyWelcomeMessage())
-  packageStartupMessage("For example usage please run: vignette('manhattanly')")
+  packageStartupMessage("See example usage at http://sahirbhatnagar.com/manhattanly/")
 }
 
 
