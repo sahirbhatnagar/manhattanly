@@ -104,7 +104,7 @@ setkey(hapmap, CHR, BP)
 str(hapmap)
 
 significantSNP <- hapmap[P<1e-6]$SNP
-#hapmap <- as.data.frame(hapmap)
+hapmap <- as.data.frame(hapmap)
 
 devtools::use_data(hapmap, overwrite = TRUE)
 # write_csv(hapmap, "data-raw/hapmap.csv")
@@ -118,11 +118,16 @@ devtools::use_data(significantSNP, overwrite = TRUE)
 # devtools::use_data(veteran, overwrite = TRUE)
 
 
+tools::checkRdaFiles("data/")
+tools::resaveRdaFiles("data/")
 
 help(hapmap)
-
-
+devtools::check()
+library(devtools)
+document()
 head(hapmap)
+devtools::build_vignettes()
+devtools::build(binary = TRUE)
 
 
 # devtools::load_all()
