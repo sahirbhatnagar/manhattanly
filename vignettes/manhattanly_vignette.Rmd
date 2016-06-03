@@ -11,8 +11,8 @@ vignette: >
 
 ```{r}
 library(manhattanly)
-veteran
-hapmap
+head(hapmap)
+dim(hapmap)
 significantSNP
 ```
 
