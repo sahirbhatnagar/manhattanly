@@ -3,3 +3,4 @@
 ^data-raw$
 .gitignore
 .Rhistory
+^\.travis\.yml$
