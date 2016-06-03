@@ -106,9 +106,9 @@ str(hapmap)
 significantSNP <- hapmap[P<1e-6]$SNP
 hapmap <- as.data.frame(hapmap)
 
-devtools::use_data(hapmap, overwrite = TRUE)
+#devtools::use_data(hapmap, overwrite = TRUE)
 # write_csv(hapmap, "data-raw/hapmap.csv")
-# save(hapmap, file = "data/hapmap.RData")
+save(hapmap, file = "data/hapmap.RData")
 
 # devtools::use_data(hapmap, overwrite = TRUE)
 devtools::use_data(significantSNP, overwrite = TRUE)
