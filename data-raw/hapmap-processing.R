@@ -13,7 +13,7 @@
 
 library(data.table)
 rm(list = ls())
-# library(readr)
+library(readr)
 # ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/
 # DT <- data.table::fread("~/Downloads/hapmap3_r2_b36_fwd.consensus.qc.poly.map")
 DT <- data.table::fread("../hapmap3_r2_b36_fwd.consensus.qc.poly.map")
@@ -107,7 +107,7 @@ significantSNP <- hapmap[P<1e-6]$SNP
 hapmap <- as.data.frame(hapmap)
 
 devtools::use_data(hapmap, overwrite = TRUE)
-# write_csv(hapmap, "data-raw/hapmap.csv")
+write_csv(hapmap, "data-raw/hapmap.csv")
 # save(hapmap, file = "data/hapmap.rda")
 
 # devtools::use_data(hapmap, overwrite = TRUE)
@@ -119,7 +119,7 @@ devtools::use_data(significantSNP, overwrite = TRUE)
 
 
 tools::checkRdaFiles("data/")
-tools::resaveRdaFiles("data/")
+# tools::resaveRdaFiles("data/")
 
 help(hapmap)
 devtools::check()
@@ -128,40 +128,40 @@ document()
 head(hapmap)
 devtools::build_vignettes()
 devtools::build()
-
-
-# devtools::load_all()
-manhattanly(hapmap)
-manhattanly(hapmap, p = "ZSCORE", snp = "SNP", annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
-
-
-pp <- manhattanly(kk, snp = "SNP", gene = "GENE", annotation1 = "EFFECTSIZE",
-                  xlab = "hello", ylab = "my nam is", title = "all day",
-                  genomewideline = FALSE, suggestiveline = FALSE, showlegend = F,
-                  showgrid = F)
-
-pp %>% layout(annotations = list(
-  list(x = 0.2, y = 1,
-       xref = "paper", yref = "paper",
-       xanchor = "left", yanchor = "top",
-       ax = 0, ay = 0,
-       text = "Visualizing <em>boot.stepAIC()</em>",
-       font = list(family = "serif", size = 30)),
-
-  list(x = 0.8, y = 0.90,
-       xref = "paper", yref = "paper",
-       xanchor = "left", yanchor = "top", align = "left",
-       ax = 0, ay = 0,
-       text = paste0("<a href='http://www.w3schools.com'>Visit W3Schools.com!</a>", 43, "<br>",
-                     "<em>No. of bootstrap samples:</em>", 57, "<br>"),
-       font = list(family = "PT Sans Narrow", size = 15))
-))
-
-
-manhattanly(kk, snp = "SNP", gene = "GENE", annotation1 = "EFFECTSIZE",
-            xlab = "hello", ylab = "my nam is", title = "all day",
-            genomewideline = FALSE, suggestiveline = FALSE, showlegend = F,
-            showgrid = F)
+# 
+# 
+# # devtools::load_all()
+# manhattanly(hapmap)
+# manhattanly(hapmap, p = "ZSCORE", snp = "SNP", annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
+# 
+# 
+# pp <- manhattanly(kk, snp = "SNP", gene = "GENE", annotation1 = "EFFECTSIZE",
+#                   xlab = "hello", ylab = "my nam is", title = "all day",
+#                   genomewideline = FALSE, suggestiveline = FALSE, showlegend = F,
+#                   showgrid = F)
+# 
+# pp %>% layout(annotations = list(
+#   list(x = 0.2, y = 1,
+#        xref = "paper", yref = "paper",
+#        xanchor = "left", yanchor = "top",
+#        ax = 0, ay = 0,
+#        text = "Visualizing <em>boot.stepAIC()</em>",
+#        font = list(family = "serif", size = 30)),
+# 
+#   list(x = 0.8, y = 0.90,
+#        xref = "paper", yref = "paper",
+#        xanchor = "left", yanchor = "top", align = "left",
+#        ax = 0, ay = 0,
+#        text = paste0("<a href='http://www.w3schools.com'>Visit W3Schools.com!</a>", 43, "<br>",
+#                      "<em>No. of bootstrap samples:</em>", 57, "<br>"),
+#        font = list(family = "PT Sans Narrow", size = 15))
+# ))
+# 
+# 
+# manhattanly(kk, snp = "SNP", gene = "GENE", annotation1 = "EFFECTSIZE",
+#             xlab = "hello", ylab = "my nam is", title = "all day",
+#             genomewideline = FALSE, suggestiveline = FALSE, showlegend = F,
+#             showgrid = F)
 
 
 

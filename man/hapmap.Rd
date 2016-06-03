@@ -15,7 +15,8 @@
   (\code{integer})} }}
 \source{
 \url{ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/}
- \url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
+
+\url{http://hgdownload.cse.ucsc.edu/goldenPath/hg18/database/}
 }
 \usage{
 hapmap
