@@ -40,7 +40,7 @@ The splitting of the tasks into data pre-processing and plot rendering is inspir
 ## Contact
 
 * Issues: <https://github.com/sahirbhatnagar/manhattanly/issues>
-* Pull Requests: <https://github.com/talgalili/heatmaply/>
+* Pull Requests: <https://github.com/sahirbhatnagar/manhattanly/>
 * e-mail: <sahir.bhatnagar@gmail.com>
 
 
