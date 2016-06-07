@@ -1,29 +1,28 @@
 ---
 title: Interactive Manhattan and Q-Q plots in R
-author: 
 date: "`r Sys.Date()`"
 output:
   html_document:
     self_contained: yes
     toc: true
-    toc_float: true
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Introduction to heatmaply}
 -->
 
-```{r setup, include=FALSE, echo=FALSE, message=FALSE}
+```{r setup, include=FALSE, echo=TRUE, message=FALSE}
+#library(plotly)
 library(manhattanly)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE, 
                       tidy = FALSE, 
                       cache = FALSE, 
                       warning = FALSE,
-                      message = FALSE,
-                      dpi = 60,
-                      comment = "#>")
-knitr::opts_knit$set(eval.after = 'fig.cap')
+                      message = FALSE)
+                      #dpi = 60,
+                      #comment = "#>")
+#knitr::opts_knit$set(eval.after = 'fig.cap')
 ```
 
 **Author**: [Sahir Bhatnagar](http://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
@@ -31,45 +30,239 @@ knitr::opts_knit$set(eval.after = 'fig.cap')
 
 # Introduction
 
-Create interactive [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) and [manhattan](https://en.wikipedia.org/wiki/Manhattan_plot) plots that are usable from the R console,
-in the [`RStudio`](https://www.rstudio.com/) viewer pane, in [`R Markdown`](http://rmarkdown.rstudio.com/) documents, and in [`Shiny`](http://shiny.rstudio.com/) apps.
-Hover the mouse pointer over a point to show details or drag a rectangle to
-zoom. A manhattan plot is a popular graphical method for visualizing results
-from high-dimensional data analysis such as a (epi)genome wide asssociation study
-(GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter
-plot against their genomic position. Manhattan plots are used for visualizing
-potential regions of interest in the genome that are associated with a phenotype.
-Interactive manhattan plots allow the inspection of specific value (e.g. rs number or
-gene name) by hovering the mouse over a point, as well as zooming into a region of the
+[Manhattan](https://en.wikipedia.org/wiki/Manhattan_plot) and [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) plots are popular graphical methods for visualizing results from high-dimensional data analysis such as a (epi)genome wide asssociation study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter plot against their genomic position. Manhattan plots are used for visualizing
+potential regions of interest in the genome that are associated with a phenotype. Q-Q plots tell us about the distributional assumptions of the observed test statistics.
+
+Interactive manhattan and Q-Q plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the
 genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
+
+This pacakge creates interactive Q-Q and manhattan plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
+zoom in on a region of interest and then export the image as a `.png` file.
+
 This work is based on the [`qqman`](https://github.com/stephenturner/qqman) by [Stephen Turner](http://stephenturner.us/) and the [`plotly.js`](https://plot.ly/)
-engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot and
-include extra annotation information.
+engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot,
+including extra annotation information and seamless integration with HTML.
 
+***************
+***************
 
+# Installation
 
-## Installation
-
-You can install manhattanly from github with:
+You can install `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/manhattanly) with:
 
 ```R
 install.packages("devtools")
-devtools::install_github("manhattanly/sahirbhatnagar")
+devtools::install_github("sahirbhatnagar/manhattanly")
 ```
 
+***************
+***************
 
-# Example
+# Quick Start
+
+The `manhattanly` package ships with an example dataset called `HapMap`. See `help(HapMap)` for more details about how this dataset was created. Here is what the `HapMap` dataset looks like:
 
 ```{r}
+# load the manhattanly library
 library(manhattanly)
+
 head(HapMap)
+
 dim(HapMap)
-significantSNP
 ```
 
+The required columns to create a manhattan plot are the chromosome, base-pair position and p-value. By default, the `manhattanly` function assumes these columns are named `CHR`, `BP` and `P` (but these can be specified by the user if they are different)
+
+Create an interactive manhattan plot using one command:
+```{r}
+manhattanly(HapMap, snp = "SNP", gene = "GENE")
+```
+
+***************
+
+The arguments `snp = "SNP"` and `gene = "GENE"` specify that we want to add snp and gene information to each point. This information is found in the columns names `"SNP"` and `"GENE"` in the `HapMap` dataset. See `help(manhattanly)` for a full list of options.
+
+Similarly, we can create an interactive Q-Q plot using one command:
+```{r}
+qqly(HapMap, snp = "SNP", gene = "GENE")
+```
+
+***************
+
+
+See `help(qqly)` for a full list of options. 
+
+args(manhattanly)
+
+***************
+***************
+
+
+## Highlighting SNPs of Interest
+
+We can also highlight SNPs of interest using the `highlight` argument. This package comes with a list of SNPs of interest called `significantSNP` (see `help(significantSNP)` for more details). To highlight these SNPs we simply pass this vector to the `highlight` argument (note that these SNPs need to be present in the `"SNP"` column of your data):
 
 ```{r}
-manhattanly(HapMap)
+manhattanly(HapMap, snp = "SNP", gene = "GENE", highlight = significantSNP)
 ```
+
+***************
+***************
+
+
+
+## More annotations
+
+You can add up to 4 annotations. In the following plot we add the snp, gene, the distance to the nearest gene and the effect size:
+
+```{r}
+manhattanly(HapMap, snp = "SNP", gene = "GENE",
+            annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE",
+            highlight = significantSNP)
+```
+
+
+***************
+***************
+
+
+## Adding Text Annotations to the Plot
+
+The annotations in the previous plots only appear when we hover the mouse over the point. Once we have identified a SNP, or a few SNPs of interest we want to explicitly show the annotation information and save the plot. The output of the `manhattanly` function is an object which can be further manipulated using the `%>%` operator from the `magrittr` package:
+
+```{r}
+library(magrittr)
+
+p <- manhattanly(HapMap, snp = "SNP", gene = "GENE",
+            annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE",
+            highlight = significantSNP)
+
+# get the x and y coordinates from the pre-processed data
+plotData <- manhattanr(HapMap, snp = "SNP", gene = "GENE")[["data"]]
+
+# annotate the smallest p-value
+annotate <- plotData[which.min(plotData$P),]
+
+# x and y coordinates of SNP with smallest p-value
+xc <- annotate$pos
+yc <- annotate$logp
+
+p %>% plotly::layout(annotations = list(
+  list(x = xc, y = yc,
+       text = paste0(annotate$SNP,"<br>","GENE: ",annotate$GENE),
+       font = list(family = "serif", size = 10))))
+
+```
+
+
+***************
+
+You can then save the plot as a `.png` file by clicking on the camera icon in the toolbar (which appears when you hover your mouse over it). 
+
+
+
+
+***************
+***************
+
+
+## Sharing your Plots 
+
+By default, plotly for R runs locally in your web browser or in the R Studio viewer. It would be useful to be able to easily share these plot with for example, your collaborators or supervisor, especially in the during the exploratory data analysis stage of your project.
+
+You can publish your charts to the web with [plotly's web service](https://plot.ly/) in three steps.
+
+***************
+
+### Step 1: Signup for a free plotly account
+
+Create a free plotly account [here](https://plot.ly/). A plotly account is required to publish charts online. It's free to get started, and you control the privacy of your charts.
+
+***************
+
+### Step 2: Save your authentication credentials
+
+Find your authentication API keys in your online settings. Set them in your R session with:
+
+```{r, eval=FALSE}
+Sys.setenv("plotly_username"="your_plotly_username")
+Sys.setenv("plotly_api_key"="your_api_key")
+```
+
+***************
+
+### Step 3: Publish your graphs to plotly with `plotly_POST`
+
+```{r, eval=FALSE}
+library(plotly)
+# p is the interactive manhattan plot we saved earlier
+plotly_POST(p, filename = "r-docs/manhattan", world_readable=TRUE)
+```
+
+* `filename` sets the name of the file inside your online plotly account.
+* `world_readable` sets the privacy of your chart. If `TRUE`, the graph is publically viewable, if `FALSE`, only you can view it.
+
+***************
+***************
+
+
+# Data Pre-Processing
+
+The `manhattanly` package splits up the data pre-processing from the rendering of the plot object (inspired by the [`heatmaply`](https://github.com/talgalili/heatmaply) package by [Tal Galili](http://www.r-statistics.com/)). These are done by the `manhattanr` and `qqr` and functions:
+
+```{r}
+# create an object of class `manhattanr`
+manhattanrObject <- manhattanr(HapMap)
+
+# whats in there
+str(manhattanrObject)
+
+# the data used for plotting is a data.frame
+# this data.frame can be used with any graphics function such as in base R
+# you do not need to use plotly
+head(manhattanrObject[["data"]])
+is.data.frame(manhattanrObject[["data"]])
+```
+
+This `manhattanrObject` which is of class `manhattanr` can also be passed to the `manhattanly` function (we omit the plot here for the sake of size of the rendered vignette):
+
+```{r, eval=FALSE}
+manhattanly(manhattanrObject)
+```
+
+************
+
+We can specify more annotations in the data using the `snp`, `gene`, `annotation1` and `annotation2` arguments:
+
+```{r}
+# create an object of class `manhattanr`
+manhattanrObject <- manhattanr(HapMap, snp = "SNP", gene = "GENE",
+            annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE")
+
+# the annotation columns are now part of the data.frame
+head(manhattanrObject[["data"]])
+is.data.frame(manhattanrObject[["data"]])
+```
+
+
+***************
+
+Similarly the data used for the Q-Q plot can be created using the `qqr` function:
+
+```{r}
+qqrObject <- qqr(HapMap)
+str(qqrObject)
+head(qqrObject[["data"]])
+```
+
+This `qqrObject` which is of class `qqr` can also be passed to the `qqly` function (we omit the plot here for the sake of size of the rendered vignette):
+
+```{r, eval=FALSE}
+qqly(qqrObject)
+```
+
+
+
+
 
 

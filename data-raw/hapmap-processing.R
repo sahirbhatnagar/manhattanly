@@ -23,7 +23,7 @@ setkey(DT, CHR)
 DT[, chr:=paste0("chr",CHR)]
 
 tmp <- DT[, .N, by = list(CHR)]
-tmp[, num:=ceiling(N*0.025)]
+tmp[, num:=ceiling(N*0.01)]
 tmp[, sum(num)]
 
 devtools::source_gist("https://gist.github.com/mrdwab/933ffeaa7a1d718bd10a")
@@ -42,11 +42,11 @@ hapmap[, `:=`(P = runif(.N), EFFECTSIZE = rnorm(.N, sd = 0.1))]
 # hapmap[, hist(ZSCORE)]
 # hapmap[, hist(EFFECTSIZE)]
 
-significantRS1 <- hapmap[CHR %in% 5][order(BP)][2000:2010]$SNP
-significantRS2 <- hapmap[CHR %in% 5][order(BP)][1990:1999]$SNP
-significantRS3 <- hapmap[CHR %in% 5][order(BP)][1980:1989]$SNP
-significantRS4 <- hapmap[CHR %in% 5][order(BP)][1970:1979]$SNP
-significantRS5 <- hapmap[CHR %in% 5][order(BP)][1960:1969]$SNP
+significantRS1 <- hapmap[CHR %in% 5][order(BP)][200:210]$SNP
+significantRS2 <- hapmap[CHR %in% 5][order(BP)][190:199]$SNP
+significantRS3 <- hapmap[CHR %in% 5][order(BP)][180:189]$SNP
+significantRS4 <- hapmap[CHR %in% 5][order(BP)][170:179]$SNP
+significantRS5 <- hapmap[CHR %in% 5][order(BP)][160:169]$SNP
 
 # significantRS <- hapmap[CHR %in% c(5)][sample(.N, 100)]$SNP
 # hapmap[SNP %in% significantRS1, `:=`(P = sample(seq(1e-7, 5e-5, length.out = 2e2),
@@ -108,6 +108,7 @@ HapMap <- as.data.frame(hapmap)
 
 devtools::use_data(HapMap, overwrite = TRUE)
 readr::write_csv(HapMap, "data-raw/HapMap.csv")
+readr::write_csv(as.data.frame(significantSNP), "data-raw/significantSNP.csv")
 # save(hapmap, file = "data/hapmap.rda")
 
 # devtools::use_data(hapmap, overwrite = TRUE)

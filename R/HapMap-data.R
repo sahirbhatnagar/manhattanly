@@ -10,7 +10,7 @@
 #' NCBI (hg18, Build 36.1)
 #'
 #'
-#' @format A data frame with 36011 rows and 8 variables: \describe{
+#' @format A data frame with 14412 rows and 8 variables: \describe{
 #'   \item{CHR}{chromosome number. Autosomes coded 1 through 22, and 23 is the X
 #'   chromosome (\code{integer})} \item{BP}{genomic base-pair position
 #'   (\code{integer})} \item{P}{p-value (\code{numeric})} \item{SNP}{rs# or snp

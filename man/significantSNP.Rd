@@ -4,7 +4,7 @@
 \name{significantSNP}
 \alias{significantSNP}
 \title{Character vector of SNPs to highlight}
-\format{A character vector with 21 elements}
+\format{A character vector with 20 elements}
 \usage{
 significantSNP
 }
