@@ -10,7 +10,7 @@ Description: Create interactive Q-Q and manhattan plots that are usable from the
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a point to show details or drag a rectangle to
     zoom. A manhattan plot is a popular graphical method for visualizing results
-    from high-dimensional data analysis such as a (epi)genome wide asssociation study
+    from high-dimensional data analysis such as a (epi)genome wide association study
     (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter
     plot against their genomic position. Manhattan plots are used for visualizing
     potential regions of interest in the genome that are associated with a phenotype.
