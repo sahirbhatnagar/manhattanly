@@ -2,7 +2,7 @@ Package: manhattanly
 Type: Package
 Title: Interactive Q-Q and Manhattan Plots Using Plotly.js
 Version: 0.1.0
-Date: 2016-05-25
+Date: 2016-06-07
 LazyData: true
 Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
     role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
