@@ -32,8 +32,7 @@ Imports:
     ggplot2
 Suggests:
     knitr,
-    rmarkdown,
-    qqman
+    rmarkdown
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 URL: https://github.com/sahirbhatnagar/manhattanly/, http://sahirbhatnagar.com/manhattanly/

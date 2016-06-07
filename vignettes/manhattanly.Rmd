@@ -1,6 +1,5 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Interactive Q-Q and Manhattan Plots Using Plotly.js"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -25,7 +24,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **Author**: [Sahir Bhatnagar](http://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
 
-A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
+In the interactive manhattan and qq plots below, we only use a subset (chromosomes 4 to 8) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
+
+**************
 
 # Introduction
 
@@ -51,7 +52,7 @@ You can install `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/ma
 
 ```R
 install.packages("devtools")
-devtools::install_github("sahirbhatnagar/manhattanly")
+devtools::install_github("sahirbhatnagar/manhattanly", build_vignettes = TRUE)
 ```
 
 ***************
