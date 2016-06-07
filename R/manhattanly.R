@@ -56,8 +56,8 @@
 #'   \url{https://github.com/stephenturner/qqman},
 #'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 #' @aliases manhattanly.default manhattanly.manhattanr
-#' @import magrittr
-#' @importFrom plotly plot_ly layout add_trace
+#' @importFrom magrittr '%<>%'
+#' @import plotly
 #' @export
 #' @examples
 #' \dontrun{

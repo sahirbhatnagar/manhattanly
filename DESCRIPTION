@@ -24,11 +24,11 @@ Description: Create interactive Q-Q and manhattan plots that are usable from the
     Once uploaded to a 'plotly' account, 'plotly' graphs (and the data behind them) 
     can be viewed and modified in a web browser.
 Depends:
-    R (>= 3.0.0),
-    plotly (>= 3.6.0)
+    R (>= 3.0.0)
 Imports:
     stats,
     magrittr (>= 1.0.1),
+    plotly (>= 3.6.0),
     ggplot2
 Suggests:
     knitr,

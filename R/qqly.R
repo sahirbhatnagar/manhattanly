@@ -40,7 +40,6 @@
 #'   \url{https://github.com/stephenturner/qqman}
 #' @note This function first creates a \code{ggplot2} object and then converts
 #'   it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
-#' @import plotly
 #' @export
 #' @examples
 #' \dontrun{
