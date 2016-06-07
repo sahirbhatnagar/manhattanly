@@ -13,7 +13,7 @@ You can install manhattanly from github with:
 
 ```R
 install.packages("devtools")
-devtools::install_github("sahirbhatnagar/manhattanly")
+devtools::install_github("sahirbhatnagar/manhattanly", build_vignettes = TRUE)
 ```
 
 ## Vignette
