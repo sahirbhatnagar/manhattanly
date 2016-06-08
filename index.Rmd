@@ -6,6 +6,7 @@ output:
   html_document:
     number_sections: yes
     self_contained: yes
+    toc: true
 ---
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}
