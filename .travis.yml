@@ -14,6 +14,9 @@ r_github_packages:
 install:
   - Rscript -e "if (!require('devtools')) install.packages('devtools')"
   - Rscript -e "devtools::install_github('sahirbhatnagar/manhattanly')"
+  - Rscript -e "if (!require('devtools')) install.packages('plotly')"
+  - Rscript -e "if (!require('devtools')) install.packages('ggplot2')"
+  - Rscript -e "if (!require('devtools')) install.packages('magrittr')"
 
 before_script:
   - chmod +x ./_build.sh
