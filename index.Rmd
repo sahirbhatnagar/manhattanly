@@ -4,11 +4,12 @@ author: "Sahir Bhatnagar"
 date: "`r Sys.Date()`"
 output:
   html_document:
-    toc: true    
+    number_sections: yes
+    self_contained: yes
 ---
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}
-#library(plotly)
+library(plotly)
 #library(manhattanly)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE, 
@@ -219,6 +220,8 @@ plotly_POST(p, filename = "r-docs/manhattan", world_readable=TRUE)
 [`R Markdown`](http://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan and qq plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the [`.Rmd`](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd) document:
 
 <pre><code>```{r}
+# plotly library needs to be loaded
+library(plotly)
 manhattanly(HapMap, snp = "SNP", gene = "GENE")
 ```</code></pre>
 
