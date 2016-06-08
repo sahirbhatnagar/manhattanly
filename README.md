@@ -5,7 +5,7 @@
 
 The goal of manhattanly is to create interactive manhattan and Q-Q plots
 
-![](http://i.imgur.com/656S3VY.gif)
+![](http://i.imgur.com/n88LCky.gifv)
 
 ## Installation
 
