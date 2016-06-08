@@ -8,3 +8,6 @@
 ^index\.Rmd$
 ^index\.html$
 ^cran-comments\.md$
+^_build\.sh$
+^_deploy\.sh$
+^_book$
