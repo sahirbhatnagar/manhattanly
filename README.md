@@ -1,7 +1,10 @@
 [![Travis-CI Build Status](https://travis-ci.org/sahirbhatnagar/manhattanly.svg?branch=master)](https://travis-ci.org/sahirbhatnagar/manhattanly)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/manhattanly)](https://cran.r-project.org/package=manhattanly)
 
-
+<!--
+![](http://cranlogs.r-pkg.org/badges/manhattanly?color=yellow)
+![](http://cranlogs.r-pkg.org/badges/grand-total/manhattanly?color=yellowgreen)
+-->
 
 # manhattanly
 
