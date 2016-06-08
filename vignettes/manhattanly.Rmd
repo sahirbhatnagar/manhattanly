@@ -1,16 +1,20 @@
 ---
 title: "Interactive Q-Q and Manhattan Plots Using Plotly.js"
+author: "Sahir Bhatnagar"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{manhattanly}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+output:
+  html_document:
+    self_contained: yes
+    toc: true    
 ---
+<!--
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{Introduction to heatmaply}
+-->
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}
 #library(plotly)
-library(manhattanly)
+#library(manhattanly)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE, 
                       tidy = FALSE, 
@@ -24,7 +28,12 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **Author**: [Sahir Bhatnagar](http://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
 
-In the interactive manhattan and qq plots below, we only use a subset (chromosomes 4 to 8) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
+
+**Notes**:
+
+* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd).
+
+* In the interactive manhattan and qq plots below, we only use a subset (chromosomes 4 to 7) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
 
 **************
 
@@ -48,7 +57,14 @@ including extra annotation information and seamless integration with HTML.
 
 # Installation
 
-You can install `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/manhattanly) with:
+You can install `manhattanly` from CRAN:
+
+```R
+install.packages("manhattanly")
+```
+
+
+Alternatively, you can install the development version of `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/manhattanly) with:
 
 ```R
 install.packages("devtools")
@@ -62,7 +78,7 @@ devtools::install_github("sahirbhatnagar/manhattanly", build_vignettes = TRUE)
 
 The `manhattanly` package ships with an example dataset called `HapMap`. See `help(HapMap)` for more details about how this dataset was created. Here is what the `HapMap` dataset looks like:
 
-```{r}
+```{r, message=TRUE}
 # load the manhattanly library
 library(manhattanly)
 
@@ -75,7 +91,7 @@ The required columns to create a manhattan plot are the chromosome, base-pair po
 
 Create an interactive manhattan plot using one command:
 ```{r}
-manhattanly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE")
+manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
 ```
 
 ***************
@@ -85,7 +101,7 @@ The arguments `snp = "SNP"` and `gene = "GENE"` specify that we want to add snp 
 Similarly, we can create an interactive Q-Q plot using one command (See `help(qqly)` for a full list of options):
 
 ```{r}
-qqly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE")
+qqly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
 ```
 
 ***************
@@ -103,7 +119,7 @@ You can then save the plot as a `.png` file by clicking on the camera icon in th
 We can also highlight SNPs of interest using the `highlight` argument. This package comes with a list of SNPs of interest called `significantSNP` (see `help(significantSNP)` for more details). To highlight these SNPs we simply pass this vector to the `highlight` argument (note that these SNPs need to be present in the `"SNP"` column of your data):
 
 ```{r, eval = TRUE}
-manhattanly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE", highlight = significantSNP)
+manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE", highlight = significantSNP)
 ```
 
 ***************
@@ -116,7 +132,7 @@ manhattanly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE", highlight 
 You can add up to 4 annotations. In the following plot we add the snp, gene, the distance to the nearest gene and the effect size:
 
 ```{r, eval = TRUE}
-manhattanly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE",
+manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE",
             annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE",
             highlight = significantSNP)
 ```
@@ -133,12 +149,12 @@ The annotations in the previous plots only appear when we hover the mouse over t
 ```{r, eval = TRUE}
 library(magrittr)
 
-p <- manhattanly(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE",
+p <- manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE",
             annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE",
             highlight = significantSNP)
 
 # get the x and y coordinates from the pre-processed data
-plotData <- manhattanr(subset(HapMap, CHR %in% 4:8), snp = "SNP", gene = "GENE")[["data"]]
+plotData <- manhattanr(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")[["data"]]
 
 # annotate the smallest p-value
 annotate <- plotData[which.min(plotData$P),]
@@ -205,6 +221,17 @@ plotly_POST(p, filename = "r-docs/manhattan", world_readable=TRUE)
 ***************
 ***************
 
+# Dynamic Documents with `knitr` and `R Markdown`
+
+[`R Markdown`](http://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan and qq plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the [`.Rmd`](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd) document:
+
+<pre><code>```{r}
+manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
+```</code></pre>
+
+
+*****************
+*****************
 
 # Data Pre-Processing
 
@@ -260,6 +287,8 @@ This `qqrObject` which is of class `qqr` can also be passed to the `qqly` functi
 ```{r, eval=FALSE}
 qqly(qqrObject)
 ```
+
+
 
 
 

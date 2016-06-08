@@ -1,6 +1,6 @@
 Package: manhattanly
 Type: Package
-Title: Interactive Q-Q and Manhattan Plots Using Plotly.js
+Title: Interactive Q-Q and Manhattan Plots Using 'plotly.js'
 Version: 0.1.0
 Date: 2016-06-07
 LazyData: true
