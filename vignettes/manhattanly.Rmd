@@ -9,7 +9,7 @@ output:
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Introduction to heatmaply}
+%\VignetteIndexEntry{Introduction to manhattanly}
 -->
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}

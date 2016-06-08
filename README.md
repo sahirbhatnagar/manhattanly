@@ -1,4 +1,6 @@
 [![Travis-CI Build Status](https://travis-ci.org/sahirbhatnagar/manhattanly.svg?branch=master)](https://travis-ci.org/sahirbhatnagar/manhattanly)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/manhattanly)](https://cran.r-project.org/package=manhattanly)
+
 
 
 # manhattanly
@@ -9,7 +11,13 @@ The goal of manhattanly is to create interactive manhattan and Q-Q plots
 
 ## Installation
 
-You can install manhattanly from github with:
+You can install `manhattanly` from CRAN:
+
+```R
+install.packages("manhattanly")
+```
+
+Alternatively, you can install the development version of `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/manhattanly) with:
 
 ```R
 install.packages("devtools")
