@@ -7,10 +7,6 @@ output:
     self_contained: yes
     toc: true    
 ---
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Introduction to manhattanly}
--->
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}
 #library(plotly)
@@ -31,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **Notes**:
 
-* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd).
+* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/index.Rmd).
 
 **************
 
