@@ -86,7 +86,7 @@ manhattanly <- function(x,
                         showlegend = FALSE,
                         showgrid = FALSE,
                         snpSets = NULL,
-                        snpSetColors = NULL,  
+                        snpSetColors = NULL,
                         xlab = NULL,
                         ylab = "-log10(p)",
                         title = "Manhattan Plot", ...) {
@@ -370,10 +370,19 @@ manhattanly.manhattanr <- function(x,
                                      size = point_size),
                        name = "of interest")
 
+    }
+  }
+  
+  # Highlight multiple SNP sets
+  if (!is.na(snpName)) {
+    if (!is.null(snpSets)) {
       for(snpSetIndex in 1:length(snpSets))
       {
         snpSet = snpSets[snpSetIndex]
         snpSetColor = snpSetColors[snpSetIndex]
+
+        if (any(!(snpSet %in% d[[snpName]]))) warning("You're trying to highlight SNPs that don't exist in your results.")
+
         snpSet.highlight <- d[which(d[[snpName]] %in% snpSet), ]
         p %<>% plotly::add_trace(x = snpSet.highlight$pos,
                          y = snpSet.highlight$logp,
@@ -385,9 +394,9 @@ manhattanly.manhattanr <- function(x,
                          marker = list(color = snpSetColor,
                                        size = point_size),
                          name = "of interest")
-      }
 
-    }
+      }
+    } 
   }
   p
 }
