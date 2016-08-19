@@ -126,6 +126,20 @@ manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE", highlight 
 ***************
 ***************
 
+## Coloring Multiple Regions of Interest
+
+We can color multiple regions of interest using the `snpSets` and `snpSetColors` arguments. For example, to color the first thousand SNPs sea green and the last thousand hot pink, we pass the following `snpSets` and `snpSetColors` arguments (note that these SNPs need to be present in the `"SNP"` column of your data):
+
+```{r, eval = TRUE}
+snpSetOne = head(HapMap,1000)$SNP
+snpSetTwo = tail(HapMap,1000)$SNP
+snpSets = list("one" = snpSetOne, "two" = snpSetTwo)
+snpSetColors = c("#18A3AC", "#EC1848")
+manhattanly(HapMap, snp = "SNP", gene = "GENE", snpSets = snpSets, snpSetColors = snpSetColors)
+```
+
+***************
+***************
 
 
 ## More annotations
