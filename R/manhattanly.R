@@ -373,12 +373,12 @@ manhattanly.manhattanr <- function(x,
     }
   }
   
-  # Highlight multiple SNP sets
+  # Color multiple regions of interest
   if (!is.na(snpName)) {
     if (!is.null(snpSets)) {
       for(snpSetIndex in 1:length(snpSets))
       {
-        snpSet = snpSets[snpSetIndex]
+        snpSet = unlist(snpSets[snpSetIndex])
         snpSetColor = snpSetColors[snpSetIndex]
 
         if (any(!(snpSet %in% d[[snpName]]))) warning("You're trying to highlight SNPs that don't exist in your results.")
