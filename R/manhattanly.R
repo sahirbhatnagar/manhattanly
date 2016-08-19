@@ -85,6 +85,8 @@ manhattanly <- function(x,
                         highlight_color = "#00FF00",
                         showlegend = FALSE,
                         showgrid = FALSE,
+                        snpSets = NULL,
+                        snpSetColors = NULL,  
                         xlab = NULL,
                         ylab = "-log10(p)",
                         title = "Manhattan Plot", ...) {
@@ -367,6 +369,24 @@ manhattanly.manhattanr <- function(x,
                        marker = list(color = highlight_color,
                                      size = point_size),
                        name = "of interest")
+
+      for(snpSetIndex in 1:length(snpSets))
+      {
+        snpSet = snpSets[snpSetIndex]
+        snpSetColor = snpSetColors[snpSetIndex]
+        snpSet.highlight <- d[which(d[[snpName]] %in% snpSet), ]
+        p %<>% plotly::add_trace(x = snpSet.highlight$pos,
+                         y = snpSet.highlight$logp,
+                         type = "scatter",
+                         mode = "markers",
+                         evaluate = TRUE,
+                         text = snpSet.highlight[[snpName]],
+                         showlegend = showlegend,
+                         marker = list(color = snpSetColor,
+                                       size = point_size),
+                         name = "of interest")
+      }
+
     }
   }
   p
