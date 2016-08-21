@@ -63,12 +63,6 @@ means that nothing is highlighted.}
 
 \item{showgrid}{Should gridlines be shown. Default is \code{FALSE}.}
 
-\item{snpSets}{List of character vectors of SNPs in the dataset to be highlighted.
- Default is \code{NULL}.}
-
-\item{snpSetColors}{Corresponding list of colors to be used to highlight snpSets.
-Default is \code{NULL}.}
-
 \item{xlab}{X-axis label. Default is \code{NULL} which means that the label
 is automatically determined by the \code{\link{manhattanr}} function.
 Specify here to overwrite the default.}
