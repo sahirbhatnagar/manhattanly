@@ -162,8 +162,8 @@ manhattanly.manhattanr <- function(x,
   # x <- manhattanr(kk, annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
   # x <- manhattanr(kk, annotation1 = "ZSCORE")
   # x <- manhattanr(kk, annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
-  # x <- manhattanr(HapMap, snp = "SNP")
-  #
+  # x <- manhattanr(HapMap, snp = "SNP", gene = "GENE")
+  # 
   # x$data %>% head
   # str(x$data)
   # labelChr <- NULL
@@ -177,11 +177,13 @@ manhattanly.manhattanr <- function(x,
   # genomewideline_color = "red"
   # suggestiveline_width = genomewideline_width = 1;
   # highlight_color = "#00FF00"
-  # highlight = significantSNP
+  # highlight = c(significantSNP, x$data$SNP[1:20])
   # showlegend = TRUE
   # showgrid = TRUE
   # ylab = "-log10(p)"
+  # xlab = NULL
   # title = "Manhattan Plot"
+  # col = c("#969696", "#252525")
 
   #########
 
@@ -355,19 +357,68 @@ manhattanly.manhattanr <- function(x,
   if (!is.na(snpName)) {
     if (!is.null(highlight)) {
       if (any(!(highlight %in% d[[snpName]]))) warning("You're trying to highlight SNPs that don't exist in your results.")
-
+      
       d.highlight <- d[which(d[[snpName]] %in% highlight), ]
-
-      p %<>% plotly::add_trace(x = d.highlight$pos,
-                       y = d.highlight$logp,
-                       type = "scatter",
-                       mode = "markers",
-                       #evaluate = TRUE,
-                       text = d.highlight[[snpName]],
-                       showlegend = showlegend,
-                       marker = list(color = highlight_color,
-                                     size = point_size),
-                       name = "of interest")
+      
+      
+      # Add points to the plot
+      if (nchr==1) {
+        
+        TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
+                      if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
+                      if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
+                      if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
+        
+        p %<>% plotly::add_trace(x = d$pos, y = d$logp,
+                                 type = "scatter",
+                                 mode = "markers",
+                                 text = TEXT,
+                                 showlegend = showlegend,
+                                 marker = list(color = highlight_color,
+                                               size = point_size),
+                                 name = "of interest")
+        
+      } else {
+        
+        # icol <- 1
+        
+        for(i in unique(d.highlight$index)) {
+          
+          tmp <- d.highlight[d.highlight$index == i, ]
+          
+          TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ", tmp[[snpName]]),
+                        if (!is.na(geneName)) paste0(geneName,": ", tmp[[geneName]]),
+                        if (!is.na(annotation1Name)) paste0(annotation1Name,": ", tmp[[annotation1Name]]),
+                        if (!is.na(annotation2Name)) paste0(annotation2Name,": ", tmp[[annotation2Name]]),
+                        sep = "<br>")
+          
+          # get chromosome name for labeling
+          chromo <- unique(tmp[which(tmp$index==i),"CHR"])
+          p %<>% plotly::add_trace(x = tmp$pos, 
+                                   y = tmp$logp, 
+                                   type = "scatter",
+                                   mode = "markers", 
+                                   text = TEXT,
+                                   showlegend = showlegend,
+                                   marker = list(color = highlight_color,
+                                                 size = point_size),
+                                   name = "of interest")
+          # icol = icol + 1
+        }
+        
+      }
+      
+      
+      # p %<>% plotly::add_trace(x = d.highlight$pos,
+      #                  y = d.highlight$logp,
+      #                  type = "scatter",
+      #                  mode = "markers",
+      #                  #evaluate = TRUE,
+      #                  text = d.highlight[[snpName]],
+      #                  showlegend = showlegend,
+      #                  marker = list(color = highlight_color,
+      #                                size = point_size),
+      #                  name = "of interest")
     }
   }
   p
