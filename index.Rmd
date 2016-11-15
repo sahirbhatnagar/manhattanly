@@ -299,7 +299,7 @@ By default, the points greater than the default `genomewideline` and `effect_siz
 
 
 ```{r}
-volcanoly(HapMap, genomewideline = -log10(1e-2), effect_size_line = c(-0.5, 0.5))
+volcanoly(HapMap, snp = "SNP", genomewideline = -log10(1e-2), effect_size_line = c(-0.5, 0.5))
 ```
 
 Note that in order to highlight points, the `volcanoly` function requires an identifier for each point given by the `snp` argument. If the `snp` argument is left blank, then no highlighting will be done.
@@ -309,7 +309,7 @@ Note that in order to highlight points, the `volcanoly` function requires an ide
 Set either of the `genomewideline` and `effect_size_line` arguments to `FALSE` to remove that threshold:
 
 ```{r}
-volcanoly(HapMap, genomewideline = -log10(1e-2), effect_size_line = FALSE)
+volcanoly(HapMap, snp = "SNP",  genomewideline = -log10(1e-2), effect_size_line = FALSE)
 ```
 
 ***************
@@ -317,7 +317,7 @@ volcanoly(HapMap, genomewideline = -log10(1e-2), effect_size_line = FALSE)
 Instead of automatic highlighting, you can specify the points you want to highlight using the `highlight` argument:
 
 ```{r}
-volcanoly(HapMap, highlight = significantSNP)
+volcanoly(HapMap, snp = "SNP",  highlight = significantSNP)
 ```
 
 ***************
@@ -325,15 +325,17 @@ volcanoly(HapMap, highlight = significantSNP)
 Finally, to remove highlighting altogether while keeping the threshold lines set `highlight = FALSE` : 
 
 ```{r}
-volcanoly(HapMap, highlight = FALSE)
+volcanoly(HapMap, snp = "SNP", highlight = FALSE)
 ```
+
+The `snp` argument is stil necessary however.
 
 ***************
 
 Similar to the `manhattanr` and `qqr` functions, there is a `volcanor` function which is the pre-pocessing step and creates an object of class `volcanor`:
 
 ```{r}
-volcanorObject <- volcanor(HapMap)
+volcanorObject <- volcanor(HapMap, snp = "SNP")
 str(volcanorObject)
 head(volcanorObject[["data"]])
 ```
