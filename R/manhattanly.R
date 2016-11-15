@@ -277,16 +277,27 @@ manhattanly.manhattanr <- function(x,
                   if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]]),
                   if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d[[annotation1Name]]),
                   if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d[[annotation2Name]]), sep = "<br>")
-
-    p %<>% plotly::add_trace(x = d$pos, y = d$logp,
-                     type = "scatter",
-                     mode = "markers",
-                     #evaluate = TRUE,
-                     text = TEXT,
-                     showlegend = showlegend,
-                     marker = list(color = col[1],
-                                   size = point_size),
-                     name = paste0("chr", unique(d$CHR)))
+    
+    if (is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name)) {
+      p %<>% plotly::add_trace(x = d$pos, y = d$logp,
+                               type = "scatter",
+                               mode = "markers",
+                               # text = TEXT,
+                               showlegend = showlegend,
+                               marker = list(color = col[1],
+                                             size = point_size),
+                               name = paste0("chr", unique(d$CHR))) 
+    } else {
+      
+      p %<>% plotly::add_trace(x = d$pos, y = d$logp,
+                               type = "scatter",
+                               mode = "markers",
+                               text = TEXT,
+                               showlegend = showlegend,
+                               marker = list(color = col[1],
+                                             size = point_size),
+                               name = paste0("chr", unique(d$CHR)))         
+    }
 
   } else {
 
@@ -304,14 +315,25 @@ manhattanly.manhattanr <- function(x,
 
       # get chromosome name for labeling
       chromo <- unique(tmp[which(tmp$index==i),"CHR"])
+      
+      if (is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name)) {
       p %<>% plotly::add_trace(x = tmp$pos, y = tmp$logp, type = "scatter",
                        mode = "markers", 
-                       #evaluate = TRUE,
-                       text = TEXT,
                        showlegend = showlegend,
                        marker = list(color = col[icol],
                                      size = point_size),
-                       name = paste0("chr",chromo))
+                       name = paste0("chr",chromo)) 
+      } else {
+        
+        p %<>% plotly::add_trace(x = tmp$pos, y = tmp$logp, type = "scatter",
+                                 mode = "markers", 
+                                 showlegend = showlegend,
+                                 text = TEXT,
+                                 marker = list(color = col[icol],
+                                               size = point_size),
+                                 name = paste0("chr",chromo))        
+      }
+      
       icol = icol + 1
     }
 
