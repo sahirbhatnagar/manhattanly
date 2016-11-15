@@ -4,8 +4,8 @@
 \alias{volcanor}
 \title{Creates a volcano object}
 \usage{
-volcanor(x, p = "P", effect_size = "EFFECTSIZE", snp = "SNP", gene,
-  annotation1, annotation2, ...)
+volcanor(x, p = "P", effect_size = "EFFECTSIZE", snp, gene, annotation1,
+  annotation2, ...)
 }
 \arguments{
 \item{x}{A \code{data.frame} which must contain at least the following 
@@ -19,15 +19,15 @@ Should not have missing, NA, NaN, or NULL values and should be between 0
 and 1.}
 
 \item{effect_size}{A string denoting the column name for the effect size. 
-Default is \code{p = "EFFECTSIZE"}. This column must be \code{numeric} or 
+Default is \code{effect_size = "EFFECTSIZE"}. This column must be \code{numeric} or 
 \code{integer}. Should not have missing, NA, NaN, or NULL values.}
 
 \item{snp}{A string denoting the column name for the SNP names (e.g. rs 
-number). Default is \code{p = "SNP"}. More generally, this column could be
-anything that identifies each point being plotted. For example, in an
-Epigenomewide association study (EWAS) this could be the probe name or cg
-number. This column should contain \code{characters}. This argument is
-necessary.
+number). This argument is optional but required if you want to highlight 
+any points. More generally, this column could be anything that identifies 
+each point being plotted. For example, in an Epigenomewide association 
+study (EWAS) this could be the probe name or cg number. This column should 
+contain \code{characters}. This argument is necessary. 
 \code{\link{volcanoly}} function}
 
 \item{gene}{A string denoting the column name for the GENE names. This column
@@ -69,8 +69,7 @@ This function will return an error if any of the p-values are NA, less
 }
 \examples{
 library(manhattanly)
-volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", 
-snp = "SNP", highlight = significantSNP)
+volcanorObj <- volcanor(HapMap)
 class(volcanorObj)
 head(volcanorObj)
 

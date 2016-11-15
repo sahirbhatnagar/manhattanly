@@ -16,14 +16,14 @@
 #'   Should not have missing, NA, NaN, or NULL values and should be between 0 
 #'   and 1.
 #' @param effect_size A string denoting the column name for the effect size. 
-#'   Default is \code{p = "EFFECTSIZE"}. This column must be \code{numeric} or 
+#'   Default is \code{effect_size = "EFFECTSIZE"}. This column must be \code{numeric} or 
 #'   \code{integer}. Should not have missing, NA, NaN, or NULL values.
 #' @param snp A string denoting the column name for the SNP names (e.g. rs 
-#'   number). Default is \code{p = "SNP"}. More generally, this column could be
-#'   anything that identifies each point being plotted. For example, in an
-#'   Epigenomewide association study (EWAS) this could be the probe name or cg
-#'   number. This column should contain \code{characters}. This argument is
-#'   necessary.
+#'   number). This argument is optional but required if you want to highlight 
+#'   any points. More generally, this column could be anything that identifies 
+#'   each point being plotted. For example, in an Epigenomewide association 
+#'   study (EWAS) this could be the probe name or cg number. This column should 
+#'   contain \code{characters}. This argument is necessary. 
 #'   \code{\link{volcanoly}} function
 #' @inheritParams manhattanr
 #' @param ... currently ignored
@@ -36,14 +36,13 @@
 #'   of the columns corresponding to the data provided. This information is used
 #'   for annotating the plot in the \code{\link{volcanoly}} function } }
 #'   
-#' @importFrom utils head   
+#' @importFrom utils head
 #' @seealso \code{\link{volcanoly}}
 #'   
 #'   
 #' @examples
 #' library(manhattanly)
-#' volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", 
-#' snp = "SNP", highlight = significantSNP)
+#' volcanorObj <- volcanor(HapMap)
 #' class(volcanorObj)
 #' head(volcanorObj)
 #' 
@@ -52,7 +51,7 @@
 volcanor <- function(x,
                       p = "P",
                       effect_size = "EFFECTSIZE",
-                      snp = "SNP",
+                      snp,
                       gene,
                       annotation1,
                       annotation2,
@@ -94,15 +93,15 @@ volcanor <- function(x,
   }
   
   # Create a new data.frame with columns called P.
-  d <- data.frame(EFFECTSIZE = x[[effect_size]], P = x[[p]], SNP = x[[snp]])
+  d <- data.frame(EFFECTSIZE = x[[effect_size]], P = x[[p]])
   
   # If the input data frame has a SNP column, add it to the new data frame
   # you're creating. Rename columns according to input
-  # if (!missing(snp)) {
-  #   d[["SNP"]] <- x[[snp]]
-  #   # str(d)
-  #   colnames(d)[which(colnames(d) == "SNP")] <- snp
-  # }
+  if (!missing(snp)) {
+    d[["SNP"]] <- x[[snp]]
+    # str(d)
+    colnames(d)[which(colnames(d) == "SNP")] <- snp
+  }
   
   if (!missing(gene)) {
     d[["GENE"]] <- x[[gene]]
@@ -130,7 +129,7 @@ volcanor <- function(x,
                    pName = p,
                    effectName = effect_size,
                    xlabel = effect_size,
-                   snpName = snp,
+                   snpName = if (missing(snp)) NA else snp,
                    geneName = if (missing(gene)) NA else gene,
                    annotation1Name = if (missing(annotation1)) NA else annotation1,
                    annotation2Name = if (missing(annotation2)) NA else annotation2)
