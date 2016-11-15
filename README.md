@@ -14,7 +14,7 @@ The goal of manhattanly is to create interactive manhattan, Q-Q and volcano plot
 
 ## Installation
 
-You can install `manhattanly` from [CRAN](https://cran.r-project.org/web/packages/manhattanly/):
+You can install `manhattanly` from [CRAN](https://cran.r-project.org/package=manhattanly):
 
 ```R
 install.packages("manhattanly")
