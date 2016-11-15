@@ -36,15 +36,16 @@
 #'   of the columns corresponding to the data provided. This information is used
 #'   for annotating the plot in the \code{\link{volcanoly}} function } }
 #'   
-#'   
+#' @importFrom utils head   
 #' @seealso \code{\link{volcanoly}}
 #'   
 #'   
 #' @examples
 #' library(manhattanly)
-#' volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", snp = "SNP", highlight = significantSNP)
+#' volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", 
+#' snp = "SNP", highlight = significantSNP)
 #' class(volcanorObj)
-#' head(volcanorObj[["data"]])
+#' head(volcanorObj)
 #' 
 #' @export
 

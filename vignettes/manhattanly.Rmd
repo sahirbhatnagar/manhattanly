@@ -3,7 +3,7 @@ title: "Interactive Q-Q and Manhattan Plots Using Plotly.js"
 author: "Sahir Bhatnagar"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_vignette:
     number_sections: yes
     self_contained: yes
     toc: true    
@@ -112,8 +112,8 @@ You can then save the plot as a `.png` file by clicking on the camera icon in th
 
 You can also make a volcano plot which by default, highlights the points greater than the default `genomewideline` and `effect_size_line` arguments:
 
-```{r}
-volcanoly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
+```{r, eval=FALSE}
+volcanoly(subset(HapMap, CHR %in% 6:7), snp = "SNP", gene = "GENE")
 ```
 
 

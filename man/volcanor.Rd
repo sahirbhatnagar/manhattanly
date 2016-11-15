@@ -69,9 +69,10 @@ This function will return an error if any of the p-values are NA, less
 }
 \examples{
 library(manhattanly)
-volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", snp = "SNP", highlight = significantSNP)
+volcanorObj <- volcanor(HapMap, p = "P", effect_size = "EFFECTSIZE", 
+snp = "SNP", highlight = significantSNP)
 class(volcanorObj)
-head(volcanorObj[["data"]])
+head(volcanorObj)
 
 }
 \seealso{
