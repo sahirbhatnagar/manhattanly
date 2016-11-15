@@ -325,7 +325,7 @@ volcanoly(HapMap, snp = "SNP",  highlight = significantSNP)
 Finally, to remove highlighting altogether while keeping the threshold lines set `highlight = FALSE` : 
 
 ```{r}
-volcanoly(HapMap, highlight = FALSE)
+volcanoly(HapMap, snp = "SNP", highlight = FALSE)
 ```
 
 The `snp` argument isn't necessary because there is no highlighting being done.
