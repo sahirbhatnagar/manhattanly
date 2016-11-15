@@ -103,6 +103,12 @@ qqly(HapMap, snp = "SNP", gene = "GENE")
 You can then save the plot as a `.png` file by clicking on the camera icon in the toolbar (which appears when you hover your mouse over it). 
 
 
+You can also make a volcano plot:
+
+```{r}
+volcanoly(HapMap, snp = "SNP", gene = "GENE")
+```
+
 
 
 ***************
