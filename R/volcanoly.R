@@ -277,12 +277,7 @@ volcanoly.volcanor <- function(x,
   p <- plotly::ggplotly(p)
   
   # pp %<>% plotly::add_trace(marker = list(color = col,size = point_size, text = TEXT)) 
-  if (is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name)) {
-  p %<>% plotly::add_trace(
-                    type = "scatter",
-                    mode = "markers",
-                    marker = list(color = col, size = point_size))
-  } else {
+  if (!(is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name))) {
     p %<>% plotly::add_trace(
       type = "scatter",
       mode = "markers",

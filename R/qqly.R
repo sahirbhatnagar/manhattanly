@@ -115,7 +115,7 @@ qqly.qqr <- function(x,
                      title = "Q-Q Plot",
                      ...) {
 
-  # x <- qqr(HapMap, snp = "SNP")
+  # x <- qqr(HapMap, snp = "SNP", gene = "GENE")
   # x$data %>% head
   # str(x$data)
   # # http://www.cookbook-r.com/Graphs/Shapes_and_line_types/
@@ -156,39 +156,29 @@ qqly.qqr <- function(x,
   # Initalize ggplot and then convert to plotly using ggplotly
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  if (any(c(!is.na(snpName),!is.na(geneName),!is.na(annotation1Name), !is.na(annotation2Name)))) {
   p <- ggplot2::ggplot(data = d, ggplot2::aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
-    ggplot2::geom_point(ggplot2::aes(text = TEXT),
-               size = size,
-               color = col[1],
-               shape = type) +
+    ggplot2::geom_point(size = size,
+                        color = col[1],
+                        shape = type) +
     ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1),
-                size = abline_size,
-                color = abline_col,
-                linetype = abline_type) +
-    ggplot2::theme_bw() +
-    ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank()) +
+                         size = abline_size,
+                         color = abline_col,
+                         linetype = abline_type) +
+    ggplot2::theme_classic() +
     ggplot2::labs(x = xlab,
-         y = ylab,
-         title = title)
-  } else {
-    p <- ggplot2::ggplot(data = d, ggplot2::aes_string(x = 'EXPECTED', y = 'OBSERVED')) +
-      ggplot2::geom_point(size = size,
-                 color = col[1],
-                 shape = type) +
-      ggplot2::geom_abline(ggplot2::aes(intercept = 0, slope = 1),
-                  size = abline_size,
-                  color = abline_col,
-                  linetype = abline_type) +
-      ggplot2::theme_bw() +
-      ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
-            panel.grid.minor = ggplot2::element_blank()) +
-      ggplot2::labs(x = xlab,
-           y = ylab,
-           title = title)
-  }
+                  y = ylab,
+                  title = title)
 
+  p <- plotly::ggplotly(p)
+  
+  if (!(is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name))) {
+    p %<>% plotly::add_trace(
+      type = "scatter",
+      mode = "markers",
+      text = TEXT,
+      marker = list(color = col, size = point_size))
+  }
+  
   EXPECTED=OBSERVED=NULL
   # Highlight snps from a character vector
   if (!is.na(snpName)) {
@@ -198,21 +188,22 @@ qqly.qqr <- function(x,
       d.highlight <- d[which(d[[snpName]] %in% highlight), ]
 
       TEXT2 <- paste(if (!is.na(snpName)) paste0(snpName,": ", d.highlight[[snpName]]),
-                    if (!is.na(geneName)) paste0(geneName,": ", d.highlight[[geneName]]),
-                    if (!is.na(annotation1Name)) paste0(annotation1Name,": ", d.highlight[[annotation1Name]]),
-                    if (!is.na(annotation2Name)) paste0(annotation2Name,": ", d.highlight[[annotation2Name]]),
-                    sep = "<br>")
-
-      p <- p + ggplot2::geom_point(data = d.highlight,
-                                   ggplot2::aes(x = EXPECTED, y = OBSERVED,
-                                                text = TEXT2),
-                                   size = size,
-                                   color = highlight_color,
-                                   shape = type)
+                     if (!is.na(geneName)) paste0(geneName,": ", d.highlight[[geneName]]),
+                     if (!is.na(annotation1Name)) paste0(annotation1Name,": ", d.highlight[[annotation1Name]]),
+                     if (!is.na(annotation2Name)) paste0(annotation2Name,": ", d.highlight[[annotation2Name]]),
+                     sep = "<br>")
+      
+      p %<>% plotly::add_trace(x = d.highlight$EXPECTED, y = d.highlight$OBSERVED,
+                               type = "scatter",
+                               mode = "markers",
+                               text = TEXT2,
+                               marker = list(color = highlight_color,
+                                             size = point_size),
+                               name = "of interest")
     }
   }
 
 
-  plotly::ggplotly(p)
+  p
 
 }
