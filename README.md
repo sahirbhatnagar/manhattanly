@@ -8,7 +8,7 @@
 
 # manhattanly
 
-The goal of manhattanly is to create interactive manhattan and Q-Q plots
+The goal of manhattanly is to create interactive manhattan, Q-Q and volcano plots
 
 ![](http://i.imgur.com/n88LCky.gif)
 

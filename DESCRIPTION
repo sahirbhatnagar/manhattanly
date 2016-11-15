@@ -1,12 +1,12 @@
 Package: manhattanly
 Type: Package
 Title: Interactive Q-Q and Manhattan Plots Using 'plotly.js'
-Version: 0.1.0
-Date: 2016-06-07
+Version: 0.2.0
+Date: 2016-11-17
 LazyData: true
 Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
     role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
-Description: Create interactive Q-Q and manhattan plots that are usable from the R console,
+Description: Create interactive Q-Q, manhattan and volcano plots that are usable from the R console,
     in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a point to show details or drag a rectangle to
     zoom. A manhattan plot is a popular graphical method for visualizing results
@@ -28,8 +28,8 @@ Depends:
 Imports:
     stats,
     magrittr (>= 1.0.1),
-    plotly (>= 3.6.0),
-    ggplot2
+    plotly (>= 4.5.6),
+    ggplot2 (>= 2.1.0)
 Suggests:
     knitr,
     rmarkdown

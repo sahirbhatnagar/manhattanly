@@ -176,7 +176,7 @@ qqly.qqr <- function(x,
       type = "scatter",
       mode = "markers",
       text = TEXT,
-      marker = list(color = col, size = point_size))
+      marker = list(color = col, size = size))
   }
   
   EXPECTED=OBSERVED=NULL
@@ -198,7 +198,7 @@ qqly.qqr <- function(x,
                                mode = "markers",
                                text = TEXT2,
                                marker = list(color = highlight_color,
-                                             size = point_size),
+                                             size = size),
                                name = "of interest")
     }
   }
