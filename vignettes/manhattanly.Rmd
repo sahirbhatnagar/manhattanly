@@ -34,19 +34,19 @@ knitr::opts_chunk$set(echo = TRUE,
 
 * This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd).
 
-* In the interactive manhattan and qq plots below, we only use a subset (chromosomes 4 to 7) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
+* In the interactive manhattan, qq and volcano plots below, we only use a subset (chromosomes 4 to 7) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
 
 **************
 
 # Introduction
 
-[Manhattan](https://en.wikipedia.org/wiki/Manhattan_plot) and [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) plots are popular graphical methods for visualizing results from high-dimensional data analysis such as a (epi)genome wide asssociation study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter plot against their genomic position. Manhattan plots are used for visualizing
-potential regions of interest in the genome that are associated with a phenotype. Q-Q plots tell us about the distributional assumptions of the observed test statistics.
+[Manhattan](https://en.wikipedia.org/wiki/Manhattan_plot), [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) and [volcano](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC154570/) plots are popular graphical methods for visualizing results from high-dimensional data analysis such as a (epi)genome wide asssociation study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter plot against their genomic position. Manhattan plots are used for visualizing
+potential regions of interest in the genome that are associated with a phenotype. Q-Q plots tell us about the distributional assumptions of the observed test statistics. Volcano plots are the negative log10 p-values plotted against their effect size, odds ratio or log fold-change. They are used to identify clinically meaningful markers in genomic experiments, i.e., markers that are statistically significant and have an effect size greater than some threshold. 
 
-Interactive manhattan and Q-Q plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the
+Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the
 genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
 
-This pacakge creates interactive Q-Q and manhattan plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
+This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
 zoom in on a region of interest and then export the image as a `.png` file.
 
 This work is based on the [`qqman`](https://github.com/stephenturner/qqman) by [Stephen Turner](http://stephenturner.us/) and the [`plotly.js`](https://plot.ly/)
@@ -68,8 +68,8 @@ install.packages("manhattanly")
 Alternatively, you can install the development version of `manhattanly` from [GitHub](https://github.com/sahirbhatnagar/manhattanly) with:
 
 ```R
-install.packages("devtools")
-devtools::install_github("sahirbhatnagar/manhattanly", build_vignettes = TRUE)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load_gh("sahirbhatnagar/manhattanly")
 ```
 
 ***************
@@ -108,6 +108,13 @@ qqly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
 ***************
 You can then save the plot as a `.png` file by clicking on the camera icon in the toolbar (which appears when you hover your mouse over it). 
 
+***************
+
+You can also make a volcano plot which by default, highlights the points greater than the default `genomewideline` and `effect_size_line` arguments:
+
+```{r}
+volcanoly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
+```
 
 
 
