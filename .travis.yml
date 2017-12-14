@@ -16,6 +16,7 @@ install:
   - Rscript -e "if (!require('rmarkdown')) install.packages('rmarkdown')"
   - Rscript -e "if (!require('knitr')) install.packages('knitr')"
   - Rscript -e "devtools::install_github('sahirbhatnagar/manhattanly')"
+  - Rscript -e "if (!require('manhattanly')) install.packages('manhattanly')"
   - Rscript -e "if (!require('plotly')) install.packages('plotly')"
   - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
   - Rscript -e "if (!require('magrittr')) install.packages('magrittr')"
