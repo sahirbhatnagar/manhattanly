@@ -1,34 +1,29 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
-
 language: r
-
 env:
   global:
-    - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE" PATH=$HOME/bin:$PATH
-    - secure: "u2Fg8f3eFdwaNIxBpo2joU1BB8Qb528WBUCFxLUBuYAXHyAmIalvcF6ArFHC4hmMRx39Dl2wnW7SV9hcLxiGLeym8OPkTQD4RiF4V7DORX19MQM+0yucI7tZ6g7tJ2hrBZj/R4qX75Hf2TVygp7+tChKe9F8e9NnKB81av06aWpbPXMDN/SczeQEIos34A3U2Q1p/NPC9FRYajn940EfGb2Hs8Ob6G5+qRUkyKQodbsnk6EMjMg23ccYgumGGGrw4D/ZmfF59/QDFfmHf15q8/dFKMT/FsfV2PH+B4qZl78g9W8bOSMbXU4OoehHEBOdV/KwzuqI0ksYnoyM5+hxnskaCvT6bZ7E2iFHmPkNBEXikqKcK/5g5CEdjiDt95XKFF02UL9tA7IXwMFtMOX1RoVJ9GCNxkJUSuzb/cZdvMnqlBrSAlD1hkQHOY+T6pyUwn3eQIzY3jaA380/Th/BkhutjhA9aHd2ZGSpvHMKgAz52gkL7d3MoGFW9Ir+azBk26c4DxNA0y32rdFtMnbtA/KdZKnz3ayCGMaQqEgCg4spYzkVE3eesBI18bcgSSzNLVj7RRAlKQWGJP9lXWc+C4KaZ8o4XUfCjBXV7nMwQH0kh6HCPu1WzmGNtcX1hllMZvHsj3OX11BS6utMCmI7f2KAB8dftN/GCqP6pe+ljGk="
+  - R_PKG="$(basename $TRAVIS_REPO_SLUG)" R_KNITR_OPTIONS="knitr.chunk.tidy=TRUE"
+    PATH=$HOME/bin:$PATH
+  - secure: FZp6T9lNIv1Mem478dZm6a8cY69R+muPtIyYutoVQecNFyJ+wFBkfj+GT5zcSQ3UaWBdNbSCR8s2OHkoBGlb89lsAtk+MYPtumK7PDEnjA9czbZsnJvSdwq/MiRcM1ESeRSC3G8trYjrrDalzk5evMSLGUcDFkDNnzPVMMvCqskQ8QFAhj8MQv7AXP3maTazODW+t8S9KTlTO87xj8MSp/JivWlQmw+1kBstTVNd2BsB2bHdxTxjwE83K3dl2MLB3YpWfwXjMSeAnltki1b9Q3EtgmUIBbOq2UOj4/CNwR45offWTDzEPuVXs0sNDchUanH3PN1IY1QCLYsMaAquBN64h2OvT4W9W0RqLQUQWWda6PNZTwtC3BMyfryp4q/YRon0ndXjhvxGaIuFM/deQG6pogvE+aYv+z3SqS3xu64yy4OQBvaNHSM4MLXfe95eDnGxvAdcx3TF+BsJ4DZxcNlwX1zLXJDR/T9FnICKkTb2PLViTbyCgLtHoGQwR5hwl1roD5147Ni7QmxYwaqqOO8bskl0ijLL4BHcO4WpTLnugLnrX6R0c4zmAnnmYZ6TkdJb+0EMvIi4CuINrND9cY92rZpRCqqoqRuql4p+RC1Rjsr5xlDSyp0WWNS/XeaYe8ANwq6leNNHHIp6VPbc2P/QJqrXPNLQOeXtl/ATgzc=
 
 r_github_packages:
-  - sahirbhatnagar/manhattanly
+- sahirbhatnagar/manhattanly
 
 install:
-  - Rscript -e "if (!require('devtools')) install.packages('devtools')"
-  - Rscript -e "if (!require('rmarkdown')) install.packages('rmarkdown')"
-  - Rscript -e "if (!require('knitr')) install.packages('knitr')"
-  - Rscript -e "devtools::install_github('sahirbhatnagar/manhattanly')"
-  - Rscript -e "if (!require('manhattanly')) install.packages('manhattanly')"
-  - Rscript -e "if (!require('plotly')) install.packages('plotly')"
-  - Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
-  - Rscript -e "if (!require('magrittr')) install.packages('magrittr')"
+- Rscript -e "if (!require('devtools')) install.packages('devtools')"
+- Rscript -e "if (!require('rmarkdown')) install.packages('rmarkdown')"
+- Rscript -e "if (!require('knitr')) install.packages('knitr')"
+- Rscript -e "devtools::install_github('sahirbhatnagar/manhattanly')"
+- Rscript -e "if (!require('plotly')) install.packages('plotly')"
+- Rscript -e "if (!require('ggplot2')) install.packages('ggplot2')"
+- Rscript -e "if (!require('magrittr')) install.packages('magrittr')"
 
 before_script:
-  - chmod +x ./_build.sh
-  - chmod +x ./_deploy.sh
+- chmod +x ./_build.sh
+- chmod +x ./_deploy.sh
 
 script:
-  - ./_build.sh
-  - ./_deploy.sh
+- "./_build.sh"
+- "./_deploy.sh"
 
 cache:
-  packages: yes
-
+  packages: true
