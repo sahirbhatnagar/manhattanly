@@ -5,11 +5,11 @@ git config --global user.name "sahirbhatnagar"
 
 # clone the repository to the book-output directory
 git clone -b gh-pages \
-  https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git \
+  https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git \
   book-output
 cd book-output
+git rm -rf *
 cp -r ../_book/* ./
-rm -rf _bookdown_files
-git add *
+git add --all *
 git commit -m "Update the complete version of the vignette"
-git push origin gh-pages
+git push -q origin gh-pages
