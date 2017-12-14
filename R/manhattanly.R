@@ -72,6 +72,7 @@
 manhattanly <- function(x,
                         # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
                         # col = RColorBrewer::brewer.pal(n = 9, name = "Greys"),
+                        ...,
                         col = c("#969696", "#252525"),
                         point_size = 5,
                         labelChr = NULL,
@@ -87,7 +88,7 @@ manhattanly <- function(x,
                         showgrid = FALSE,
                         xlab = NULL,
                         ylab = "-log10(p)",
-                        title = "Manhattan Plot", ...) {
+                        title = "Manhattan Plot") {
 
   UseMethod("manhattanly")
 
@@ -95,8 +96,7 @@ manhattanly <- function(x,
 
 #' @export
 manhattanly.default <- function(x,
-                                # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
-                                # col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
+                                ...,
                                 col = c("#969696", "#252525"),
                                 point_size = 5,
                                 labelChr = NULL,
@@ -112,7 +112,7 @@ manhattanly.default <- function(x,
                                 showgrid = FALSE,
                                 xlab = NULL,
                                 ylab = "-log10(p)",
-                                title = "Manhattan Plot", ...) {
+                                title = "Manhattan Plot") {
 
   mh <- manhattanr(x, ...)
   nchr <- mh$nchr
@@ -138,8 +138,7 @@ manhattanly.default <- function(x,
 
 #' @export
 manhattanly.manhattanr <- function(x,
-                                   # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
-                                   # col = RColorBrewer::brewer.pal(n = 9, name = "Set1"),
+                                   ...,
                                    col = c("#969696", "#252525"),
                                    point_size = 5,
                                    labelChr = NULL,
@@ -155,8 +154,7 @@ manhattanly.manhattanr <- function(x,
                                    showgrid = FALSE,
                                    xlab = NULL,
                                    ylab = "-log10(p)",
-                                   title = "Manhattan Plot",
-                                   ...) {
+                                   title = "Manhattan Plot") {
 
   # x <- manhattanr(gwasResults)
   # x <- manhattanr(kk, annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")

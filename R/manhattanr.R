@@ -88,8 +88,7 @@ manhattanr <- function(x,
                        gene,
                        annotation1,
                        annotation2,
-                       logp = TRUE,
-                       ...) {
+                       logp = TRUE) {
 
   # NULLing out strategy
   # http://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
@@ -103,7 +102,7 @@ manhattanr <- function(x,
   # bp = "BP";
   # p = "P";
   # snp = "SNP"
-
+# browser()
   # Check for sensible dataset
   ## Make sure you have chr, bp and p columns.
   if (!(chr %in% names(x))) stop(paste("Column", chr, "not found in 'x' data.frame"))
