@@ -389,7 +389,9 @@ manhattanly.manhattanr <- function(x,
                       if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
                       if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
         
-        p %<>% plotly::add_trace(x = d$pos, y = d$logp,
+        # browser()
+        
+        p %<>% plotly::add_trace(x = d.highlight$pos, y = d.highlight$logp,
                                  type = "scatter",
                                  mode = "markers",
                                  text = TEXT,
