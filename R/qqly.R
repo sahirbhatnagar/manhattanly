@@ -36,8 +36,7 @@
 #' @return An interactive Q-Q plot.
 #' @aliases qqly.default qqly.qqr
 #' @seealso \code{\link{qqr}}, \code{\link{HapMap}},
-#'   \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
-#'   \url{https://github.com/stephenturner/qqman}
+#'   \code{\link{significantSNP}}
 #' @note This function first creates a \code{ggplot2} object and then converts
 #'   it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
 #' @export

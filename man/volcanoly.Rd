@@ -6,12 +6,25 @@
 \alias{volcanoly.volcanor}
 \title{Creates a plotly volcano plot}
 \usage{
-volcanoly(x, col = c("#252525"), point_size = 5, effect_size_line = c(-1,
-  1), effect_size_line_color = "grey", effect_size_line_width = 0.5,
-  effect_size_line_type = 2, genomewideline = -log10(1e-05),
-  genomewideline_color = "grey", genomewideline_width = 0.5,
-  genomewideline_type = 2, highlight = NULL, highlight_color = "red",
-  xlab = NULL, ylab = "-log10(p)", title = "Volcano Plot", ...)
+volcanoly(
+  x,
+  col = c("#252525"),
+  point_size = 5,
+  effect_size_line = c(-1, 1),
+  effect_size_line_color = "grey",
+  effect_size_line_width = 0.5,
+  effect_size_line_type = 2,
+  genomewideline = -log10(1e-05),
+  genomewideline_color = "grey",
+  genomewideline_width = 0.5,
+  genomewideline_type = 2,
+  highlight = NULL,
+  highlight_color = "red",
+  xlab = NULL,
+  ylab = "-log10(p)",
+  title = "Volcano Plot",
+  ...
+)
 }
 \arguments{
 \item{x}{Can be an object of class \code{volcanor} produced by the 
@@ -107,4 +120,3 @@ volcanoly(HapMap, snp = "SNP", highlight = significantSNP)
 \code{\link{volcanor}}, \code{\link{HapMap}}, 
   \code{\link{significantSNP}}
 }
-

@@ -1,5 +1,11 @@
-[![Travis-CI Build Status](https://travis-ci.org/sahirbhatnagar/manhattanly.svg?branch=master)](https://travis-ci.org/sahirbhatnagar/manhattanly)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/manhattanly)](https://cran.r-project.org/package=manhattanly)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/sahirbhatnagar/manhattanly/workflows/R-CMD-check/badge.svg)](https://github.com/sahirbhatnagar/manhattanly/actions)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/manhattanly?color=green)](https://www.r-pkg.org/pkg/manhattanly)
+[![CRAN](https://www.r-pkg.org/badges/version/manhattanly?color=blue)](https://cran.r-project.org/package=manhattanly)
+[![Lifecycle:maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![Codecov test coverage](https://codecov.io/gh/sahirbhatnagar/manhattanly/branch/master/graph/badge.svg)](https://codecov.io/gh/sahirbhatnagar/manhattanly?branch=master)
+<!-- badges: end -->
+
 
 <!--
 ![](http://cranlogs.r-pkg.org/badges/manhattanly?color=yellow)

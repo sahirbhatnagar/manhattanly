@@ -4,8 +4,16 @@
 \alias{volcanor}
 \title{Creates a volcano object}
 \usage{
-volcanor(x, p = "P", effect_size = "EFFECTSIZE", snp, gene, annotation1,
-  annotation2, ...)
+volcanor(
+  x,
+  p = "P",
+  effect_size = "EFFECTSIZE",
+  snp,
+  gene,
+  annotation1,
+  annotation2,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{data.frame} which must contain at least the following 
@@ -77,4 +85,3 @@ head(volcanorObj)
 \seealso{
 \code{\link{volcanoly}}
 }
-

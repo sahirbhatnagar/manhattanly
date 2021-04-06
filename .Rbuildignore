@@ -11,3 +11,7 @@
 ^_build\.sh$
 ^_deploy\.sh$
 ^_book$
+^\.github$
+^codecov\.yml$
+^doc$
+^Meta$

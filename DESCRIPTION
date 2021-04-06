@@ -2,7 +2,7 @@ Package: manhattanly
 Type: Package
 Title: Interactive Q-Q and Manhattan Plots Using 'plotly.js'
 Version: 0.2.0
-Date: 2016-11-17
+Date: 2021-04-06
 LazyData: true
 Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
     role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
@@ -24,17 +24,20 @@ Description: Create interactive Q-Q, manhattan and volcano plots that are usable
     Once uploaded to a 'plotly' account, 'plotly' graphs (and the data behind them) 
     can be viewed and modified in a web browser.
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.5.0)
 Imports:
     stats,
-    magrittr (>= 1.0.1),
-    plotly (>= 4.5.6),
-    ggplot2 (>= 2.1.0)
+    magrittr,
+    plotly,
+    ggplot2
 Suggests:
+    testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 URL: https://github.com/sahirbhatnagar/manhattanly/, http://sahirbhatnagar.com/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 7.1.1
+Config/testthat/edition: 3

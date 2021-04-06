@@ -6,10 +6,21 @@
 \alias{qqly.qqr}
 \title{Creates a plotly Q-Q plot}
 \usage{
-qqly(x, col = "#252525", size = 1, type = 20, abline_col = "red",
-  abline_size = 0.5, abline_type = 1, highlight = NULL,
-  highlight_color = "#00FF00", xlab = "Expected -log10(p)",
-  ylab = "Observed -log10(p)", title = "Q-Q Plot", ...)
+qqly(
+  x,
+  col = "#252525",
+  size = 1,
+  type = 20,
+  abline_col = "red",
+  abline_size = 0.5,
+  abline_type = 1,
+  highlight = NULL,
+  highlight_color = "#00FF00",
+  xlab = "Expected -log10(p)",
+  ylab = "Observed -log10(p)",
+  title = "Q-Q Plot",
+  ...
+)
 }
 \arguments{
 \item{x}{Can be an object of class \code{qqr} produced by the
@@ -79,7 +90,5 @@ qqly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 \seealso{
 \code{\link{qqr}}, \code{\link{HapMap}},
-  \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
-  \url{https://github.com/stephenturner/qqman}
+  \code{\link{significantSNP}}
 }
-

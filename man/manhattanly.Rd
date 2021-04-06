@@ -6,13 +6,26 @@
 \alias{manhattanly.manhattanr}
 \title{Creates a plotly manhattan plot}
 \usage{
-manhattanly(x, col = c("#969696", "#252525"), point_size = 5,
-  labelChr = NULL, suggestiveline = -log10(1e-05),
-  suggestiveline_color = "blue", suggestiveline_width = 1,
-  genomewideline = -log10(5e-08), genomewideline_color = "red",
-  genomewideline_width = 1, highlight = NULL, highlight_color = "#00FF00",
-  showlegend = FALSE, showgrid = FALSE, xlab = NULL, ylab = "-log10(p)",
-  title = "Manhattan Plot", ...)
+manhattanly(
+  x,
+  ...,
+  col = c("#969696", "#252525"),
+  point_size = 5,
+  labelChr = NULL,
+  suggestiveline = -log10(1e-05),
+  suggestiveline_color = "blue",
+  suggestiveline_width = 1,
+  genomewideline = -log10(5e-08),
+  genomewideline_color = "red",
+  genomewideline_width = 1,
+  highlight = NULL,
+  highlight_color = "#00FF00",
+  showlegend = FALSE,
+  showgrid = FALSE,
+  xlab = NULL,
+  ylab = "-log10(p)",
+  title = "Manhattan Plot"
+)
 }
 \arguments{
 \item{x}{Can be an object of class \code{manhattanr} produced by the
@@ -20,6 +33,8 @@ manhattanly(x, col = c("#969696", "#252525"), point_size = 5,
 at least the following three columns: \itemize{ \item{the chromosome
 number} \item{genomic base-pair position} \item{a numeric quantity to plot
 such as a p-value or zscore} }}
+
+\item{...}{other parameters passed to \code{\link{manhattanr}}}
 
 \item{col}{A character vector indicating the colors of each chromosome. If
 the number of colors specified is less than the number of unique
@@ -70,8 +85,6 @@ Specify here to overwrite the default.}
 \item{ylab}{Y-axis label. Default is \code{"-log10(p)"}.}
 
 \item{title}{Title of the plot. Default is \code{"Manhattan Plot"}}
-
-\item{...}{other parameters passed to \code{\link{manhattanr}}}
 }
 \value{
 An interactive manhattan plot.
@@ -100,8 +113,7 @@ manhattanly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 \seealso{
 \code{\link{manhattanr}}, \code{\link{HapMap}},
-  \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
+  \code{\link{significantSNP}},
   \url{https://github.com/stephenturner/qqman},
   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 }
-

@@ -52,7 +52,7 @@
 #'   documents or embeded in websites using simple HTML code.
 #' @return An interactive manhattan plot.
 #' @seealso \code{\link{manhattanr}}, \code{\link{HapMap}},
-#'   \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
+#'   \code{\link{significantSNP}},
 #'   \url{https://github.com/stephenturner/qqman},
 #'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 #' @aliases manhattanly.default manhattanly.manhattanr
@@ -389,7 +389,9 @@ manhattanly.manhattanr <- function(x,
                       if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
                       if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
         
-        p %<>% plotly::add_trace(x = d$pos, y = d$logp,
+        # browser()
+        
+        p %<>% plotly::add_trace(x = d.highlight$pos, y = d.highlight$logp,
                                  type = "scatter",
                                  mode = "markers",
                                  text = TEXT,
