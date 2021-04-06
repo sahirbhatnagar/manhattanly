@@ -31,10 +31,12 @@ Imports:
     plotly (>= 4.5.6),
     ggplot2 (>= 2.1.0)
 Suggests:
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 URL: https://github.com/sahirbhatnagar/manhattanly/, http://sahirbhatnagar.com/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues
-RoxygenNote: 5.0.1
+RoxygenNote: 7.1.1
+Config/testthat/edition: 3

@@ -4,7 +4,9 @@
 \name{significantSNP}
 \alias{significantSNP}
 \title{Character vector of SNPs to highlight}
-\format{A character vector with 20 elements}
+\format{
+A character vector with 20 elements
+}
 \usage{
 significantSNP
 }
@@ -16,4 +18,3 @@ SNP rs identifiers from \code{\link{HapMap}} dataset that are significant at \co
 \code{\link{HapMap}}
 }
 \keyword{datasets}
-

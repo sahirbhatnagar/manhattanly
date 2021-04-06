@@ -76,4 +76,3 @@ head(qqrObj[["data"]])
 \seealso{
 \code{\link{qqly}}
 }
-

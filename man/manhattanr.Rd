@@ -10,8 +10,17 @@ The pre-processing is mostly the same as the
   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
 }
 \usage{
-manhattanr(x, chr = "CHR", bp = "BP", p = "P", snp, gene, annotation1,
-  annotation2, logp = TRUE, ...)
+manhattanr(
+  x,
+  chr = "CHR",
+  bp = "BP",
+  p = "P",
+  snp,
+  gene,
+  annotation1,
+  annotation2,
+  logp = TRUE
+)
 }
 \arguments{
 \item{x}{A \code{data.frame} which must contain at least the following three
@@ -102,4 +111,3 @@ head(DT2[["data"]])
   \url{https://github.com/stephenturner/qqman},
   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 }
-
