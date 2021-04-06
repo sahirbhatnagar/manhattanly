@@ -32,9 +32,8 @@
 #'   for annotating the plot in the \code{\link{qqly}} function } }
 #'
 #' @source The calculation of the expected p-value is taken from the
-#'   \code{\link[qqman]{qq}} function from the
-#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
-#'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
+#'   qq function from the
+#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package
 #'
 #' @seealso \code{\link{qqly}}
 #'

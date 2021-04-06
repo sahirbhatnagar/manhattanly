@@ -5,9 +5,8 @@
 \title{Creates a qq object}
 \source{
 The calculation of the expected p-value is taken from the
-  \code{\link[qqman]{qq}} function from the
-  \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
-  \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
+  qq function from the
+  \href{https://github.com/stephenturner/qqman}{\code{qqman}} package
 }
 \usage{
 qqr(x, p = "P", snp, gene, annotation1, annotation2, ...)

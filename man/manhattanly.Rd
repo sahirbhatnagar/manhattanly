@@ -113,7 +113,7 @@ manhattanly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 \seealso{
 \code{\link{manhattanr}}, \code{\link{HapMap}},
-  \code{\link{significantSNP}}, \code{\link[qqman]{manhattan}},
+  \code{\link{significantSNP}},
   \url{https://github.com/stephenturner/qqman},
   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
 }

@@ -45,7 +45,6 @@
 #'   useful to plot raw p-values, but plotting the raw value could be useful for
 #'   other genome-wide plots, for example, peak heights, bayes factors, test
 #'   statistics, other "scores" etc.
-#' @param ... currently ignored
 #'
 #' @return A \code{list} object of class \code{manhattanr} with the following
 #'   elements \describe{ \item{data}{processed data to be used for plotting}
@@ -60,9 +59,8 @@
 #'   \code{\link{manhattanly}} function } }
 #' @export
 #' @source The pre-processing is mostly the same as the
-#'   \code{\link[qqman]{manhattan}} function from the
-#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
-#'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}
+#'   manhattan function from the
+#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package
 #'
 #' @examples
 #' # HapMap dataset included in this package already has columns named P, CHR and BP

@@ -90,6 +90,5 @@ qqly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 \seealso{
 \code{\link{qqr}}, \code{\link{HapMap}},
-  \code{\link{significantSNP}}, \code{\link[qqman]{qq}},
-  \url{https://github.com/stephenturner/qqman}
+  \code{\link{significantSNP}}
 }

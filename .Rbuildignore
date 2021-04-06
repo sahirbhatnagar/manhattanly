@@ -13,3 +13,5 @@
 ^_book$
 ^\.github$
 ^codecov\.yml$
+^doc$
+^Meta$
