@@ -350,6 +350,10 @@ volcanoly.volcanor <- function(x,
     # p <- p + eline1 + eline2
   }
   
+  if (is.logical(effect_size_line) & is.logical(genomewideline)) {
+    p2 <- list(NULL)
+  }
+  
   # fig <- 
   p <- fig %>% layout(shapes = p2) 
   
