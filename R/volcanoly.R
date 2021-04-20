@@ -133,6 +133,35 @@ volcanoly.default <- function(x,
 }
 
 
+my_vline <- function(x = 0, color = "grey", dash = "dash", width = 2) {
+  list(
+    type = "line", 
+    y0 = 0, 
+    y1 = 1, 
+    yref = "paper",
+    x0 = x, 
+    x1 = x, 
+    line = list(color = color, width = width, dash = dash)
+  )
+}
+
+my_hline <- function(y = 0, color = "grey", dash = "dash", width = 2) {
+  
+  # https://plotly.com/r/reference/#layout-shapes for dash arguments
+  # can be number (to keep original API or character)
+  # dash <- match.arg(dash)
+  list(
+    type = "line", 
+    x0 = 0, 
+    x1 = 1, 
+    xref = "paper",
+    y0 = y, 
+    y1 = y, 
+    line = list(color = color, width = width, dash = dash)
+  )
+}
+
+
 #' @export
 volcanoly.volcanor <- function(x,
                                col = c("#252525"),
@@ -140,11 +169,11 @@ volcanoly.volcanor <- function(x,
                                effect_size_line = c(-1,1),
                                effect_size_line_color = "grey",
                                effect_size_line_width = 0.5,
-                               effect_size_line_type = 2,
+                               effect_size_line_type = "dash",
                                genomewideline = -log10(1e-5),
                                genomewideline_color = "grey",
                                genomewideline_width = 0.5,
-                               genomewideline_type = 2,
+                               genomewideline_type = "dash",
                                highlight = NULL,
                                highlight_color = "red",
                                xlab = NULL,
@@ -180,7 +209,6 @@ volcanoly.volcanor <- function(x,
   #########
   
   d <- x$data
-  head(d)
   pName <- x$pName
   log10pName <- "LOG10P"
   effectName <- x$effectName
@@ -217,73 +245,131 @@ volcanoly.volcanor <- function(x,
   #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   # rm(p)
   
-  TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d[[snpName]]),
-                if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]]),
-                if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d[[annotation1Name]]),
-                if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d[[annotation2Name]]), sep = "<br>")
   
-  p <- ggplot2::ggplot(d, ggplot2::aes_string(x = effectName, y = log10pName)) + 
-    ggplot2::geom_point() + 
-    ggplot2::theme_classic() + 
-    ggplot2::labs(x = if(!is.null(xlab)) xlab else xlabel,
-                  y = ylab,
-                  title = title)
+  # TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d[[snpName]]),
+  #               if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]]),
+  #               # if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d[[annotation1Name]]),
+  #               # if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d[[annotation2Name]]), 
+  #               sep = "<br>")
+  
+  my_xlab <- list(
+    title = if(!is.null(xlab)) xlab else xlabel
+  )
+  
+  my_ylab <- list(
+    title = ylab
+  )
+  
+  
+  
+  
+  fig <- plot_ly(d, x = ~EFFECTSIZE, y = ~LOG10P,
+                 type = 'scatter', mode = 'markers',
+                 hoverinfo = 'text',
+                 marker = list(color = col,
+                               size = point_size),
+                 text = ~paste(if (!is.na(snpName)) paste0(snpName,": ",d[[snpName]]),
+                               if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]]),
+                               paste0(effectName,": ",EFFECTSIZE),
+                               paste0(log10pName,": ",LOG10P), 
+                               sep = "<br>")) %>% plotly::layout(xaxis = my_xlab, yaxis = my_ylab, title = list(text = title))
+  
+  # fig
+  # browser()
+  
+  #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Keep going from here
+  # p <- ggplot2::ggplot(d, ggplot2::aes(x = EFFECTSIZE, y = LOG10P)) + 
+  #   ggplot2::geom_point() + 
+  #   ggplot2::theme_classic() + 
+  #   ggplot2::labs(x = if(!is.null(xlab)) xlab else xlabel,
+  #                 y = ylab,
+  #                 title = title)
   
   if (!is.logical(effect_size_line) & !is.logical(genomewideline)) {
     
-    eline1 <- ggplot2::geom_vline(xintercept = effect_size_line[1], 
-                                  linetype = effect_size_line_type, 
-                                  size = effect_size_line_width, 
-                                  color = effect_size_line_color)
-    eline2 <- ggplot2::geom_vline(xintercept = effect_size_line[2],
-                                  linetype = effect_size_line_type,
-                                  size = effect_size_line_width,
-                                  color = effect_size_line_color)
-    pline <- ggplot2::geom_hline(yintercept = genomewideline[1],
-                                 linetype = genomewideline_type,
-                                 size = genomewideline_width,
-                                 color = genomewideline_color)
+    p2 <- list(
+      my_vline(x = effect_size_line[1], color = effect_size_line_color, dash = effect_size_line_type, width = effect_size_line_width),
+      my_vline(x = effect_size_line[2], color = effect_size_line_color, dash = effect_size_line_type, width = effect_size_line_width),
+      my_hline(y = genomewideline[1], color = genomewideline_color, dash = genomewideline_type, width = genomewideline_width)
+    )
     
-    p <- p + eline1 + eline2 + pline
+    # eline1 <- ggplot2::geom_vline(xintercept = effect_size_line[1], 
+    #                               linetype = effect_size_line_type, 
+    #                               size = effect_size_line_width, 
+    #                               color = effect_size_line_color)
+    # eline2 <- ggplot2::geom_vline(xintercept = effect_size_line[2],
+    #                               linetype = effect_size_line_type,
+    #                               size = effect_size_line_width,
+    #                               color = effect_size_line_color)
+    # pline <- ggplot2::geom_hline(yintercept = genomewideline[1],
+    #                              linetype = genomewideline_type,
+    #                              size = genomewideline_width,
+    #                              color = genomewideline_color)
+    
+    # fig <- fig %>% layout(shapes = p2)
+    # p <- p + eline1 + eline2 + pline
   }
   
   if (is.logical(effect_size_line) & !is.logical(genomewideline)) {
     
-    pline <- ggplot2::geom_hline(yintercept = genomewideline[1],
-                                 linetype = genomewideline_type,
-                                 size = genomewideline_width,
-                                 color = genomewideline_color)
+    # pline <- ggplot2::geom_hline(yintercept = genomewideline[1],
+    #                              linetype = genomewideline_type,
+    #                              size = genomewideline_width,
+    #                              color = genomewideline_color)
     
-    p <- p + pline
+    p2 <- list(
+      my_hline(y = genomewideline[1], color = genomewideline_color, dash = genomewideline_type, width = genomewideline_width)
+    )
+    
+    # p <- p + pline
   }
   
   
   if (!is.logical(effect_size_line) & is.logical(genomewideline)) {
     
-    eline1 <- ggplot2::geom_vline(xintercept = effect_size_line[1], 
-                                  linetype = effect_size_line_type, 
-                                  size = effect_size_line_width, 
-                                  color = effect_size_line_color)
-    eline2 <- ggplot2::geom_vline(xintercept = effect_size_line[2],
-                                  linetype = effect_size_line_type,
-                                  size = effect_size_line_width,
-                                  color = effect_size_line_color)
     
-    p <- p + eline1 + eline2
+    p2 <- list(
+      my_vline(x = effect_size_line[1], color = effect_size_line_color, dash = effect_size_line_type, width = effect_size_line_width),
+      my_vline(x = effect_size_line[2], color = effect_size_line_color, dash = effect_size_line_type, width = effect_size_line_width)
+      # my_hline(y = genomewideline[1], color = genomewideline_color, dash = genomewideline_type, width = genomewideline_width)
+    )
+    
+    # eline1 <- ggplot2::geom_vline(xintercept = effect_size_line[1], 
+    #                               linetype = effect_size_line_type, 
+    #                               size = effect_size_line_width, 
+    #                               color = effect_size_line_color)
+    # eline2 <- ggplot2::geom_vline(xintercept = effect_size_line[2],
+    #                               linetype = effect_size_line_type,
+    #                               size = effect_size_line_width,
+    #                               color = effect_size_line_color)
+    # 
+    # p <- p + eline1 + eline2
   }
   
+  # fig <- 
+  p <- fig %>% layout(shapes = p2) 
   
-  
-  p <- plotly::ggplotly(p)
+  # p <- plotly::ggplotly(p)
   
   # pp %<>% plotly::add_trace(marker = list(color = col,size = point_size, text = TEXT)) 
-  if (!(is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name))) {
-    p %<>% plotly::add_trace(
-      type = "scatter",
-      mode = "markers",
-      text = TEXT,
-      marker = list(color = col, size = point_size))
-  }
+  # if (!(is.na(snpName) && is.na(geneName) && is.na(annotation1Name) && is.na(annotation2Name))) {
+    # p %<>% plotly::add_trace(
+    #   type = "scatter",
+    #   mode = "markers",
+    #   text = TEXT,
+    #   marker = list(color = col, size = point_size)
+    #   )
+    # 
+    # p %>% add_markers()
+    # 
+    # p %<>% plotly::add_text(
+    #   # type = "scatter",
+    #   # mode = "markers",
+    #   text = TEXT
+    #   # marker = list(color = col, size = point_size)
+    # )
+    
+  # }
   
   
   # p %<>%  
@@ -295,6 +381,7 @@ volcanoly.volcanor <- function(x,
   #       text = TEXT)) 
   
 
+  # automatic highlighting
   if (is.null(highlight)) {
     if (!is.na(snpName)) {
       
@@ -325,20 +412,36 @@ volcanoly.volcanor <- function(x,
           d.highlight <- d[highlight_index, ] 
           
           
-          TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
-                        if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
-                        if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
-                        if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
+          # TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
+          #               if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]), sep = "<br>")
           
+
+          p %<>% plotly::add_trace(x = ~EFFECTSIZE, 
+                                  y = ~LOG10P,
+                                  data = d.highlight, 
+                                  inherit = FALSE,
+                                  type = "scatter",
+                                  mode = "markers",
+                                  marker = list(color = highlight_color,
+                                                size = point_size),
+                                  # name = "of interest",
+                                  showlegend = FALSE,
+                                  text = ~paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
+                                                if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
+                                                paste0(effectName,": ",EFFECTSIZE),
+                                                paste0(log10pName,": ",LOG10P), 
+                                                sep = "<br>")
+          )
           
+          # p %>% plotly::add_trace(x = d.highlight$EFFECTSIZE, y = d.highlight$LOG10P,
+          #                          type = "scatter",
+          #                          mode = "markers",
+          #                          text = TEXT,
+          #                          marker = list(color = highlight_color,
+          #                                        size = point_size),
+          #                          name = "of interest")
           
-          p %<>% plotly::add_trace(x = d.highlight$EFFECTSIZE, y = d.highlight$LOG10P,
-                                   type = "scatter",
-                                   mode = "markers",
-                                   text = TEXT,
-                                   marker = list(color = highlight_color,
-                                                 size = point_size),
-                                   name = "of interest")
+
         }
         
       }
@@ -353,18 +456,36 @@ volcanoly.volcanor <- function(x,
         
         d.highlight <- d[which(d[[snpName]] %in% highlight), ]
         
-        TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
-                      if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
-                      if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
-                      if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
+        # TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
+        #               if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
+        #               if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
+        #               if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
         
-        p %<>% plotly::add_trace(x = d.highlight$EFFECTSIZE, y = d.highlight$LOG10P,
+        
+        p %<>% plotly::add_trace(x = ~EFFECTSIZE, 
+                                 y = ~LOG10P,
+                                 data = d.highlight, 
+                                 inherit = FALSE,
                                  type = "scatter",
                                  mode = "markers",
-                                 text = TEXT,
                                  marker = list(color = highlight_color,
                                                size = point_size),
-                                 name = "of interest")
+                                 # name = "of interest",
+                                 showlegend = FALSE,
+                                 text = ~paste(if (!is.na(snpName)) paste0(snpName,": ",d.highlight[[snpName]]),
+                                               if (!is.na(geneName)) paste0(geneName,": ",d.highlight[[geneName]]),
+                                               paste0(effectName,": ",EFFECTSIZE),
+                                               paste0(log10pName,": ",LOG10P), 
+                                               sep = "<br>")
+        )
+        
+        # p %<>% plotly::add_trace(x = d.highlight$EFFECTSIZE, y = d.highlight$LOG10P,
+        #                          type = "scatter",
+        #                          mode = "markers",
+        #                          text = TEXT,
+        #                          marker = list(color = highlight_color,
+        #                                        size = point_size),
+        #                          name = "of interest")
         
       }
       
