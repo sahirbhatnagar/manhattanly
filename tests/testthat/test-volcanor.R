@@ -20,9 +20,7 @@ volcanorObj2 <- volcanor(HapMap2,
                          p = "Pval",
                          effect_size = "logFC",
                          snp = "rs",
-                         gene = "taxa",
-                         annotation1 = "zvalue",
-                         annotation2 = "chromosome")
+                         gene = "taxa")
 
 DT2_default <- volcanor(HapMap2, 
                         p = "Pval",

@@ -63,8 +63,8 @@ qqr <- function(x,
   if (!is.numeric(x[[p]])) stop(sprintf("p argument specified as %s but this column is not numeric in the 'x' data.frame", p))
 
   # Check if any p are not in (0,1)
-  if (any(x[[p]]<0)) stop("Negative p-values found. These must be removed.")
-  if (any(x[[p]]>1)) stop("P-values greater than 1 found. These must be removed.")
+  if (any(x[[p]]<0, na.rm = TRUE)) stop("Negative p-values found. These must be removed.")
+  if (any(x[[p]]>1, na.rm = TRUE)) stop("P-values greater than 1 found. These must be removed.")
   if (any(is.na(x[[p]]))) stop("NA P-values found. These must be removed")
 
   ## check if all specified annotations are in 'x' data.frame
