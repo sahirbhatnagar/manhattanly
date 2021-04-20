@@ -14,10 +14,6 @@ DT_snp_gene <- volcanor(HapMap,
 
 # change colnames
 HapMap2 <- HapMap
-colnames(HapMap2) <- c("chromosome","baseposition","pvalue","rs","zvalue", "beta","genename","dist")
-
-# change colnames
-HapMap2 <- HapMap
 colnames(HapMap2) <- c("chromosome","baseposition","Pval","rs","zvalue", "logFC","taxa","dist")
 
 volcanorObj2 <- volcanor(HapMap2, 
