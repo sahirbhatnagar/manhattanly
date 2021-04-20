@@ -36,6 +36,7 @@ Suggests:
     rmarkdown,
     covr
 VignetteBuilder: knitr
+Encoding: UTF-8
 License: MIT + file LICENSE
 URL: https://github.com/sahirbhatnagar/manhattanly/, http://sahirbhatnagar.com/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues

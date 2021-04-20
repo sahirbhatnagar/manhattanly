@@ -22,7 +22,7 @@ DT_single <- manhattanr(HapMap4)
 DT_annotations <- manhattanr(HapMap, chr = "CHR", bp = "BP", p = "P", snp = "SNP", gene = "GENE",
            annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
 
-test_that("multiplication works", {
+test_that("manhattanr objects on HapMap data", {
   expect_s3_class(DT_default,"manhattanr")
   expect_s3_class(DT_snp_gene,"manhattanr")
   expect_s3_class(DT2_default,"manhattanr")

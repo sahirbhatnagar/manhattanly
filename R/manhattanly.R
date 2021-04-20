@@ -42,7 +42,6 @@
 #' @param ylab Y-axis label. Default is \code{"-log10(p)"}.
 #' @param title Title of the plot. Default is \code{"Manhattan Plot"}
 #' @param ... other parameters passed to \code{\link{manhattanr}}
-#' @inheritParams manhattanr
 #' @note This package is inspired by the
 #'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
 #'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}. Much of the
