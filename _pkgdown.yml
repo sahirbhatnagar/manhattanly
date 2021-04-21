@@ -37,10 +37,8 @@ navbar:
   structure:
     left:
     - home
-    - intro
     - articles
     - reference
-    - tutorials
     - news
     right: github
   components:

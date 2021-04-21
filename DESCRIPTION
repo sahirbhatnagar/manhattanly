@@ -38,7 +38,7 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 License: MIT + file LICENSE
-URL: https://github.com/sahirbhatnagar/manhattanly/, http://sahirbhatnagar.com/manhattanly/
+URL: https://github.com/sahirbhatnagar/manhattanly/, https://sahirbhatnagar.com/manhattanly/
 BugReports: https://github.com/sahirbhatnagar/manhattanly/issues
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
