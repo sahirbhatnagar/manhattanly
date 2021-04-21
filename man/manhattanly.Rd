@@ -39,7 +39,7 @@ such as a p-value or zscore} }}
 \item{col}{A character vector indicating the colors of each chromosome. If
 the number of colors specified is less than the number of unique
 chromosomes, then the elements will be recycled. Can be
-\href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+\href{https://www.rapidtables.com/web/color/RGB_Color.html}{Hex Codes} as
 well.}
 
 \item{point_size}{A \code{numeric} indicating the size of the points on the
@@ -94,12 +94,11 @@ Creates an interactive manhattan plot with multiple annotation options
 }
 \note{
 This package is inspired by the
-  \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
-  \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}. Much of the
-  plot format and pre-processing is the same. This package provides
-  additional annotation options and builds on the \code{\link{plotly}}
-  \code{d3.js} engine. These plots can be included in Shiny apps, Rmarkdown
-  documents or embeded in websites using simple HTML code.
+  \href{https://github.com/stephenturner/qqman}{\code{qqman}} package. This
+  package provides additional annotation options and builds on the
+  \code{\link{plotly}} \code{d3.js} engine. These plots can be included in
+  Dash apps, Shiny apps, Rmarkdown documents or embedded in websites using
+  simple HTML code.
 }
 \examples{
 \dontrun{
@@ -113,7 +112,5 @@ manhattanly(HapMap, snp = "SNP", highlight = significantSNP)
 }
 \seealso{
 \code{\link{manhattanr}}, \code{\link{HapMap}},
-  \code{\link{significantSNP}},
-  \url{https://github.com/stephenturner/qqman},
-  \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
+  \code{\link{significantSNP}}
 }

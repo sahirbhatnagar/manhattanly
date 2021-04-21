@@ -10,7 +10,7 @@
 #' @param col A character vector indicating the colors of each chromosome. If
 #'   the number of colors specified is less than the number of unique
 #'   chromosomes, then the elements will be recycled. Can be
-#'   \href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+#'   \href{https://www.rapidtables.com/web/color/RGB_Color.html}{Hex Codes} as
 #'   well.
 #' @param point_size A \code{numeric} indicating the size of the points on the
 #'   plot. Default is 5
@@ -42,22 +42,17 @@
 #' @param ylab Y-axis label. Default is \code{"-log10(p)"}.
 #' @param title Title of the plot. Default is \code{"Manhattan Plot"}
 #' @param ... other parameters passed to \code{\link{manhattanr}}
-#' @inheritParams manhattanr
 #' @note This package is inspired by the
-#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package by
-#'   \href{http://www.gettinggeneticsdone.com/}{Stephen Turner}. Much of the
-#'   plot format and pre-processing is the same. This package provides
-#'   additional annotation options and builds on the \code{\link{plotly}}
-#'   \code{d3.js} engine. These plots can be included in Shiny apps, Rmarkdown
-#'   documents or embeded in websites using simple HTML code.
+#'   \href{https://github.com/stephenturner/qqman}{\code{qqman}} package. This
+#'   package provides additional annotation options and builds on the
+#'   \code{\link{plotly}} \code{d3.js} engine. These plots can be included in
+#'   Dash apps, Shiny apps, Rmarkdown documents or embedded in websites using
+#'   simple HTML code.
 #' @return An interactive manhattan plot.
 #' @seealso \code{\link{manhattanr}}, \code{\link{HapMap}},
-#'   \code{\link{significantSNP}},
-#'   \url{https://github.com/stephenturner/qqman},
-#'   \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
+#'   \code{\link{significantSNP}}
 #' @aliases manhattanly.default manhattanly.manhattanr
 #' @importFrom magrittr '%<>%'
-#' @import plotly
 #' @export
 #' @examples
 #' \dontrun{
@@ -70,8 +65,6 @@
 #' }
 
 manhattanly <- function(x,
-                        # col = colorRampPalette(RColorBrewer::brewer.pal(n = 9, name = "Set1"))(nchr),
-                        # col = RColorBrewer::brewer.pal(n = 9, name = "Greys"),
                         ...,
                         col = c("#969696", "#252525"),
                         point_size = 5,
@@ -156,37 +149,7 @@ manhattanly.manhattanr <- function(x,
                                    ylab = "-log10(p)",
                                    title = "Manhattan Plot") {
 
-  # x <- manhattanr(gwasResults)
-  # x <- manhattanr(kk, annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
-  # x <- manhattanr(kk, annotation1 = "ZSCORE")
-  # x <- manhattanr(kk, annotation1 = "ZSCORE", annotation2 = "EFFECTSIZE")
-  # x <- manhattanr(HapMap, snp = "SNP", gene = "GENE")
-  # 
-  # x$data %>% head
-  # str(x$data)
-  # labelChr <- NULL
-  # col <- colorRampPalette(rev(RColorBrewer::brewer.pal(n = 7, name ="Set1")))(22)
-  # showgrid <- TRUE
-  # labelChr = NULL
-  # point_size = 5
-  # suggestiveline = -log10(1e-5)
-  # genomewideline = -log10(5e-8)
-  # suggestiveline_color = "blue"
-  # genomewideline_color = "red"
-  # suggestiveline_width = genomewideline_width = 1;
-  # highlight_color = "#00FF00"
-  # highlight = c(significantSNP, x$data$SNP[1:20])
-  # showlegend = TRUE
-  # showgrid = TRUE
-  # ylab = "-log10(p)"
-  # xlab = NULL
-  # title = "Manhattan Plot"
-  # col = c("#969696", "#252525")
-
-  #########
-
   d <- x$data
-  pName <- x$pName
   snpName <- x$snpName
   geneName <- x$geneName
   annotation1Name <- x$annotation1Name
@@ -199,8 +162,8 @@ manhattanly.manhattanr <- function(x,
   if (!is.null(highlight) & is.na(snpName)) stop("You're trying to highlight snps, but havent provided a snp column")
 
   # Initialize plot
-  xmax = ceiling(max(d$pos) * 1.03)
-  xmin = floor(max(d$pos) * -0.03)
+  xmax <- ceiling(max(d$pos) * 1.03)
+  xmin <- floor(max(d$pos) * -0.03)
 
   # If manually specifying chromosome labels, ensure a character vector
   # and number of labels matches number chrs.
@@ -224,7 +187,7 @@ manhattanly.manhattanr <- function(x,
 
   # Add an axis.
   if (nchr == 1) {
-    #If single chromosome, ticks and labels automatic.
+    # If single chromosome, ticks and labels automatic.
     p %<>% plotly::layout(p,
                   title = title,
                   xaxis = list(
@@ -234,9 +197,7 @@ manhattanly.manhattanr <- function(x,
                     range = c(xmin, xmax)
                   ),
                   yaxis = list(
-                    title = ylab)#,
-                    #range = c(0,ceiling(max(d$logp)))
-                  #)
+                    title = ylab)
     )
   } else {
     # if multiple chrs, use the ticks and labels you created above.
@@ -254,9 +215,7 @@ manhattanly.manhattanr <- function(x,
                   ticks = "outside"
                 ),
                 yaxis = list(
-                  title = ylab)#,
-                  #range = c(0,ceiling(max(d$logp)))
-                #)
+                  title = ylab)
     )
   }
 
@@ -265,11 +224,6 @@ manhattanly.manhattanr <- function(x,
 
   # Add points to the plot
   if (nchr==1) {
-
-    # paste(if (!is.na(snpName)) paste0(snpName,": ",d[[snpName]],"<br>"),
-    # if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]],"<br>"),
-    # if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d[[annotation1Name]],"<br>")
-    # if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d[[annotation2Name]],"<br>")
 
     TEXT <- paste(if (!is.na(snpName)) paste0(snpName,": ",d[[snpName]]),
                   if (!is.na(geneName)) paste0(geneName,": ",d[[geneName]]),
@@ -389,8 +343,6 @@ manhattanly.manhattanr <- function(x,
                       if (!is.na(annotation1Name)) paste0(annotation1Name,": ",d.highlight[[annotation1Name]]),
                       if (!is.na(annotation2Name)) paste0(annotation2Name,": ",d.highlight[[annotation2Name]]), sep = "<br>")
         
-        # browser()
-        
         p %<>% plotly::add_trace(x = d.highlight$pos, y = d.highlight$logp,
                                  type = "scatter",
                                  mode = "markers",
@@ -401,8 +353,6 @@ manhattanly.manhattanr <- function(x,
                                  name = "of interest")
         
       } else {
-        
-        # icol <- 1
         
         for(i in unique(d.highlight$index)) {
           
@@ -425,36 +375,12 @@ manhattanly.manhattanr <- function(x,
                                    marker = list(color = highlight_color,
                                                  size = point_size),
                                    name = "of interest")
-          # icol = icol + 1
         }
         
       }
-      
-      
-      # p %<>% plotly::add_trace(x = d.highlight$pos,
-      #                  y = d.highlight$logp,
-      #                  type = "scatter",
-      #                  mode = "markers",
-      #                  #evaluate = TRUE,
-      #                  text = d.highlight[[snpName]],
-      #                  showlegend = showlegend,
-      #                  marker = list(color = highlight_color,
-      #                                size = point_size),
-      #                  name = "of interest")
     }
   }
   p
 }
 
-# jj <- manhattan_plotly(gwasResults, genomewideline = FALSE)
-#
-# jj
-# str(jj)
 
-# topHits = subset(d, P <= annotatePval)
-# p %>% layout(annotations = list(x = topHits$pos[10],
-#                                 y = -log10(topHits$P[10]),
-#                                 text = topHits$SNP[10],
-#                                 showarrow = T))
-
-"%ni%" <- Negate("%in%")

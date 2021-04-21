@@ -1,0 +1,58 @@
+url: http://sahirbhatnagar.com/manhattanly
+
+template:
+  params:
+    bootswatch: cosmo
+
+authors:
+  Sahir Bhatnagar:
+    href: http://sahirbhatnagar.com/
+
+development:
+  mode: release
+
+reference:
+- title: Building datasets for plotting
+  desc: >
+    Functions that setup data structure
+  contents:
+    - '`manhattanr`'
+    - '`qqr`'
+    - '`volcanor`'
+- title: Plotting functions
+  desc: >
+    Main functions for plotting 
+  contents:
+    - '`manhattanly`'
+    - '`qqly`'
+    - '`volcanoly`'
+- title: Datasets
+  desc: >
+    Datasets that ship with the package to illustrate usage
+  contents:
+    - '`HapMap`'
+    - '`significantSNP`'
+
+navbar:
+  structure:
+    left:
+    - home
+    - articles
+    - reference
+    - news
+    right: github
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      href: index.html
+    articles:
+      text: Vignettes
+      menu:
+      - text: Interactive manhattan, volcano and qq plots
+        href: articles/web_only/manhattanly_full.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    news:
+      text: Changelog
+      href: news/index.html

@@ -39,9 +39,9 @@ See the [online vignette](http://sahirbhatnagar.com/manhattanly/) for example us
 
 ## Credit
 
-This package is inspired by the [`qqman`](https://github.com/stephenturner/qqman) package by [Stephen Turner](http://stephenturner.us/). The pre-processing of the data in the `manhattanly` package is based on the `qqman::manhattan` and `qqman::qq` functions. 
+This package is inspired by the [`qqman`](https://github.com/stephenturner/qqman) R package. The pre-processing of the data in the `manhattanly` package is based on the `qqman::manhattan` and `qqman::qq` functions. 
 
-The splitting of the tasks into data pre-processing and plot rendering is inspired by the [`heatmaply`](https://github.com/talgalili/heatmaply) package by [Tal Galili](http://www.r-statistics.com/)
+The splitting of the tasks into data pre-processing and plot rendering is inspired by the [`heatmaply`](https://github.com/talgalili/heatmaply) R package.
 
 
 ## Related Work

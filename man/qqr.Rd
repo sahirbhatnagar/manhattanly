@@ -70,7 +70,6 @@ library(manhattanly)
 qqrObj <- qqr(HapMap, snp = "SNP", highlight = significantSNP)
 class(qqrObj)
 head(qqrObj[["data"]])
-
 }
 \seealso{
 \code{\link{qqly}}

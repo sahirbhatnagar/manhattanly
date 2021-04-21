@@ -8,18 +8,18 @@
 \usage{
 qqly(
   x,
+  ...,
   col = "#252525",
-  size = 1,
+  size = 5,
   type = 20,
   abline_col = "red",
-  abline_size = 0.5,
-  abline_type = 1,
+  abline_size = 1,
+  abline_type = "solid",
   highlight = NULL,
   highlight_color = "#00FF00",
   xlab = "Expected -log10(p)",
   ylab = "Observed -log10(p)",
-  title = "Q-Q Plot",
-  ...
+  title = "Q-Q Plot"
 )
 }
 \arguments{
@@ -27,30 +27,33 @@ qqly(
 \code{\link{qqr}} function or a \code{data.frame} which must contain at
 least the following column: \itemize{ \item{a p-value, must be numeric} }}
 
+\item{...}{other parameters passed to \code{\link{qqr}}}
+
 \item{col}{A \code{character} indicating the color of the points. Can
-be \href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+be \href{https://www.rapidtables.com/web/color/RGB_Color.html}{Hex Codes} as
 well.}
 
 \item{size}{A \code{numeric} specifying the size of the points. Default
 is 1}
 
 \item{type}{An integer between 0 and 25 specifying the point shape.
-Default is 20 (filled circle). See
-\href{http://www.cookbook-r.com/Graphs/Shapes_and_line_types/}{R Cookbook}
-for complete list}
+Default is 20 (filled circle). Deprecated.}
 
 \item{abline_col}{A \code{character} indicating the color of the 45 degree
 diagonal line. Can be
-\href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+\href{https://www.rapidtables.com/web/color/RGB_Color.html}{Hex Codes} as
 well. Default is \code{"red"}.}
 
 \item{abline_size}{A \code{numeric} indicating the size of the 45 degree
 diagonal line. Default is 0.5.}
 
-\item{abline_type}{An integer between 0 and 6 specifying the line type of the
-diagonal 45 degree line. Default is 1 (solid line). See
-\href{http://www.cookbook-r.com/Graphs/Shapes_and_line_types/}{R Cookbook}
-for complete list}
+\item{abline_type}{Sets the line type of the
+45 degree line. Set to a dash type character among "solid", "dot",
+"dash", "longdash", "dashdot", or "longdashdot", or a dash length list in
+px (eg "5px","10px","2px"). Can also be a positive numeric value (e.g 5,
+10, 2). Default is "dash". See
+\href{https://plotly.com/r/reference/#layout-shapes}{plotly help page on
+layouts} for complete list and more details}
 
 \item{highlight}{A character vector of SNPs in your dataset to highlight.
 These SNPs should all be in your dataset. Default is \code{NULL} which
@@ -64,18 +67,12 @@ means that nothing is highlighted.}
 \item{ylab}{Y-axis label. Default is \code{"Observed -log10(p)"}}
 
 \item{title}{Title of the plot. Default is \code{"Q-Q Plot"}}
-
-\item{...}{other parameters passed to \code{\link{qqr}}}
 }
 \value{
 An interactive Q-Q plot.
 }
 \description{
 Creates an interactive Q-Q plot with multiple annotation options
-}
-\note{
-This function first creates a \code{ggplot2} object and then converts
-  it to a \code{plotly} object using \code{\link[plotly]{ggplotly}}
 }
 \examples{
 \dontrun{
