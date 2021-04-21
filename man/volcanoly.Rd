@@ -8,6 +8,7 @@
 \usage{
 volcanoly(
   x,
+  ...,
   col = c("#252525"),
   point_size = 5,
   effect_size_line = c(-1, 1),
@@ -22,8 +23,7 @@ volcanoly(
   highlight_color = "red",
   xlab = NULL,
   ylab = "-log10(p)",
-  title = "Volcano Plot",
-  ...
+  title = "Volcano Plot"
 )
 }
 \arguments{
@@ -32,6 +32,8 @@ volcanoly(
 at least the following two columns: \itemize{ \item{a p-value, must be
 numeric} \item{a measure of the strength of association, typically an odds
 ratio, regression coefficient or log fold change. Must be numeric} }}
+
+\item{...}{other parameters passed to \code{\link{volcanor}}}
 
 \item{col}{A character of length 1 indicating the color of the points. Only
 the first argument will be used if more than one color is supplied. Can be
@@ -94,8 +96,6 @@ here to overwrite the default.}
 \item{ylab}{Y-axis label. Default is \code{"-log10(p)"}.}
 
 \item{title}{Title of the plot. Default is \code{"Volcano Plot"}}
-
-\item{...}{other parameters passed to \code{\link{volcanor}}}
 }
 \value{
 An interactive volcano plot.
