@@ -37,7 +37,7 @@ ratio, regression coefficient or log fold change. Must be numeric} }}
 
 \item{col}{A character of length 1 indicating the color of the points. Only
 the first argument will be used if more than one color is supplied. Can be
-\href{http://www.rapidtables.com/web/color/RGB_Color.htm}{Hex Codes} as
+\href{https://www.rapidtables.com/web/color/RGB_Color.html}{Hex Codes} as
 well.}
 
 \item{point_size}{A \code{numeric} indicating the size of the points on the
@@ -110,11 +110,12 @@ This package provides additional annotation options and builds on the
   simple HTML code.
 }
 \examples{
-volcanorObj <- volcanor(HapMap, 
+volcanorObj <- volcanor(HapMap,
   p = "P",
   effect_size = "EFFECTSIZE",
   snp = "SNP",
-  gene = "GENE")
+  gene = "GENE"
+)
 class(volcanorObj)
 head(volcanorObj$data)
 }

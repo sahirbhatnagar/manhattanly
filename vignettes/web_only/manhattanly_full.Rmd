@@ -21,7 +21,7 @@ library(plotly)
 library(knitr)
 options(rmarkdown.html_vignette.check_title = FALSE)
 knitr::opts_chunk$set(echo = TRUE, 
-                      eval=FALSE,
+                      eval=TRUE,
                       tidy = FALSE, 
                       cache = FALSE, 
                       warning = FALSE,
@@ -97,7 +97,7 @@ dim(HapMap.subset)
 The required columns to create a manhattan plot are the chromosome, base-pair position and p-value. By default, the `manhattanly` function assumes these columns are named `CHR`, `BP` and `P` (but these can be specified by the user if they are different)
 
 Create an interactive manhattan plot using one command:
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 manhattanly(HapMap.subset, snp = "SNP", gene = "GENE")
 ```
 
@@ -118,7 +118,7 @@ You can then save the plot as a `.png` file by clicking on the camera icon in th
 
 You can also make a volcano plot which by default, highlights the points greater than the default `genomewideline` and `effect_size_line` arguments:
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 volcanoly(HapMap.subset, snp = "SNP", gene = "GENE")
 ```
 
@@ -217,7 +217,7 @@ Create a free plotly account [here](https://plot.ly/). A plotly account is requi
 
 Find your authentication API keys in your online settings. Set them in your R session with:
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 Sys.setenv("plotly_username"="your_plotly_username")
 Sys.setenv("plotly_api_key"="your_api_key")
 ```
@@ -271,7 +271,7 @@ is.data.frame(manhattanrObject[["data"]])
 
 This `manhattanrObject` which is of class `manhattanr` can also be passed to the `manhattanly` function (we omit the plot here for the sake of size of the rendered vignette):
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 manhattanly(manhattanrObject)
 ```
 
@@ -302,7 +302,7 @@ head(qqrObject[["data"]])
 
 This `qqrObject` which is of class `qqr` can also be passed to the `qqly` function (we omit the plot here for the sake of size of the rendered vignette):
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 qqly(qqrObject)
 ```
 

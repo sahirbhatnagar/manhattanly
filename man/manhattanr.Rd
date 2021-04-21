@@ -97,14 +97,10 @@ DT <- manhattanr(HapMap)
 class(DT)
 head(DT[["data"]])
 
-#include snp and gene information
+# include snp and gene information
 DT2 <- manhattanr(HapMap, snp = "SNP", gene = "GENE")
 head(DT2[["data"]])
-
-
 }
 \seealso{
-\code{\link{manhattanly}},
-  \url{https://github.com/stephenturner/qqman},
-  \href{https://github.com/nstrayer/D3ManhattanPlots}{D3ManhattanPlots}
+\code{\link{manhattanly}}
 }

@@ -43,7 +43,6 @@
 #' qqrObj <- qqr(HapMap, snp = "SNP", highlight = significantSNP)
 #' class(qqrObj)
 #' head(qqrObj[["data"]])
-#'
 #' @export
 
 qqr <- function(x,
@@ -54,26 +53,24 @@ qqr <- function(x,
                 annotation2,
                 ...) {
 
-  # x = HapMap
-  # p = "P"
-  ## Make sure you have p column exists in x.
+  # Make sure you have p column exists in x.
   if (!(p %in% names(x))) stop(paste("Column", p, "not found 'x' data.frame"))
 
   # Check for numeric p
   if (!is.numeric(x[[p]])) stop(sprintf("p argument specified as %s but this column is not numeric in the 'x' data.frame", p))
 
   # Check if any p are not in (0,1)
-  if (any(x[[p]]<0, na.rm = TRUE)) stop("Negative p-values found. These must be removed.")
-  if (any(x[[p]]>1, na.rm = TRUE)) stop("P-values greater than 1 found. These must be removed.")
+  if (any(x[[p]] < 0, na.rm = TRUE)) stop("Negative p-values found. These must be removed.")
+  if (any(x[[p]] > 1, na.rm = TRUE)) stop("P-values greater than 1 found. These must be removed.")
   if (any(is.na(x[[p]]))) stop("NA P-values found. These must be removed")
 
-  ## check if all specified annotations are in 'x' data.frame
+  # check if all specified annotations are in 'x' data.frame
   if (!missing(snp)) {
     if (!(snp %in% names(x))) stop(sprintf("snp argument specified as %s but this column not found in 'x' data.frame", snp))
   }
 
   if (!missing(gene)) {
-    if(!(gene %in% names(x))) stop(sprintf("gene argument specified as %s but this column not found in 'x' data.frame", gene))
+    if (!(gene %in% names(x))) stop(sprintf("gene argument specified as %s but this column not found in 'x' data.frame", gene))
   }
 
   if (!missing(annotation1)) {
@@ -91,7 +88,6 @@ qqr <- function(x,
   # you're creating. Rename columns according to input
   if (!missing(snp)) {
     d[["SNP"]] <- x[[snp]]
-    # str(d)
     colnames(d)[which(colnames(d) == "SNP")] <- snp
   }
 
@@ -110,26 +106,23 @@ qqr <- function(x,
     colnames(d)[which(colnames(d) == "ANNOTATION2")] <- annotation2
   }
 
-  # d <- d[complete.cases(d), ]
-  # limit to not missing, not nan, not null, not infinite, between 0 and 1
-  # pvector <- pvector[!is.na(pvector) & !is.nan(pvector) & !is.null(pvector) & is.finite(pvector) & pvector<1 & pvector>0]
-
   # sort d by decreasing p-value
-  d <- d[order(d[["P"]],decreasing = FALSE), , drop = FALSE]
+  d <- d[order(d[["P"]], decreasing = FALSE), , drop = FALSE]
 
   # Observed and expected
   d[["OBSERVED"]] <- -log10(d[["P"]])
   d[["EXPECTED"]] <- -log10(stats::ppoints(length(d[["P"]])))
 
-  qqr <- list(data = d,
-              pName = p,
-              snpName = if (missing(snp)) NA else snp,
-              geneName = if (missing(gene)) NA else gene,
-              annotation1Name = if (missing(annotation1)) NA else annotation1,
-              annotation2Name = if (missing(annotation2)) NA else annotation2)
+  qqr <- list(
+    data = d,
+    pName = p,
+    snpName = if (missing(snp)) NA else snp,
+    geneName = if (missing(gene)) NA else gene,
+    annotation1Name = if (missing(annotation1)) NA else annotation1,
+    annotation2Name = if (missing(annotation2)) NA else annotation2
+  )
 
   class(qqr) <- "qqr"
 
   qqr
-
 }
