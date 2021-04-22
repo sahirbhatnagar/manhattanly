@@ -1,4 +1,4 @@
-url: http://sahirbhatnagar.com/manhattanly
+url: https://sahirbhatnagar.com/manhattanly
 
 template:
   params:
@@ -6,7 +6,7 @@ template:
 
 authors:
   Sahir Bhatnagar:
-    href: http://sahirbhatnagar.com/
+    href: https://sahirbhatnagar.com/
 
 development:
   mode: release

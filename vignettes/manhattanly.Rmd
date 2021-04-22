@@ -1,27 +1,26 @@
 ---
-title: "Interactive Q-Q and Manhattan Plots Using Plotly.js"
+title: "Interactive Manhattan, Q-Q, and Volcano Plots Using Plotly.js"
 author: "Sahir Bhatnagar"
 date: "`r Sys.Date()`"
 output:
   html_vignette:
     number_sections: yes
-    self_contained: yes
     toc: true    
 editor_options: 
   chunk_output_type: console
 ---
 <!--
 %\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Interactive Q-Q and Manhattan Plots Using Plotly.js}
+%\VignetteIndexEntry{Interactive Manhattan, Q-Q, and Volcano Plots Using Plotly.js}
 -->
 
 ```{r setup, include=FALSE, echo=TRUE, message=FALSE}
-library(plotly)
+# library(plotly)
 #library(manhattanly)
 library(knitr)
 options(rmarkdown.html_vignette.check_title = FALSE)
 knitr::opts_chunk$set(echo = TRUE, 
-                      eval=FALSE,
+                      eval=TRUE,
                       tidy = FALSE, 
                       cache = FALSE, 
                       warning = FALSE,
@@ -36,29 +35,26 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **Notes**:
 
-* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd).
+* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://github.com/sahirbhatnagar/manhattanly/blob/master/vignettes/web_only/manhattanly_full.Rmd).
 
-* In the interactive manhattan, qq and volcano plots below, we only use a subset (random sample of SNPs on chromosomes 5 and 6) of the `HapMap` data included in this package. A more complete version of this vignette can be found at http://sahirbhatnagar.com/manhattanly/
+* In the interactive manhattan, qq and volcano plots below, we only use a subset (random sample of SNPs on chromosomes 4 to 7) of the `HapMap` data included in this package. This is to reduce the size of the compiled vignette. To reduce the package size, we don't output any plots here. Please see https://sahirbhatnagar.com/manhattanly/articles/web_only/manhattanly_full.html for the full vignette with plots. 
 
-**************
+<br>
 
 # Introduction
 
 [Manhattan](https://en.wikipedia.org/wiki/Manhattan_plot), [Q-Q](https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot) and [volcano](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC154570/) plots are popular graphical methods for visualizing results from high-dimensional data analysis such as a (epi)genome wide asssociation study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter plot against their genomic position. Manhattan plots are used for visualizing
 potential regions of interest in the genome that are associated with a phenotype. Q-Q plots tell us about the distributional assumptions of the observed test statistics. Volcano plots are the negative log10 p-values plotted against their effect size, odds ratio or log fold-change. They are used to identify clinically meaningful markers in genomic experiments, i.e., markers that are statistically significant and have an effect size greater than some threshold. 
 
-Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the
-genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
+Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
 
-This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
+This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Dash`](https://plotly.com/dash/) apps,   [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
 zoom in on a region of interest and then export the image as a `.png` file.
 
-This work is based on the [`qqman`](https://github.com/stephenturner/qqman) by [Stephen Turner](http://stephenturner.us/) and the [`plotly.js`](https://plot.ly/)
-engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot,
-including extra annotation information and seamless integration with HTML.
+This work is based on the [`qqman`](https://github.com/stephenturner/qqman) R package and the [`plotly.js`](https://plot.ly/)
+engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot, including extra annotation information and seamless integration with HTML.
 
-***************
-***************
+<br><br>
 
 # Installation
 
@@ -76,10 +72,11 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load_gh("sahirbhatnagar/manhattanly")
 ```
 
-***************
-***************
+<br><br>
 
 # Quick Start
+
+## Manhattan plot
 
 The `manhattanly` package ships with an example dataset called `HapMap`. See `help(HapMap)` for more details about how this dataset was created. Here is what the `HapMap` dataset looks like:
 
@@ -87,9 +84,9 @@ The `manhattanly` package ships with an example dataset called `HapMap`. See `he
 # load the manhattanly library
 library(manhattanly)
 set.seed(12345)
-HapMap.subset <- subset(HapMap, CHR %in% c(5,6))[sample(1:nrow(subset(HapMap, CHR %in% c(5,6))), 25),]
+HapMap.subset <- subset(HapMap, CHR %in% 4:7)
 # for highlighting SNPs of interest
-significantSNP <- sample(HapMap.subset$SNP, 5)
+significantSNP <- sample(HapMap.subset$SNP, 20)
 head(HapMap.subset)
 dim(HapMap.subset)
 ```
@@ -101,52 +98,41 @@ Create an interactive manhattan plot using one command:
 manhattanly(HapMap.subset, snp = "SNP", gene = "GENE")
 ```
 
-***************
-
 The arguments `snp = "SNP"` and `gene = "GENE"` specify that we want to add snp and gene information to each point. This information is found in the columns names `"SNP"` and `"GENE"` in the `HapMap` dataset. See `help(manhattanly)` for a full list of options.
+
+## Q-Q plot
 
 Similarly, we can create an interactive Q-Q plot using one command (See `help(qqly)` for a full list of options):
 
-```{r}
+```{r, eval=FALSE}
 qqly(HapMap.subset, snp = "SNP", gene = "GENE")
 ```
 
-***************
 You can then save the plot as a `.png` file by clicking on the camera icon in the toolbar (which appears when you hover your mouse over it). 
 
-***************
+## Volcano plot
 
 You can also make a volcano plot which by default, highlights the points greater than the default `genomewideline` and `effect_size_line` arguments:
 
 ```{r, eval=FALSE}
-volcanoly(HapMap.subset, snp = "SNP", gene = "GENE")
+volcanoly(HapMap.subset, snp = "SNP", gene = "GENE", effect_size = "EFFECTSIZE")
 ```
 
-
-
-***************
-***************
+<br>
 
 
 ## Highlighting SNPs of Interest
 
 We can also highlight SNPs of interest using the `highlight` argument. This package comes with a list of SNPs of interest called `significantSNP` (see `help(significantSNP)` for more details). To highlight these SNPs we simply pass this vector to the `highlight` argument (note that these SNPs need to be present in the `"SNP"` column of your data). We omit the plot here due to size constraints of the package on CRAN:
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 manhattanly(HapMap.subset, snp = "SNP", gene = "GENE", highlight = significantSNP)
-
-HapMap[which(HapMap$SNP %in% significantSNP),]
-
 ```
-
-***************
-***************
-
 
 
 ## More annotations
 
-You can add up to 4 annotations. In the following plot we add the snp, gene, the distance to the nearest gene and the effect size:
+You can add up to 4 annotations. In the following manhattan plot we add the snp, gene, the distance to the nearest gene and the effect size. The same annotations can also be added to Q-Q and volcano plots:
 
 ```{r, eval = FALSE}
 manhattanly(HapMap.subset, snp = "SNP", gene = "GENE",
@@ -155,15 +141,14 @@ manhattanly(HapMap.subset, snp = "SNP", gene = "GENE",
 ```
 
 
-***************
-***************
+<br>
 
 
 ## Adding Text Annotations to the Plot
 
 The annotations in the previous plots only appear when we hover the mouse over the point. Once we have identified a SNP, or a few SNPs of interest we want to explicitly show the annotation information and save the plot. The output of the `manhattanly` function is an object which can be further manipulated using the `%>%` operator from the `magrittr` package:
 
-```{r}
+```{r, eval=FALSE}
 library(magrittr)
 
 p <- manhattanly(HapMap.subset, snp = "SNP", gene = "GENE",
@@ -188,15 +173,10 @@ p %>% plotly::layout(annotations = list(
 ```
 
 
-***************
-
 You can then save the plot as a `.png` file by clicking on the camera icon in the toolbar (which appears when you hover your mouse over it). 
 
 
-
-
-***************
-***************
+<br>
 
 
 ## Sharing your Plots 
@@ -205,42 +185,38 @@ By default, plotly for R runs locally in your web browser or in the R Studio vie
 
 You can publish your charts to the web with [plotly's web service](https://plot.ly/) in three steps.
 
-***************
-
 ### Step 1: Signup for a free plotly account
 
 Create a free plotly account [here](https://plot.ly/). A plotly account is required to publish charts online. It's free to get started, and you control the privacy of your charts.
 
-***************
 
 ### Step 2: Save your authentication credentials
 
 Find your authentication API keys in your online settings. Set them in your R session with:
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=TRUE}
 Sys.setenv("plotly_username"="your_plotly_username")
 Sys.setenv("plotly_api_key"="your_api_key")
 ```
 
-***************
 
-### Step 3: Publish your graphs to plotly with `plotly_POST`
+### Step 3: Publish your graphs to plotly with `plotly::api_create()`
 
 ```{r, eval=FALSE}
 library(plotly)
 # p is the interactive manhattan plot we saved earlier
-plotly_POST(p, filename = "r-docs/manhattan", world_readable=TRUE)
+plotly::api_create(p, filename = "r-docs/manhattan", world_readable=TRUE)
 ```
 
 * `filename` sets the name of the file inside your online plotly account.
 * `world_readable` sets the privacy of your chart. If `TRUE`, the graph is publically viewable, if `FALSE`, only you can view it.
 
-***************
-***************
+
+<br><br>
 
 # Dynamic Documents with `knitr` and `R Markdown`
 
-[`R Markdown`](http://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan and qq plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the [`.Rmd`](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/manhattanly.Rmd) document:
+[`R Markdown`](http://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan, qq and volcano plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the [`.Rmd`](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/web-only/manhattanly_full.Rmd) document:
 
 <pre><code>```{r}
 library(plotly)
@@ -248,12 +224,11 @@ manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
 ```</code></pre>
 
 
-*****************
-*****************
+# Details
 
-# Data Pre-Processing
+## Data Pre-Processing
 
-The `manhattanly` package splits up the data pre-processing from the rendering of the plot object (inspired by the [`heatmaply`](https://github.com/talgalili/heatmaply) package by [Tal Galili](http://www.r-statistics.com/)). These are done by the `manhattanr` and `qqr` and functions:
+The `manhattanly` package splits up the data pre-processing from the rendering of the plot object (inspired by the [`heatmaply`](https://github.com/talgalili/heatmaply) package. These are done by the `manhattanr`, `qqr` and `volcanor` functions:
 
 ```{r}
 # create an object of class `manhattanr`
@@ -269,13 +244,14 @@ head(manhattanrObject[["data"]])
 is.data.frame(manhattanrObject[["data"]])
 ```
 
-This `manhattanrObject` which is of class `manhattanr` can also be passed to the `manhattanly` function (we omit the plot here for the sake of size of the rendered vignette):
+This `manhattanrObject` which is of class `manhattanr` can also be passed to the `manhattanly` function:
 
 ```{r, eval=FALSE}
 manhattanly(manhattanrObject)
 ```
 
-************
+
+## More annotations
 
 We can specify more annotations in the data using the `snp`, `gene`, `annotation1` and `annotation2` arguments:
 
@@ -289,8 +265,7 @@ head(manhattanrObject[["data"]])
 is.data.frame(manhattanrObject[["data"]])
 ```
 
-
-***************
+## Q-Q plots
 
 Similarly the data used for the Q-Q plot can be created using the `qqr` function:
 
@@ -307,6 +282,25 @@ qqly(qqrObject)
 ```
 
 
+## Volcano plots
+
+Similarly the data used for the volcanor plot can be created using the `volcanor` function:
+
+```{r}
+volcanorObject <- volcanor(HapMap, 
+                        p = "P",
+                        effect_size = "EFFECTSIZE",
+                        snp = "SNP",
+                        gene = "GENE")
+str(volcanorObject)
+head(volcanorObject[["data"]])
+```
+
+This can be directly passed to the `volcanoly` function, with additional arguments:
+
+```{r, eval=FALSE}
+volcanoly(volcanorObject, effect_size_line = c(-1, 0.5))
+```
 
 
 

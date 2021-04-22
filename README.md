@@ -16,7 +16,7 @@
 
 The goal of manhattanly is to create interactive manhattan, Q-Q and volcano plots
 
-![](http://i.imgur.com/n88LCky.gif)
+![](https://i.imgur.com/n88LCky.gif)
 
 ## Installation
 
@@ -35,7 +35,7 @@ devtools::install_github("sahirbhatnagar/manhattanly", build_vignettes = TRUE)
 
 ## Vignette
 
-See the [online vignette](http://sahirbhatnagar.com/manhattanly/) for example usage of the functions.
+See the [online vignette](https://sahirbhatnagar.com/manhattanly/) for example usage of the functions.
 
 ## Credit
 
@@ -70,4 +70,4 @@ You can see the most recent changes to the package in the [NEWS.md file](https:/
 
 ## Code of Conduct
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://sahirbhatnagar.com/manhattanly/CONDUCT.html). By participating in this project you agree to abide by its terms.

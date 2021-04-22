@@ -6,8 +6,8 @@ Date: 2021-04-06
 LazyData: true
 Authors@R: c(person("Sahir", "Bhatnagar", email = "sahir.bhatnagar@gmail.com",
     role = c("aut", "cre"), comment = "http://sahirbhatnagar.com/"))
-Description: Create interactive Q-Q, manhattan and volcano plots that are usable from the R console,
-    in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
+Description: Create interactive manhattan, Q-Q and volcano plots that are usable from the R console, 
+    in 'Dash' apps, in the 'RStudio' viewer pane, in 'R Markdown' documents, and in 'Shiny' apps.
     Hover the mouse pointer over a point to show details or drag a rectangle to
     zoom. A manhattan plot is a popular graphical method for visualizing results
     from high-dimensional data analysis such as a (epi)genome wide association study
@@ -17,7 +17,7 @@ Description: Create interactive Q-Q, manhattan and volcano plots that are usable
     Interactive manhattan plots allow the inspection of specific value (e.g. rs number or
     gene name) by hovering the mouse over a cell, as well as zooming into a region of the
     genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
-    This work is based on the 'qqman' package by Stephen Turner and the 'plotly.js'
+    This work is based on the 'qqman' package and the 'plotly.js'
     engine. It produces similar manhattan and Q-Q plots as the 'manhattan' and 'qq'
     functions in the 'qqman' package, with the advantage of including extra annotation 
     information and interactive web-based visualizations directly from R. 
