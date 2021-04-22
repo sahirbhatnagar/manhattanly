@@ -35,9 +35,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 **Notes**:
 
-* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/web-only/manhattanly_full.Rmd).
+* This vignette was built with `R markdown` and `knitr`. The source code for this vignette can be found [here](https://github.com/sahirbhatnagar/manhattanly/blob/master/vignettes/web_only/manhattanly_full.Rmd).
 
-* In the interactive manhattan, qq and volcano plots below, we only use a subset (random sample of SNPs on chromosomes 4 to 7) of the `HapMap` data included in this package. This is to reduce the size of the compiled vignette. To reduce the package size, we don't output any plots here. Please see https://sahirbhatnagar.com/manhattanly for the full vignette with plots. 
+* In the interactive manhattan, qq and volcano plots below, we only use a subset (random sample of SNPs on chromosomes 4 to 7) of the `HapMap` data included in this package. This is to reduce the size of the compiled vignette. To reduce the package size, we don't output any plots here. Please see https://sahirbhatnagar.com/manhattanly/articles/web_only/manhattanly_full.html for the full vignette with plots. 
 
 <br>
 

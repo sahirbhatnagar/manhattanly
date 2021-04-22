@@ -1,10 +1,13 @@
-## Test environments
-* local x86_64, linux-gnu, ubuntu 16.04 R 3.3.1
-* ubuntu 12.04 (on travis-ci), R 3.3.0
-* win-builder (devel and r-elease)
-
 ## R CMD check results
-There were no ERRORs or WARNINGs or NOTEs. 
+
+0 errors | 0 warnings | 0 notes
+ 
+## revdepcheck results
+
+We checked 1 reverse dependencies (0 from CRAN + 1 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
 
 
 ## Downstream dependencies
