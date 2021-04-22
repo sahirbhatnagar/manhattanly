@@ -3,6 +3,7 @@ on:
     branches:
       - main
       - master
+      - fix-issues-Apr-2021
 
 name: pkgdown
 
