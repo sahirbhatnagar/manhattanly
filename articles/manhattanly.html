@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Interactive Manhattan, Q-Q, and Volcano Plots Using Plotly.js</h1>
                         <h4 class="author">Sahir Bhatnagar</h4>
             
-            <h4 class="date">2021-04-22</h4>
+            <h4 class="date">2021-04-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sahirbhatnagar/manhattanly/blob/master/vignettes/manhattanly.Rmd"><code>vignettes/manhattanly.Rmd</code></a></small>
       <div class="hidden name"><code>manhattanly.Rmd</code></div>
@@ -101,7 +101,7 @@
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Interactive Manhattan, Q-Q, and Volcano Plots Using Plotly.js}
 -->
-<p><strong>Author</strong>: <a href="http://sahirbhatnagar.com/">Sahir Bhatnagar</a> (<a href="mailto:sahir.bhatnagar@gmail.com" class="email">sahir.bhatnagar@gmail.com</a>)</p>
+<p><strong>Author</strong>: <a href="https://sahirbhatnagar.com/">Sahir Bhatnagar</a> (<a href="mailto:sahir.bhatnagar@gmail.com" class="email">sahir.bhatnagar@gmail.com</a>)</p>
 <p><strong>Notes</strong>:</p>
 <ul>
 <li><p>This vignette was built with <code>R markdown</code> and <code>knitr</code>. The source code for this vignette can be found <a href="https://github.com/sahirbhatnagar/manhattanly/blob/master/vignettes/web_only/manhattanly_full.Rmd">here</a>.</p></li>
@@ -113,8 +113,8 @@
 <a href="#introduction" class="anchor"></a>Introduction</h1>
 <p><a href="https://en.wikipedia.org/wiki/Manhattan_plot">Manhattan</a>, <a href="https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot">Q-Q</a> and <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC154570/">volcano</a> plots are popular graphical methods for visualizing results from high-dimensional data analysis such as a (epi)genome wide asssociation study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted on a scatter plot against their genomic position. Manhattan plots are used for visualizing potential regions of interest in the genome that are associated with a phenotype. Q-Q plots tell us about the distributional assumptions of the observed test statistics. Volcano plots are the negative log10 p-values plotted against their effect size, odds ratio or log fold-change. They are used to identify clinically meaningful markers in genomic experiments, i.e., markers that are statistically significant and have an effect size greater than some threshold.</p>
 <p>Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the genome (e.g. a chromosome) by dragging a rectangle around the relevant area.</p>
-<p>This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the <a href="https://www.rstudio.com/"><code>RStudio</code></a> viewer pane, <a href="http://rmarkdown.rstudio.com/"><code>R Markdown</code></a> documents, in <a href="https://plotly.com/dash/"><code>Dash</code></a> apps, <a href="http://shiny.rstudio.com/"><code>Shiny</code></a> apps, embeddable in websites and can be exported as <code>.png</code> files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to zoom in on a region of interest and then export the image as a <code>.png</code> file.</p>
-<p>This work is based on the <a href="https://github.com/stephenturner/qqman"><code>qqman</code></a> R package and the <a href="https://plot.ly/"><code>plotly.js</code></a> engine. It produces similar manhattan and Q-Q plots as the <code>qqman::manhattan</code> and <code>qqman::qq</code> functions; the main difference here is being able to interact with the plot, including extra annotation information and seamless integration with HTML.</p>
+<p>This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the <a href="https://www.rstudio.com/"><code>RStudio</code></a> viewer pane, <a href="https://rmarkdown.rstudio.com/"><code>R Markdown</code></a> documents, in <a href="https://plotly.com/dash/"><code>Dash</code></a> apps, <a href="https://shiny.rstudio.com/"><code>Shiny</code></a> apps, embeddable in websites and can be exported as <code>.png</code> files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to zoom in on a region of interest and then export the image as a <code>.png</code> file.</p>
+<p>This work is based on the <a href="https://github.com/stephenturner/qqman"><code>qqman</code></a> R package and the <a href="https://plotly.com/"><code>plotly.js</code></a> engine. It produces similar manhattan and Q-Q plots as the <code>qqman::manhattan</code> and <code>qqman::qq</code> functions; the main difference here is being able to interact with the plot, including extra annotation information and seamless integration with HTML.</p>
 <p><br><br></p>
 </div>
 <div id="installation" class="section level1">
@@ -227,11 +227,11 @@
 <h2 class="hasAnchor">
 <a href="#sharing-your-plots" class="anchor"></a>Sharing your Plots</h2>
 <p>By default, plotly for R runs locally in your web browser or in the R Studio viewer. It would be useful to be able to easily share these plot with for example, your collaborators or supervisor, especially in the during the exploratory data analysis stage of your project.</p>
-<p>You can publish your charts to the web with <a href="https://plot.ly/">plotly’s web service</a> in three steps.</p>
+<p>You can publish your charts to the web with <a href="https://plotly.com/">plotly’s web service</a> in three steps.</p>
 <div id="step-1-signup-for-a-free-plotly-account" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-1-signup-for-a-free-plotly-account" class="anchor"></a>Step 1: Signup for a free plotly account</h3>
-<p>Create a free plotly account <a href="https://plot.ly/">here</a>. A plotly account is required to publish charts online. It’s free to get started, and you control the privacy of your charts.</p>
+<p>Create a free plotly account <a href="https://plotly.com/">here</a>. A plotly account is required to publish charts online. It’s free to get started, and you control the privacy of your charts.</p>
 </div>
 <div id="step-2-save-your-authentication-credentials" class="section level3">
 <h3 class="hasAnchor">
@@ -263,7 +263,7 @@
 <h1 class="hasAnchor">
 <a href="#dynamic-documents-with-knitr-and-r-markdown" class="anchor"></a>Dynamic Documents with <code>knitr</code> and <code>R Markdown</code>
 </h1>
-<p><a href="http://rmarkdown.rstudio.com/"><code>R Markdown</code></a> is a an <code>R</code> software package that allows the creation of dynamic documents, i.e., embed <code>R</code> code with text to create fully reproducible reports. Furthermore it allows easy creation of <code>HTML</code> reports without knowing how to code in <code>HTML</code> (such as this vignette). This means you can embed interactive manhattan, qq and volcano plots in <code>HTML</code> reports using the <code>manhattanly</code> package. For example, to embed the above manhattan plot I included the following code chunk in the <a href="https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/web-only/manhattanly_full.Rmd"><code>.Rmd</code></a> document:</p>
+<p><a href="https://rmarkdown.rstudio.com/"><code>R Markdown</code></a> is a an <code>R</code> software package that allows the creation of dynamic documents, i.e., embed <code>R</code> code with text to create fully reproducible reports. Furthermore it allows easy creation of <code>HTML</code> reports without knowing how to code in <code>HTML</code> (such as this vignette). This means you can embed interactive manhattan, qq and volcano plots in <code>HTML</code> reports using the <code>manhattanly</code> package. For example, to embed the above manhattan plot I included the following code chunk in the <code>.Rmd</code> document:</p>
 <pre><code>```{r}
 library(plotly)
 manhattanly(subset(HapMap, CHR %in% 4:7), snp = "SNP", gene = "GENE")
