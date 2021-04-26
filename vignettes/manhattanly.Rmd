@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE,
 #knitr::opts_knit$set(eval.after = 'fig.cap')
 ```
 
-**Author**: [Sahir Bhatnagar](http://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
+**Author**: [Sahir Bhatnagar](https://sahirbhatnagar.com/) (sahir.bhatnagar@gmail.com)
 
 
 **Notes**:
@@ -48,10 +48,10 @@ potential regions of interest in the genome that are associated with a phenotype
 
 Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming into a region of the genome (e.g. a chromosome) by dragging a rectangle around the relevant area.
 
-This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](http://rmarkdown.rstudio.com/) documents, in [`Dash`](https://plotly.com/dash/) apps,   [`Shiny`](http://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
+This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, the [`RStudio`](https://www.rstudio.com/) viewer pane, [`R Markdown`](https://rmarkdown.rstudio.com/) documents, in [`Dash`](https://plotly.com/dash/) apps,   [`Shiny`](https://shiny.rstudio.com/) apps, embeddable in websites and can be exported as `.png` files. By hovering the mouse over a point, you can see annotation information such as the SNP identifier and GENE name. You can also drag a rectangle to
 zoom in on a region of interest and then export the image as a `.png` file.
 
-This work is based on the [`qqman`](https://github.com/stephenturner/qqman) R package and the [`plotly.js`](https://plot.ly/)
+This work is based on the [`qqman`](https://github.com/stephenturner/qqman) R package and the [`plotly.js`](https://plotly.com/)
 engine. It produces similar manhattan and Q-Q plots as the `qqman::manhattan` and `qqman::qq` functions; the main difference here is being able to interact with the plot, including extra annotation information and seamless integration with HTML.
 
 <br><br>
@@ -183,11 +183,11 @@ You can then save the plot as a `.png` file by clicking on the camera icon in th
 
 By default, plotly for R runs locally in your web browser or in the R Studio viewer. It would be useful to be able to easily share these plot with for example, your collaborators or supervisor, especially in the during the exploratory data analysis stage of your project.
 
-You can publish your charts to the web with [plotly's web service](https://plot.ly/) in three steps.
+You can publish your charts to the web with [plotly's web service](https://plotly.com/) in three steps.
 
 ### Step 1: Signup for a free plotly account
 
-Create a free plotly account [here](https://plot.ly/). A plotly account is required to publish charts online. It's free to get started, and you control the privacy of your charts.
+Create a free plotly account [here](https://plotly.com/). A plotly account is required to publish charts online. It's free to get started, and you control the privacy of your charts.
 
 
 ### Step 2: Save your authentication credentials
@@ -216,7 +216,7 @@ plotly::api_create(p, filename = "r-docs/manhattan", world_readable=TRUE)
 
 # Dynamic Documents with `knitr` and `R Markdown`
 
-[`R Markdown`](http://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan, qq and volcano plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the [`.Rmd`](https://raw.githubusercontent.com/sahirbhatnagar/manhattanly/master/vignettes/web-only/manhattanly_full.Rmd) document:
+[`R Markdown`](https://rmarkdown.rstudio.com/) is a an `R` software package that allows the creation of dynamic documents, i.e., embed `R` code with text to create fully reproducible reports. Furthermore it allows easy creation of `HTML` reports without knowing how to code in `HTML` (such as this vignette). This means you can embed interactive manhattan, qq and volcano plots in `HTML` reports using the `manhattanly` package. For example, to embed the above manhattan plot I included the following code chunk in the `.Rmd` document:
 
 <pre><code>```{r}
 library(plotly)
