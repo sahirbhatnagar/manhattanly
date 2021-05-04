@@ -1,0 +1,514 @@
+pacman::p_load(dash)
+pacman::p_load(dashCoreComponents)
+pacman::p_load(dashHtmlComponents)
+pacman::p_load_gh("plotly/dashDaq")
+pacman::p_load(dashBio)
+pacman::p_load(manhattanly)
+
+data("HapMap")
+volcanoly(HapMap, snp = "SNP", gene = "GENE")
+manhattanly(HapMap, snp = "SNP", gene = "GENE", genomewideline = 6, suggestiveline = 2)
+dataset <- HapMap
+
+app <- Dash$new()
+
+####################################################################################################
+
+#################################### CREATE LAYOUT #################################################
+
+app$layout(
+  htmlDiv(
+    list(
+      # create and style title
+      htmlDiv(
+        list(
+          htmlH2(
+            id = "title",
+            'Interactive Metabolomics Viewer',
+            style = list(
+              textAlign = 'left'
+            )
+          ),
+          htmlH5(
+            'Statistical & functional analysis of metabolomics data',
+            style = list(
+              textAlign = 'left'
+            )
+          )
+        ),
+        className = "banner"
+      ),
+      
+      
+      
+      # create top container and graph child, set style
+      htmlDiv(
+        list(
+          htmlDiv(
+            id = "top-graphs",
+            style = list(
+              display = "flex",
+              borderRadius = '5px',
+              justifyContent = "space-evenly",
+              width = "100%",
+              # height = "50px",
+              margin = "0 auto"
+            ),
+            children = list(
+              # create tabs
+              htmlDiv(
+                id = "control-tabs",
+                className = "control-tabs",
+                children = list(
+                  dccTabs(
+                    id="tabs",
+                    # style = list(colors = list(primary = "white")),
+                    value = "what-is",
+                    children = list(
+                      dccTab(
+                        label = "About",
+                        value = "what-is",
+                        children = htmlDiv(
+                          className = "control-tab",
+                          children = list(
+                            htmlH4(
+                              className = "what-is",
+                              children = "What is PCoA?"
+                            ),
+                            dccMarkdown(
+                              'Principal Coordinates Analysis (PCoA, = Multidimensional scaling, MDS)
+                      is a method to explore and to visualize similarities or dissimilarities of data.
+                      It starts with a distance matrix annd assigns for each item a
+                      location in a low-dimensional space (here 3D scatter plot).'
+                            ),
+                            htmlH4(
+                              className = "what-is",
+                              children = "What is Volcano Plot?"
+                            ),
+                            dccMarkdown(
+                              'A scatterplot that shows statistical significance (P value) versus magnitude of change (fold change) in this case
+                      of volatile organic compounds (VOCs).'
+                            )
+                          )
+                        )
+                      ),
+                      
+                      dccTab(
+                        label = "Parameters",
+                        value = "parameters",
+                        children = htmlDiv(
+                          className = "control-tab",
+                          children = list(
+                            
+                            # htmlDiv(
+                            #   className = "app-controls-block",
+                            #   children = list(
+                            #     htmlDiv(
+                            #       className = "app-controls-name",
+                            #       children = "Select Date"
+                            #     ),
+                            #     dccDropdown(
+                            #       id = "d_date-box",
+                            #       className = "dropdowns",
+                            #       style = list(marginRight = "10px",
+                            #                    width = "100%"),
+                            #       # style = list(width = "45%"),
+                            #       options = lapply(list("20190723", "20190905"),
+                            #                        function(x){
+                            #                          list(label = x, value = x)
+                            #                        }
+                            #       ),
+                            #       value = c('20190723','20190905'),
+                            #       multi = TRUE
+                            #     )
+                            #   )
+                            # ),
+                            
+                            # htmlDiv(
+                            #   className = "app-controls-block",
+                            #   children = list(
+                            #     htmlDiv(
+                            #       className = "app-controls-name",
+                            #       children = "Select Treatment"
+                            #     ),
+                            #     dccDropdown(
+                            #       id = "d_treatment",
+                            #       className = "dropdowns",
+                            #       style = list(marginRight = "10px", width = "100%"),
+                            #       # style = list(width = "45%"),
+                            #       options = lapply(list("Control", "NI"),
+                            #                        function(x){
+                            #                          list(label = x, value = x)
+                            #                        }
+                            #       ),
+                            #       value = c('Control', 'NI'),
+                            #       multi = TRUE
+                            #     )
+                            #   )
+                            # ),
+                            
+                            
+                            # Volcano Inputs ----------------------------------------------------------
+                            
+                            htmlDiv(
+                              className = "app-controls-block",
+                              children = list(
+                                htmlDiv(
+                                  className = "app-settings-name",
+                                  children = "Settings for Volcano Plot:"
+                                ))),
+                            
+                            htmlDiv(
+                              className = "app-controls-block",
+                              children = list(
+                                htmlDiv(
+                                  className = "app-controls-name",
+                                  children = "Effect size threshold"
+                                ),
+                                dccRangeSlider(
+                                  id = 'volcanoplot-input',
+                                  min = -3,
+                                  max = 3,
+                                  step = 0.1,
+                                  marks = setNames(
+                                    lapply(-3:3,
+                                           function(i){
+                                             list(label = as.character(i))
+                                           }),
+                                    -3:3
+                                  ),
+                                  value = c(-0.5, 1)
+                                )
+                              )
+                            ),
+                            
+                            htmlDiv(
+                              className = "app-controls-block",
+                              children = list(
+                                htmlDiv(
+                                  className = "app-controls-name",
+                                  children = "-log10(p-value) threshold"
+                                ),
+                                dccSlider(
+                                  id = "vp-genomic-line-val",
+                                  value = 2,
+                                  marks = setNames(
+                                    lapply(0:10,
+                                           function(i){
+                                             list(label = as.character(i))
+                                           }),
+                                    0:10
+                                  ),
+                                  max = 10,
+                                  min = 0,
+                                  step = 0.1
+                                )
+                              )
+                            ),
+                            
+                            # Manhattan Inputs ----------------------------------------------------------
+                            
+                            htmlDiv(
+                              className = "app-controls-block",
+                              children = list(
+                                htmlDiv(
+                                  className = "app-settings-name",
+                                  children = "Settings for Manhattan Plot:"
+                                ))),
+                            
+                            htmlDiv(
+                              className = "app-controls-block",
+                              children = list(
+                                htmlDiv(
+                                  className = "app-controls-name",
+                                  children = "Suggestive and Genome-wide line"
+                                ),
+                                dccRangeSlider(
+                                  id = 'manhattanplot-input',
+                                  min = 0,
+                                  max = 10,
+                                  step = 0.1,
+                                  marks = setNames(
+                                    lapply(0:10,
+                                           function(i){
+                                             list(label = as.character(i))
+                                           }),
+                                    0:10
+                                  ),
+                                  value = c(5, 8)
+                                )
+                              )
+                            )#,
+                            
+                            # htmlDiv(
+                            #   className = "app-controls-block",
+                            #   children = list(
+                            #     daqLEDDisplay(
+                            #       label = "VOCs down",
+                            #       id = "vp-upper-left",
+                            #       size = 10,
+                            #       color = "#19D3F3"
+                            #     )
+                            #   )
+                            # ),
+                            
+                            # htmlDiv(
+                            #   className = "app-controls-block",
+                            #   children = list(
+                            #     daqLEDDisplay(
+                            #       label = "VOCs Up",
+                            #       id = "vp-upper-right",
+                            #       size = 10,
+                            #       color = "#19D3F3"
+                            #     )
+                            #   )
+                            # )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              ),
+              
+              # htmlDiv(
+              #   id = "left-top-graph",
+              #   className = "container",
+              #   list(
+              #     htmlDiv(
+              #       style = list(width = "100%"),
+              #       list(
+              #         dccGraph(
+              #           id = "3d-pca",
+              #           figure = create3dScatter(pca),
+              #           style = list(width = '100%')
+              #         )
+              #       )
+              #     )
+              #   ),
+              #   # style container top left
+              #   style = list(
+              #     marginTop = "10px",
+              #     marginBottom = "10px",
+              #     marginLeft = 0,
+              #     marginRight = 0,
+              #     paddingTop = "2rem",
+              #     paddingBottom = "2rem",
+              #     borderRadius = '5px',
+              #     width = "38%",
+              #     float = "none",
+              #     boxSizing = "border-box",
+              #     boxShadow = '2px 2px 1px #f2f2f2'
+              #   )
+              # ),
+              
+              htmlDiv(
+                id = "right-top-graph",
+                className = "container",
+                list(
+                  htmlDiv(
+                    style = list(width = "100%"),
+                    list(
+                      dccGraph(
+                        id = "volcano-graph",
+                        figure = manhattanly::volcanoly(x = dataset, snp = "SNP", gene = "GENE"),
+                        style = list(width = '100%')
+                      )
+                    )
+                  )
+                ),
+                # style container top right
+                style = list(
+                  marginTop = "10px",
+                  marginBottom = "10px",
+                  marginLeft = 0,
+                  marginRight = 0,
+                  paddingTop = "2rem",
+                  paddingBottom = "2rem",
+                  borderRadius = '5px',
+                  width = "35%",
+                  float = "none",
+                  boxSizing = "border-box",
+                  boxShadow = '2px 2px 1px #f2f2f2'
+                )
+              )
+            )
+          )
+        )
+      ),
+      
+      
+      # create bottom container and graph child, set style
+      htmlDiv(
+        list(
+          htmlDiv(
+            id = "bottom-graphs",
+            style = list(
+              display = "flex",
+              borderRadius = '5px',
+              justifyContent = "space-evenly",
+              width = "100%",
+              margin = "0 auto"
+            ),
+            children = list(
+              htmlDiv(
+                id = "left-bottom-graph",
+                className = "container",
+                list(
+                  htmlDiv(
+                    style = list(width = "100%"),
+                    list(
+                      dccGraph(
+                        id = "manhattan-plot",
+                        figure = manhattanly::manhattanly(x = dataset, snp = "SNP", gene = "GENE"),
+                        style = list(width = '100%')
+                      )
+                    )
+                  )
+                ),
+                # style container bottom left
+                style = list(
+                  marginTop = "10px",
+                  marginBottom = "10px",
+                  marginLeft = 0,
+                  marginRight = 0,
+                  paddingTop = "3rem",
+                  paddingBottom = "2rem",
+                  borderRadius = '5px',
+                  width = "48%",
+                  float = "none",
+                  boxSizing = "border-box",
+                  boxShadow = '2px 2px 1px #f2f2f2'
+                )
+              ),
+              
+              htmlDiv(
+                id = "right-bottom-graph",
+                className = "container",
+                list(
+                  htmlDiv(
+                    style = list(width = "100%"),
+                    list(
+                      dccGraph(
+                        id = "qq-plot",
+                        figure = manhattanly::qqly(x = dataset, snp = "SNP", gene = "GENE"),
+                        style = list(width = '100%')
+                      )
+                    )
+                  )
+                ),
+                # style container top left
+                style = list(
+                  marginTop = "10px",
+                  marginBottom = "10px",
+                  marginLeft = 0,
+                  marginRight = 0,
+                  paddingTop = "3rem",
+                  paddingBottom = "2rem",
+                  borderRadius = '5px',
+                  width = "48%",
+                  boxSizing = "border-box",
+                  boxShadow = '2px 2px 1px #f2f2f2'
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+
+
+####################################################################################################
+
+#################################### CALLBACKS #####################################################
+
+# app$callback(
+#   output=list(id="3d-pca", property="figure"),
+#   list(input(id='d_date-box', property='value'),
+#        input(id='d_treatment', property='value')),
+#   function(selected_date, selected_treatment){
+#     filtered_variable <- pca %>% dplyr::filter(Date %in% c(selected_date), Treatment %in% c(selected_treatment))
+#     create3dScatter(filtered_variable)
+#   }
+# )
+
+
+  # Manhattan plot ----------------------------------------------------------
+
+  app$callback(
+    output = list(id = "manhattan-plot", property = "figure"),
+    params = list(input(id = 'manhattanplot-input', property = 'value')),
+    function(genomic_line){
+      # filtered_variable <- heat.df %>% dplyr::filter(Date %in% c(selected_date), Treatment %in% c(selected_treatment))
+      lower_upper <- unlist(genomic_line)
+      manhattanly::manhattanly(dataset, snp = "SNP", gene = "GENE", 
+                               genomewideline = lower_upper[2], 
+                               suggestiveline = lower_upper[1])
+    }
+  )
+
+
+
+
+# Volcano Plot ------------------------------------------------------------
+
+app$callback(
+  output = list(id = 'volcano-graph', property = 'figure'),
+  params = list(input(id = 'volcanoplot-input', property = 'value'),
+                input(id = "vp-genomic-line-val", property = "value")),
+  function(effects, genomic_line) {
+    manhattanly::volcanoly(
+      x = dataset,
+      snp = "SNP",
+      gene = "GENE",
+      genomewideline = as.numeric(genomic_line),
+      effect_size_line = unlist(effects),
+    )
+  }
+)
+
+# app$callback(
+#   output("vp-upper-right", "value"),
+#   list(
+#     input("volcano-graph", "figure"),
+#     input("vp-genomic-line-val", "value"),
+#     state("volcanoplot-input", "value")
+#   ),
+#   function(fig, thresh, bounds){
+#     u_lim <- bounds[[2]]
+#     number = 0
+#     if (length(fig[["data"]]) > 1){
+#       x <- unlist(fig[["data"]][[1]]["x"])
+#       y <- unlist(fig[["data"]][[1]]["y"])
+#       number <- sum((x > u_lim) & (y > thresh))
+#     }
+#     number
+#   }
+# )
+# 
+# 
+# app$callback(
+#   output("vp-upper-left", "value"),
+#   list(
+#     input("volcano-graph", "figure"),
+#     input("vp-genomic-line-val", "value"),
+#     state("volcanoplot-input", "value")
+#   ),
+#   function(fig, thresh, bounds){
+#     u_lim <- bounds[[1]]
+#     number = 0
+#     if (length(fig[["data"]]) > 1){
+#       x <- unlist(fig[["data"]][[1]]["x"])
+#       y <- unlist(fig[["data"]][[1]]["y"])
+#       number <- sum((x < u_lim) & (y > thresh))
+#     }
+#     number
+#   }
+# )
+
+
+app$run_server(debug=F, threaded=T, showcase = T)
+
