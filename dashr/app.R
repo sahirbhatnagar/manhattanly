@@ -1,14 +1,46 @@
+if (!requireNamespace("pacman")) install.packages("pacman")
 pacman::p_load(dash)
 pacman::p_load(dashCoreComponents)
 pacman::p_load(dashHtmlComponents)
 pacman::p_load_gh("plotly/dashDaq")
 pacman::p_load(dashBio)
 pacman::p_load(manhattanly)
+pacman::p_load(anytime)
+pacman::p_load(dashTable)
+pacman::p_load(jsonlite)
 
 data("HapMap")
-volcanoly(HapMap, snp = "SNP", gene = "GENE")
-manhattanly(HapMap, snp = "SNP", gene = "GENE", genomewideline = 6, suggestiveline = 2)
+# volcanoly(HapMap, snp = "SNP", gene = "GENE")
+# manhattanly(HapMap, snp = "SNP", gene = "GENE", genomewideline = 6, suggestiveline = 2)
 dataset <- HapMap
+
+parse_contents = function(contents, filename, date){
+  content_type = strsplit(contents, ",")
+  content_string = strsplit(contents, ",")
+  decoded = jsonlite::base64_dec(content_string)
+  
+  if('csv' %in% filename){
+    df = read.csv(utf8::as_utf8(decoded))
+  } else if('xls' %in% filename){
+    df = read.table(decoded, encoding = 'bytes')
+  } else{
+    return(htmlDiv(list(
+      'There was an error processing this file.'
+    )))
+  }
+  
+  return(htmlDiv(list(
+    htmlH5(filename),
+    htmlH6(anytime(date)),
+    # dashDataTable(df_to_list('records'),columns = lapply(colnames(df), function(x){list('name' = x, 'id' = x)})),
+    htmlHr(),
+    htmlDiv('Raw Content'),
+    htmlPre(paste(substr(toJSON(contents), 1, 100), "..."), style=list(
+      'whiteSpace'= 'pre-wrap',
+      'wordBreak'= 'break-all'
+    ))
+  )))
+}
 
 app <- Dash$new()
 
@@ -24,17 +56,17 @@ app$layout(
         list(
           htmlH2(
             id = "title",
-            'Interactive Metabolomics Viewer',
+            'Interactive GWAS Viewer',
             style = list(
               textAlign = 'left'
             )
-          ),
-          htmlH5(
-            'Statistical & functional analysis of metabolomics data',
-            style = list(
-              textAlign = 'left'
-            )
-          )
+          )#,
+          # htmlH5(
+          #   'Statistical & functional analysis of metabolomics data',
+          #   style = list(
+          #     textAlign = 'left'
+          #   )
+          # )
         ),
         className = "banner"
       ),
@@ -73,22 +105,36 @@ app$layout(
                           children = list(
                             htmlH4(
                               className = "what-is",
-                              children = "What is PCoA?"
+                              children = "manhattanly package"
                             ),
                             dccMarkdown(
-                              'Principal Coordinates Analysis (PCoA, = Multidimensional scaling, MDS)
-                      is a method to explore and to visualize similarities or dissimilarities of data.
-                      It starts with a distance matrix annd assigns for each item a
-                      location in a low-dimensional space (here 3D scatter plot).'
-                            ),
-                            htmlH4(
-                              className = "what-is",
-                              children = "What is Volcano Plot?"
-                            ),
-                            dccMarkdown(
-                              'A scatterplot that shows statistical significance (P value) versus magnitude of change (fold change) in this case
-                      of volatile organic compounds (VOCs).'
-                            )
+                              'Manhattan, Q-Q and volcano plots are popular graphical methods for visualizing 
+                              results from high-dimensional data analysis such as a (epi)genome wide asssociation 
+                              study (GWAS or EWAS), in which p-values, Z-scores, test statistics are plotted 
+                              on a scatter plot against their genomic position. Manhattan plots are used for 
+                              visualizing potential regions of interest in the genome that are associated with 
+                              a phenotype. Q-Q plots tell us about the distributional assumptions of the observed 
+                              test statistics. Volcano plots are the negative log10 p-values plotted against their 
+                              effect size, odds ratio or log fold-change. They are used to identify clinically 
+                              meaningful markers in genomic experiments, i.e., markers that are statistically 
+                              significant and have an effect size greater than some threshold.
+                              Interactive manhattan, Q-Q and volcano plots allow the inspection of specific value 
+                              (e.g. rs number or gene name) by hovering the mouse over a point, as well as zooming 
+                              into a region of the genome (e.g. a chromosome) by dragging a rectangle around the relevant area. 
+                              This pacakge creates interactive Q-Q, manhattan and volcano plots that are usable from the R console, 
+                              the RStudio viewer pane, R Markdown documents, in Dash apps, Dash apps, Shiny apps, embeddable in 
+                              websites and can be exported as .png files. By hovering the mouse over a point, you can see
+                              annotation information such as the SNP identifier and GENE name. You can also drag a 
+                              rectangle to zoom in on a region of interest and then export the image as a .png file.'
+                            )#,
+                      #       htmlH4(
+                      #         className = "what-is",
+                      #         children = "What is Volcano Plot?"
+                      #       ),
+                      #       dccMarkdown(
+                      #         'A scatterplot that shows statistical significance (P value) versus magnitude of change (fold change) in this case
+                      # of volatile organic compounds (VOCs).'
+                      #       )
                           )
                         )
                       ),
@@ -238,7 +284,33 @@ app$layout(
                                   value = c(5, 8)
                                 )
                               )
-                            )#,
+                            ),
+                            
+                            htmlDiv(
+                              list(
+                                dccUpload(
+                                  id='upload-data',
+                                  children=htmlDiv(list(
+                                    'Drag and Drop or ',
+                                    htmlA('Select Files')
+                                  )),
+                                  style=list(
+                                    'width'= '100%',
+                                    'height'= '60px',
+                                    'lineHeight'= '60px',
+                                    'borderWidth'= '1px',
+                                    'borderStyle'= 'dashed',
+                                    'borderRadius'= '5px',
+                                    'textAlign'= 'center',
+                                    'margin'= '10px'
+                                  ),
+                                  # Allow multiple files to be uploaded
+                                  multiple=TRUE
+                                ),
+                                htmlDiv(id='output-data-upload')
+                              )
+                            )
+                            
                             
                             # htmlDiv(
                             #   className = "app-controls-block",
@@ -469,6 +541,25 @@ app$callback(
     )
   }
 )
+
+
+
+# Data upload -------------------------------------------------------------
+
+app$callback(
+  output = list(id='output-data-upload', property = 'children'),
+  params = list(input(id = 'upload-data', property = 'contents'),
+                state(id = 'upload-data', property = 'filename'),
+                state(id = 'upload-data', property = 'last_modified')),
+  function(list_of_contents, list_of_names, list_of_dates){
+    if(is.null(list_of_contents) == FALSE){
+      children = lapply(1:length(list_of_contents), function(x){
+        parse_contents(list_of_contents[[x]], list_of_names[[x]], list_of_dates[[x]])
+      })
+      
+    }
+    return(children)
+  })
 
 # app$callback(
 #   output("vp-upper-right", "value"),
