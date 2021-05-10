@@ -10,6 +10,7 @@ pacman::p_load(dashTable)
 pacman::p_load(jsonlite)
 
 data("HapMap")
+data("significantSNP")
 # volcanoly(HapMap, snp = "SNP", gene = "GENE")
 # manhattanly(HapMap, snp = "SNP", gene = "GENE", genomewideline = 6, suggestiveline = 2)
 dataset <- HapMap
@@ -194,65 +195,7 @@ app$layout(
                             # ),
                             
                             
-                            # Volcano Inputs ----------------------------------------------------------
-                            
-                            htmlDiv(
-                              className = "app-controls-block",
-                              children = list(
-                                htmlDiv(
-                                  className = "app-settings-name",
-                                  children = "Settings for Volcano Plot:"
-                                ))),
-                            
-                            htmlDiv(
-                              className = "app-controls-block",
-                              children = list(
-                                htmlDiv(
-                                  className = "app-controls-name",
-                                  children = "Effect size threshold"
-                                ),
-                                dccRangeSlider(
-                                  id = 'volcanoplot-input',
-                                  min = -3,
-                                  max = 3,
-                                  step = 0.1,
-                                  marks = setNames(
-                                    lapply(-3:3,
-                                           function(i){
-                                             list(label = as.character(i))
-                                           }),
-                                    -3:3
-                                  ),
-                                  value = c(-0.5, 1)
-                                )
-                              )
-                            ),
-                            
-                            htmlDiv(
-                              className = "app-controls-block",
-                              children = list(
-                                htmlDiv(
-                                  className = "app-controls-name",
-                                  children = "-log10(p-value) threshold"
-                                ),
-                                dccSlider(
-                                  id = "vp-genomic-line-val",
-                                  value = 2,
-                                  marks = setNames(
-                                    lapply(0:10,
-                                           function(i){
-                                             list(label = as.character(i))
-                                           }),
-                                    0:10
-                                  ),
-                                  max = 10,
-                                  min = 0,
-                                  step = 0.1
-                                )
-                              )
-                            ),
-                            
-                            # Manhattan Inputs ----------------------------------------------------------
+                           # Manhattan Inputs ----------------------------------------------------------
                             
                             htmlDiv(
                               className = "app-controls-block",
@@ -286,30 +229,93 @@ app$layout(
                               )
                             ),
                             
-                            htmlDiv(
-                              list(
-                                dccUpload(
-                                  id='upload-data',
-                                  children=htmlDiv(list(
-                                    'Drag and Drop or ',
-                                    htmlA('Select Files')
-                                  )),
-                                  style=list(
-                                    'width'= '100%',
-                                    'height'= '60px',
-                                    'lineHeight'= '60px',
-                                    'borderWidth'= '1px',
-                                    'borderStyle'= 'dashed',
-                                    'borderRadius'= '5px',
-                                    'textAlign'= 'center',
-                                    'margin'= '10px'
-                                  ),
-                                  # Allow multiple files to be uploaded
-                                  multiple=TRUE
+                           # Volcano Inputs ----------------------------------------------------------
+                           
+                           htmlDiv(
+                             className = "app-controls-block",
+                             children = list(
+                               htmlDiv(
+                                 className = "app-settings-name",
+                                 children = "Settings for Volcano Plot:"
+                               ))),
+                           
+                           htmlDiv(
+                             className = "app-controls-block",
+                             children = list(
+                               htmlDiv(
+                                 className = "app-controls-name",
+                                 children = "Effect size threshold"
+                               ),
+                               dccRangeSlider(
+                                 id = 'volcanoplot-input',
+                                 min = -3,
+                                 max = 3,
+                                 step = 0.1,
+                                 marks = setNames(
+                                   lapply(-3:3,
+                                          function(i){
+                                            list(label = as.character(i))
+                                          }),
+                                   -3:3
+                                 ),
+                                 value = c(-0.5, 1)
+                               )
+                             )
+                           ),
+                           
+                           htmlDiv(
+                             className = "app-controls-block",
+                             children = list(
+                               htmlDiv(
+                                 className = "app-controls-name",
+                                 children = "-log10(p-value) threshold"
+                               ),
+                               dccSlider(
+                                 id = "vp-genomic-line-val",
+                                 value = 2,
+                                 marks = setNames(
+                                   lapply(0:10,
+                                          function(i){
+                                            list(label = as.character(i))
+                                          }),
+                                   0:10
+                                 ),
+                                 max = 10,
+                                 min = 0,
+                                 step = 0.1
+                               )
+                             )
+                           ),
+                           
+
+                          # File upload -------------------------------------------------------------
+                          
+                          htmlDiv(
+                            list(
+                              dccUpload(
+                                id='upload-data',
+                                children=htmlDiv(list(
+                                  'Drag and Drop or ',
+                                  htmlA('Select Files')
+                                )),
+                                style=list(
+                                  'width'= '100%',
+                                  'height'= '60px',
+                                  'lineHeight'= '60px',
+                                  'borderWidth'= '1px',
+                                  'borderStyle'= 'dashed',
+                                  'borderRadius'= '5px',
+                                  'textAlign'= 'center',
+                                  'margin'= '10px'
                                 ),
-                                htmlDiv(id='output-data-upload')
-                              )
+                                # Allow multiple files to be uploaded
+                                multiple=TRUE
+                              ),
+                              htmlDiv(id='output-data-upload')
                             )
+                          )
+
+                           
                             
                             
                             # htmlDiv(
@@ -381,11 +387,19 @@ app$layout(
                   htmlDiv(
                     style = list(width = "100%"),
                     list(
+                      # dccGraph(
+                      #   id = "volcano-graph",
+                      #   figure = manhattanly::volcanoly(x = dataset, snp = "SNP", gene = "GENE"),
+                      #   style = list(width = '100%')
+                      # )
+                      
                       dccGraph(
-                        id = "volcano-graph",
-                        figure = manhattanly::volcanoly(x = dataset, snp = "SNP", gene = "GENE"),
+                        id = "manhattan-plot",
+                        figure = manhattanly(HapMap, snp = "SNP", gene = "GENE",
+                                             annotation1 = "DISTANCE", annotation2 = "EFFECTSIZE"),
                         style = list(width = '100%')
                       )
+                      
                     )
                   )
                 ),
@@ -404,6 +418,8 @@ app$layout(
                   boxShadow = '2px 2px 1px #f2f2f2'
                 )
               )
+              
+              
             )
           )
         )
@@ -430,9 +446,15 @@ app$layout(
                   htmlDiv(
                     style = list(width = "100%"),
                     list(
+                      # dccGraph(
+                      #   id = "manhattan-plot",
+                      #   figure = manhattanly::manhattanly(x = dataset, snp = "SNP", gene = "GENE"),
+                      #   style = list(width = '100%')
+                      # )
+                      
                       dccGraph(
-                        id = "manhattan-plot",
-                        figure = manhattanly::manhattanly(x = dataset, snp = "SNP", gene = "GENE"),
+                        id = "volcano-graph",
+                        figure = manhattanly::volcanoly(x = dataset, snp = "SNP", gene = "GENE"),
                         style = list(width = '100%')
                       )
                     )
@@ -517,6 +539,9 @@ app$layout(
       # filtered_variable <- heat.df %>% dplyr::filter(Date %in% c(selected_date), Treatment %in% c(selected_treatment))
       lower_upper <- unlist(genomic_line)
       manhattanly::manhattanly(dataset, snp = "SNP", gene = "GENE", 
+                               annotation1 = "DISTANCE", 
+                               annotation2 = "EFFECTSIZE",
+                               highlight = significantSNP,
                                genomewideline = lower_upper[2], 
                                suggestiveline = lower_upper[1])
     }
