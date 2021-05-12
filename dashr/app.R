@@ -1,13 +1,13 @@
-if (!requireNamespace("pacman")) install.packages("pacman")
-pacman::p_load(dash)
-pacman::p_load(dashCoreComponents)
-pacman::p_load(dashHtmlComponents)
-pacman::p_load_gh("plotly/dashDaq")
-pacman::p_load(dashBio)
-pacman::p_load(manhattanly)
-pacman::p_load(anytime)
-pacman::p_load(dashTable)
-pacman::p_load(jsonlite)
+# if (!requireNamespace("pacman")) install.packages("pacman")
+# pacman::p_load(dash)
+# pacman::p_load(dashCoreComponents)
+# pacman::p_load(dashHtmlComponents)
+# pacman::p_load_gh("plotly/dashDaq")
+# pacman::p_load(dashBio)
+# pacman::p_load(manhattanly)
+# pacman::p_load(anytime)
+# pacman::p_load(dashTable)
+# pacman::p_load(jsonlite)
 
 data("HapMap")
 data("significantSNP")
@@ -626,5 +626,6 @@ app$callback(
 # )
 
 
-app$run_server(debug=F, threaded=T, showcase = T)
+# app$run_server(debug=F, threaded=T, showcase = T)
+app$run_server(host = '0.0.0.0', threaded=T, showcase = T)
 
